@@ -23,6 +23,9 @@
 - [x] bluetooth
 - [x] btree
 
+- [x] esp
+- [x] esp32
+
 - [x] micropython
 
 </details>
@@ -55,8 +58,6 @@
 - [ ] dht
 
 - [ ] errno
-- [ ] esp
-- [ ] esp32
 - [ ] espnow
 
 - [ ] flashbdev
