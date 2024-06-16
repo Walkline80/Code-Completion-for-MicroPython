@@ -32,5 +32,5 @@
 * 删除无用文件
 
 [unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.2...HEAD
-[Version 0.0.1]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.1...v0.0.2
+[Version 0.0.2]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.1...v0.0.2
 [Version 0.0.1]: https://gitee.com/walkline/code-completion-for-micropython/releases/tag/v0.0.1
