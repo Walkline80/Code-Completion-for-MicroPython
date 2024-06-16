@@ -1,0 +1,47 @@
+{
+  "name": "code-completion-for-micropython",
+  "displayName": "Code Completion for MicroPython",
+  "description": "MicroPython 类库代码补全插件",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/walkline/code-completion-for-micropython.git"
+  },
+  "homepage": "https://gitee.com/walkline/code-completion-for-micropython/blob/main/README.md",
+  "keywords": [
+    "micropython",
+    "completion",
+    "auto complete"
+  ],
+  "preview": true,
+  "author": {
+    "name": "Walkline Wang"
+  },
+  "publisher": "WalklineWang",
+  "icon": "images/icon.png",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.setup",
+        "title": "Setup Code Completion for MicroPython"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.4.5"
+  }
+}
