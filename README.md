@@ -6,13 +6,16 @@
 
 ## 使用方法
 
-使用快捷键 <kbd>F1</kbd> 打开命令面板，输入`MicroPython`，然后选择`Setup Code Completion for MicroPython`即可。
+使用快捷键 <kbd>F1</kbd> 打开命令面板，输入 `MicroPython`，然后：
+
+* 选择 `Setup Code Completion for MicroPython` 可以设置启用代码补全功能
+* 选择 `Reset Code Completion for MicroPython` 可以设置启用代码补全功能
 
 ## 类库列表
 
 类库列表包含了 MicroPython 官方提供的类库，以及从互联网获取的一些有用的类库。
 
-> MicroPython 官方类库列表获取自固件文件`MicroPython v1.24.0-preview.23 on 2024-06-05; ESP32C3 module with ESP32C3`
+> MicroPython 官方类库列表获取自固件文件 `MicroPython v1.24.0-preview.23 on 2024-06-05; ESP32C3 module with ESP32C3`
 
 ### MicroPython 官方类库
 
