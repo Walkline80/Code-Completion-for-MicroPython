@@ -23,10 +23,27 @@
 - [x] bluetooth
 - [x] btree
 
+- [x] cmath
+
 - [x] esp
 - [x] esp32
 
+- [x] gc
+
+- [x] json
+
+- [x] machine
+- [x] math
 - [x] micropython
+
+- [x] platform
+
+- [x] random
+
+- [x] struct
+- [x] sys
+
+- [x] time
 
 </details>
 
@@ -49,7 +66,6 @@
 
 - [ ] builtins
 
-- [ ] cmath
 - [ ] collections
 - [ ] cryptolib
 
@@ -63,18 +79,12 @@
 - [ ] flashbdev
 - [ ] framebuf
 
-- [ ] gc
-
 - [ ] hashlib
 - [ ] heapq
 
 - [ ] inisetup
 - [ ] io
 
-- [ ] json
-
-- [ ] machine
-- [ ] math
 - [ ] mip/__init__
 
 - [ ] neopixel
@@ -84,19 +94,13 @@
 - [ ] onewire
 - [ ] os
 
-- [ ] platform
-
 - [ ] requests/__init__
 - [ ] re
-- [ ] random
 
 - [ ] select
 - [ ] socket
 - [ ] ssl
-- [ ] struct
-- [ ] sys
 
-- [ ] time
 - [ ] tls
 
 - [ ] uasyncio
@@ -117,23 +121,25 @@
 <details>
 <summary>已完成的类库</summary>
 
+- [x] ble_config: [MicroPython BLE 配网](https://gitee.com/walkline/micropython_ble_config)
+
+- [x] dispatcher: [MicroPython Timer Dispatcher](https://gitee.com/walkline/micropython-timer-dispatcher)
+
+- [x] MicroDNSSrv: [MicroDNSSrv](https://github.com/jczic/MicroDNSSrv)
+- [x] MicroWebSrv: [MicroWebSrv](https://github.com/jczic/MicroWebSrv)
+
+- [x] qrcode: [MicroPython QRCode CModule](https://gitee.com/walkline/micropython-qrcode-cmodule)
+
+- [x] smartconfig: [esp32/modsmartconfig: Add smartconfig module](https://github.com/micropython/micropython/pull/13658)
+
 </details>
-
-- [ ] ble_config
-
-- [ ] dispatcher
 
 - [ ] fontlib
 
 - [ ] logging
 
-- [ ] microDNSSrv
-- [ ] MicroWebSrv
 - [ ] MicroWebSrv2
 
-- [ ] qrcode
-
-- [ ] smartconfig
 - [ ] st7789
 
 - [ ] uftpd
