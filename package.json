@@ -18,7 +18,7 @@
   },
   "publisher": "WalklineWang",
   "icon": "images/icon.png",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "engines": {
     "vscode": "^1.80.0"
   },
@@ -32,6 +32,10 @@
       {
         "command": "extension.setup",
         "title": "Setup Code Completion for MicroPython"
+      },
+      {
+        "command": "extension.reset",
+        "title": "Reset Code Completion for MicroPython"
       }
     ]
   },
