@@ -8,8 +8,8 @@
 
 使用快捷键 <kbd>F1</kbd> 打开命令面板，输入 `MicroPython`，然后：
 
-* 选择 `Setup Code Completion for MicroPython` 可以设置启用代码补全功能
-* 选择 `Reset Code Completion for MicroPython` 可以设置启用代码补全功能
+* 选择 `Setup Code Completion for MicroPython` 可以启用代码补全功能
+* 选择 `Reset Code Completion for MicroPython` 可以复位代码补全功能
 
 ## 类库列表
 
