@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [Version 0.0.4]: 2024-06-17
+
+### Added
+
+增加 `Reset Code Completion for MicroPython` 命令，用于清除之前的设置。
+
 ## [Version 0.0.3]: 2024-06-17
 
 ### Added
@@ -54,7 +60,8 @@
 
 * 删除无用文件
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.3...HEAD
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.4...HEAD
+[Version 0.0.4]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.3...v0.0.4
 [Version 0.0.3]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.2...v0.0.3
 [Version 0.0.2]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.1...v0.0.2
 [Version 0.0.1]: https://gitee.com/walkline/code-completion-for-micropython/releases/tag/v0.0.1
