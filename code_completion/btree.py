@@ -84,7 +84,7 @@ def keys(start_key=None, end_key=None, flags=None):
 
 	Note that for all 3 methods, `start_key` and `end_key` arguments represent key values.
 
-	For example, values() method will iterate over values corresponding to they key range given.
+	For example, `values()` method will iterate over values corresponding to they key range given.
 
 	None values for `start_key` means “from the first key”, no `end_key` or its value of None means “until the end of database”.
 
@@ -101,7 +101,7 @@ def values(start_key=None, end_key=None, flags=None):
 
 	Note that for all 3 methods, `start_key` and `end_key` arguments represent key values.
 
-	For example, values() method will iterate over values corresponding to they key range given.
+	For example, `values()` method will iterate over values corresponding to they key range given.
 
 	None values for `start_key` means “from the first key”, no `end_key` or its value of None means “until the end of database”.
 
@@ -118,7 +118,7 @@ def items(start_key=None, end_key=None, flags=None):
 
 	Note that for all 3 methods, `start_key` and `end_key` arguments represent key values.
 
-	For example, values() method will iterate over values corresponding to they key range given.
+	For example, `values()` method will iterate over values corresponding to they key range given.
 
 	None values for `start_key` means “from the first key”, no `end_key` or its value of None means “until the end of database”.
 

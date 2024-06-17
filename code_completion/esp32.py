@@ -148,7 +148,7 @@ class Partition(object):
 		'''
 		Gets the next update partition after this one, and returns a new Partition object.
 
-		Typical usage is Partition(Partition.RUNNING).get_next_update() which returns the next partition to update given the current running one.
+		Typical usage is `Partition(Partition.RUNNING).get_next_update()` which returns the next partition to update given the current running one.
 		'''
 
 	@classmethod

@@ -81,17 +81,17 @@ def heap_lock():
 
 	When locked no memory allocation can occur and a `MemoryError` will be raised if any heap allocation is attempted.
 
-	heap_locked() returns a true value if the heap is currently locked.
+	`heap_locked()` returns a true value if the heap is currently locked.
 
-	These functions can be nested, ie heap_lock() can be called multiple times in a row and the lock-depth will increase, and then heap_unlock() must be called the same number of times to make the heap available again.
+	These functions can be nested, ie `heap_lock()` can be called multiple times in a row and the lock-depth will increase, and then `heap_unlock()` must be called the same number of times to make the heap available again.
 
-	Both heap_unlock() and heap_locked() return the current lock depth (after unlocking for the former) as a non-negative integer, with 0 meaning the heap is not locked.
+	Both `heap_unlock()` and `heap_locked()` return the current lock depth (after unlocking for the former) as a non-negative integer, with 0 meaning the heap is not locked.
 
 	If the REPL becomes active with the heap locked then it will be forcefully unlocked.
 
 	Note:
 
-		heap_locked() is not enabled on most ports by default, requires `MICROPY_PY_MICROPYTHON_HEAP_LOCKED`.
+		`heap_locked()` is not enabled on most ports by default, requires `MICROPY_PY_MICROPYTHON_HEAP_LOCKED`.
 	'''
 
 def heap_unlock():
@@ -100,17 +100,17 @@ def heap_unlock():
 
 	When locked no memory allocation can occur and a `MemoryError` will be raised if any heap allocation is attempted.
 
-	heap_locked() returns a true value if the heap is currently locked.
+	`heap_locked()` returns a true value if the heap is currently locked.
 
-	These functions can be nested, ie heap_lock() can be called multiple times in a row and the lock-depth will increase, and then heap_unlock() must be called the same number of times to make the heap available again.
+	These functions can be nested, ie `heap_lock()` can be called multiple times in a row and the lock-depth will increase, and then `heap_unlock()` must be called the same number of times to make the heap available again.
 
-	Both heap_unlock() and heap_locked() return the current lock depth (after unlocking for the former) as a non-negative integer, with 0 meaning the heap is not locked.
+	Both `heap_unlock()` and `heap_locked()` return the current lock depth (after unlocking for the former) as a non-negative integer, with 0 meaning the heap is not locked.
 
 	If the REPL becomes active with the heap locked then it will be forcefully unlocked.
 
 	Note:
 
-		heap_locked() is not enabled on most ports by default, requires `MICROPY_PY_MICROPYTHON_HEAP_LOCKED`.
+		`heap_locked()` is not enabled on most ports by default, requires `MICROPY_PY_MICROPYTHON_HEAP_LOCKED`.
 	'''
 
 def heap_locked():
@@ -119,17 +119,17 @@ def heap_locked():
 
 	When locked no memory allocation can occur and a `MemoryError` will be raised if any heap allocation is attempted.
 
-	heap_locked() returns a true value if the heap is currently locked.
+	`heap_locked()` returns a true value if the heap is currently locked.
 
-	These functions can be nested, ie heap_lock() can be called multiple times in a row and the lock-depth will increase, and then heap_unlock() must be called the same number of times to make the heap available again.
+	These functions can be nested, ie `heap_lock()` can be called multiple times in a row and the lock-depth will increase, and then `heap_unlock()` must be called the same number of times to make the heap available again.
 
-	Both heap_unlock() and heap_locked() return the current lock depth (after unlocking for the former) as a non-negative integer, with 0 meaning the heap is not locked.
+	Both `heap_unlock()` and `heap_locked()` return the current lock depth (after unlocking for the former) as a non-negative integer, with 0 meaning the heap is not locked.
 
 	If the REPL becomes active with the heap locked then it will be forcefully unlocked.
 
 	Note:
 
-		heap_locked() is not enabled on most ports by default, requires `MICROPY_PY_MICROPYTHON_HEAP_LOCKED`.
+		`heap_locked()` is not enabled on most ports by default, requires `MICROPY_PY_MICROPYTHON_HEAP_LOCKED`.
 	'''
 
 def kbd_intr(chr: int = 3):
@@ -161,13 +161,13 @@ def schedule(func: function, arg):
 
 	Note:
 
-		If schedule() is called from a preempting IRQ, when memory allocation is not allowed and the callback to be passed to schedule() is a bound method, passing this directly will fail.
+		If `schedule()` is called from a preempting IRQ, when memory allocation is not allowed and the callback to be passed to `schedule()` is a bound method, passing this directly will fail.
 
 		This is because creating a reference to a bound method causes memory allocation.
 
-		A solution is to create a reference to the method in the class constructor and to pass that reference to schedule().
+		A solution is to create a reference to the method in the class constructor and to pass that reference to `schedule()`.
 
-		This is discussed in detail here reference documentation under “Creation of Python objects”.
+		This is discussed in detail here reference documentation under "Creation of Python objects".
 
-	There is a finite queue to hold the scheduled functions and schedule() will raise a RuntimeError if the queue is full.
+	There is a finite queue to hold the scheduled functions and `schedule()` will raise a RuntimeError if the queue is full.
 	'''

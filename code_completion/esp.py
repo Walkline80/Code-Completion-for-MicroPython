@@ -35,7 +35,7 @@ def deepsleep(time_us: int = 0, /):
 	'''
 	Note:
 
-		ESP8266 only - use machine.deepsleep() on ESP32
+		ESP8266 only - use `machine.deepsleep()` on ESP32
 
 	Enter deep sleep.
 
