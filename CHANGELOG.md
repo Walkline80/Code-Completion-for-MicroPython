@@ -2,6 +2,29 @@
 
 ## [Unreleased]
 
+## [Version 0.0.3]: 2024-06-17
+
+### Added
+
+增加代码补全类库文件
+
+* ble_config.py
+* cmath.py
+* dispatcher.py
+* gc.py
+* json.py
+* machine.py
+* math.py
+* microDNSSrv.py
+* microWebSrv.py
+* platform.py
+* qrcode.py
+* random.py
+* smartconfig.py
+* struct.py
+* sys.py
+* time.py
+
 ## [Version 0.0.2]: 2024-06-16
 
 ### Added
@@ -31,6 +54,7 @@
 
 * 删除无用文件
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.2...HEAD
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.3...HEAD
+[Version 0.0.3]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.2...v0.0.3
 [Version 0.0.2]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.1...v0.0.2
 [Version 0.0.1]: https://gitee.com/walkline/code-completion-for-micropython/releases/tag/v0.0.1
