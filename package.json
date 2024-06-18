@@ -1,16 +1,17 @@
 {
   "name": "code-completion-for-micropython",
   "displayName": "Code Completion for MicroPython",
-  "description": "MicroPython 类库代码补全插件",
+  "description": "MicroPython modules code completion extension.",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://gitee.com/walkline/code-completion-for-micropython.git"
   },
   "homepage": "https://gitee.com/walkline/code-completion-for-micropython/blob/main/README.md",
   "keywords": [
-    "micropython",
-    "completion",
-    "auto complete"
+    "MicroPython",
+    "Completion",
+    "autoComplete"
   ],
   "preview": true,
   "author": {
@@ -18,7 +19,7 @@
   },
   "publisher": "WalklineWang",
   "icon": "images/icon.png",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "engines": {
     "vscode": "^1.80.0"
   },
@@ -26,26 +27,38 @@
     "Other"
   ],
   "activationEvents": [],
-  "main": "./dist/extension",
+  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "extension.setup",
-        "title": "Setup Code Completion for MicroPython"
+        "command": "extension.enable",
+        "title": "Enable Code Completion",
+        "category": "MicroPython"
       },
       {
-        "command": "extension.reset",
-        "title": "Reset Code Completion for MicroPython"
+        "command": "extension.disable",
+        "title": "Disable Code Completion",
+        "category": "MicroPython"
       }
     ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./"
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
   },
   "devDependencies": {
     "@types/vscode": "^1.80.0",
-    "typescript": "^5.4.5"
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "eslint": "^8.57.0",
+    "typescript": "^5.4.5",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.4.0"
   }
 }

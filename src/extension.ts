@@ -20,40 +20,26 @@ function update_configuration(cfgName: string, key: string, value: any,
 		if (cfg.has(key)) {
 			cfg.update(key, value, configurationTarget)
 				.then(() => {
-					vscode.window.showInformationMessage('Code completion setup successed');
+					vscode.window.showInformationMessage('Update settings successed');
 					resolve(true);
 				}).then(undefined, err => {
-					vscode.window.showErrorMessage('Code completion setup failed');
+					vscode.window.showErrorMessage(`Update settings failed: ${err.message}`, 'OK');
 					reject(err);
 				});
-		} else {
-			resolve(false);
-		}
+		} else {resolve(false);}
 	});
 }
 
 export function activate(context: vscode.ExtensionContext) {
-	const setup = vscode.commands.registerCommand('extension.setup', () => {
+	const enable = vscode.commands.registerCommand('extension.enable', () => {
 		if (vscode.workspace.workspaceFolders?.length !== 0) {
 			update_configuration(config_name, key_1, [value], vscode.ConfigurationTarget.Workspace);
 			update_configuration(config_name, key_2, [value], vscode.ConfigurationTarget.Workspace);
 			update_configuration(config_name, key_3, value, vscode.ConfigurationTarget.Workspace);
-
-			// vscode.workspace.workspaceFolders?.forEach(folder => {
-			// 	const workspace_root = folder.uri.fsPath;
-			// 	const abconfig = vscode.Uri.file(`${workspace_root}\\abconfig`);
-
-			// 	vscode.workspace.fs.stat(abconfig).then(
-			// 		(onfulfilled) =>{
-			// 			update_configuration(config_name, key_1, value, vscode.ConfigurationTarget.Workspace);
-			// 			update_configuration(config_name, key_2, value, vscode.ConfigurationTarget.Workspace);
-			// 		}
-			// 	);
-			// });
 		}
 	});
 
-	const reset = vscode.commands.registerCommand('extension.reset', () => {
+	const disable = vscode.commands.registerCommand('extension.disable', () => {
 		if (vscode.workspace.workspaceFolders?.length !== 0) {
 			update_configuration(config_name, key_1, [], vscode.ConfigurationTarget.Workspace);
 			update_configuration(config_name, key_2, [], vscode.ConfigurationTarget.Workspace);
@@ -61,8 +47,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	});
 
-	context.subscriptions.push(setup);
-	context.subscriptions.push(reset);
+	context.subscriptions.push(enable, disable);
 }
 
 export function deactivate() {}
