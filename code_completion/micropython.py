@@ -1,6 +1,8 @@
-'''Access and control MicroPython internals'''
-# Docs: https://docs.micropython.org/en/latest/library/micropython.html
+'''
+Access and control MicroPython internals
 
+[View Doc](https://docs.micropython.org/en/latest/library/micropython.html)
+'''
 # Functions
 def const(expr):
 	'''

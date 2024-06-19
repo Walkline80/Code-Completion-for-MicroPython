@@ -4,9 +4,9 @@ control the garbage collector
 This module implements a subset of the corresponding CPython module, as described below.
 
 For more information, refer to the original CPython documentation: gc.
-'''
-# Docs: https://docs.micropython.org/en/latest/library/gc.html
 
+[View Doc](https://docs.micropython.org/en/latest/library/gc.html)
+'''
 # Functions
 def enable():
 	'''Enable automatic garbage collection.'''
@@ -25,7 +25,7 @@ def mem_alloc():
 	'''
 	Return the number of bytes of heap RAM that are allocated by Python code.
 
-	Difference to CPython:
+	Difference to CPython: 
 
 		This function is MicroPython extension.
 	'''

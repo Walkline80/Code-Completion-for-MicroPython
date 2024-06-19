@@ -2,9 +2,9 @@
 functionality specific to the ESP32
 
 The esp32 module contains functions and classes specifically aimed at controlling ESP32 modules.
-'''
-# Docs: https://docs.micropython.org/en/latest/library/esp32.html
 
+[View Doc](https://docs.micropython.org/en/latest/library/esp32.html)
+'''
 # Constants
 HEAP_DATA = ...
 HEAP_EXEC = ...

@@ -1,9 +1,8 @@
 '''
 MicroPython 定时器调度管理器，可以使用一个定时器管理多个需要定时运行的任务，以节省有限的定时器资源
+
+[View Doc](https://gitee.com/walkline/micropython-timer-dispatcher)
 '''
-# Docs: https://gitee.com/walkline/micropython-timer-dispatcher
-
-
 class Worker(object):
 	'''定时器任务'''
 	def __init__(self, work: function, period: int, *params):

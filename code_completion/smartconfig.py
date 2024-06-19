@@ -1,8 +1,8 @@
 '''
 为 MicroPython 提供 SmartConfig 相关功能。
-'''
-# Docs: https://github.com/micropython/micropython/pull/13658
 
+[View Doc](https://github.com/micropython/micropython/pull/13658)
+'''
 # Constants
 # 配网协议类型
 TYPE_ESPTOUCH = ... # EspTouch

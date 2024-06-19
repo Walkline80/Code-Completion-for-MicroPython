@@ -4,11 +4,10 @@ Specific network class implementations
 The following concrete classes implement the AbstractNIC interface and provide a way to control networking interfaces of various kinds.
 
 - class WLAN – control built-in WiFi interfaces
-'''
-# Docs:
-#	https://docs.micropython.org/en/latest/library/network.html
-#	https://docs.micropython.org/en/latest/library/network.WLAN.html
 
+[View Doc network](https://docs.micropython.org/en/latest/library/network.html)
+[View Doc network.WLAN](https://docs.micropython.org/en/latest/library/network.WLAN.html)
+'''
 # Constants
 STA_IF = ...
 AP_IF = ...

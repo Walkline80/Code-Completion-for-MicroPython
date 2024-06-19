@@ -6,9 +6,9 @@ The machine module contains specific functions related to the hardware on a part
 Most functions in this module allow to achieve direct and unrestricted access to and control of hardware blocks on a system (like CPU, timers, buses, etc.).
 
 Used incorrectly, this can lead to malfunction, lockups, crashes of your board, and in extreme cases, hardware damage.
-'''
-# Docs: https://docs.micropython.org/en/latest/library/machine.html
 
+[View Doc](https://docs.micropython.org/en/latest/library/machine.html)
+'''
 # Memory access
 def mem8():
 	'''Read/write 8 bits of memory.'''
@@ -203,6 +203,8 @@ class Pin(object):
 	Pin objects are commonly associated with a physical pin that can drive an output voltage and read input voltages.
 
 	The pin class has methods to set the mode of the pin (IN, OUT, etc) and methods to get and set the digital logic level.
+
+	[View Doc](https://docs.micropython.org/en/latest/library/machine.Pin.html)
 	'''
 	# Constants
 	# Selects the pin mode.
@@ -325,6 +327,8 @@ class Signal(object):
 	Unlike Pin, which can be only in "absolute" 0 and 1 states, a Signal can be in "asserted" (on) or "deasserted" (off) states, while being inverted (active-low) or not.
 
 	In other words, it adds logical inversion support to Pin functionality.
+
+	[View Doc](https://docs.micropython.org/en/latest/library/machine.Signal.html)
 	'''
 	def __init__(self, obj_or_pin_arguments, *, invert=False):
 		'''
@@ -361,6 +365,8 @@ class ADC(object):
 	analog to digital conversion
 
 	The ADC class provides an interface to analog-to-digital converters, and represents a single endpoint that can sample a continuous voltage and convert it to a discretised value.
+
+	[View Doc](https://docs.micropython.org/en/latest/library/machine.ADC.html)
 	'''
 	def __init__(self, id, *, sample_ns, atten):
 		'''
@@ -416,6 +422,8 @@ class ADCBlock(object):
 	It allows finer control over configuration of `machine.ADC` objects, which do the actual sampling.
 
 	This class is not always available.
+
+	[View Doc](https://docs.micropython.org/en/latest/library/machine.ADCBlock.html)
 	'''
 	def __init(self, id, *, bits):
 		'''
@@ -455,6 +463,8 @@ class PWM(object):
 	pulse width modulation
 
 	This class provides pulse width modulation output.
+
+	[View Doc](https://docs.micropython.org/en/latest/library/machine.PWM.html)
 	'''
 	def __init__(self, dest, *, freq: int, duty_u16: int, duty_ns: int, invert: bool):
 		'''
@@ -523,6 +533,8 @@ class UART(object):
 	At the physical level it consists of 2 lines: `RX` and `TX`.
 
 	The unit of communication is a character (not to be confused with a string character) which can be 8 or 9 bits wide.
+
+	[View Doc](https://docs.micropython.org/en/latest/library/machine.UART.html)
 	'''
 	# Constants
 	INV_TX = ...
@@ -676,6 +688,8 @@ class UART(object):
 class SPI(object):
 	'''
 	a Serial Peripheral Interface bus protocol (controller side)
+
+	[View Doc](https://docs.micropython.org/en/latest/library/machine.SPI.html)
 	'''
 	# Constants
 	CONTROLLER = ... # for initialising the SPI bus to controller; this is only used for the WiPy
@@ -758,6 +772,8 @@ class SPI(object):
 class SoftSPI(object):
 	'''
 	a Serial Peripheral Interface bus protocol (controller side)
+
+	[View Doc](https://docs.micropython.org/en/latest/library/machine.SPI.html)
 	'''
 	# Constants
 	CONTROLLER = ... # for initialising the SPI bus to controller; this is only used for the WiPy
@@ -840,6 +856,8 @@ class I2C(object):
 	I2C is a two-wire protocol for communicating between devices.
 
 	At the physical level it consists of 2 wires: SCL and SDA, the clock and data lines respectively.
+
+	[View Doc](https://docs.micropython.org/en/latest/library/machine.I2C.html)
 	'''
 	def __init__(self, id, *, scl, sda, freq: int = 400000, timeout: int = 50000):
 		'''
@@ -969,6 +987,8 @@ class SoftI2C(object):
 	I2C is a two-wire protocol for communicating between devices.
 
 	At the physical level it consists of 2 wires: SCL and SDA, the clock and data lines respectively.
+
+	[View Doc](https://docs.micropython.org/en/latest/library/machine.I2C.html)
 	'''
 	def __init__(self, scl, sda, *, freq: int = 400000, timeout: int = 50000):
 		'''
@@ -1128,6 +1148,8 @@ class I2S(object):
 	The I2S class supports controller operation. Peripheral operation is not supported.
 
 	The I2S class is currently available as a Technical Preview.
+
+	[View Doc](https://docs.micropython.org/en/latest/library/machine.I2S.html)
 	'''
 	# Constants
 	RX = ... # for initialising the I2S bus mode to receive
@@ -1220,6 +1242,8 @@ class RTC(object):
 	real time clock
 
 	The RTC is an independent clock that keeps track of the date and time.
+
+	[View Doc](https://docs.micropython.org/en/latest/library/machine.RTC.html)
 	'''
 	# Constants
 	ALARM0 = ... # irq trigger source
@@ -1301,6 +1325,8 @@ class Timer(object):
 	Timers are perhaps the most flexible and heterogeneous kind of hardware in MCUs and SoCs, differently greatly from a model to a model.
 
 	MicroPython’s Timer class defines a baseline operation of executing a callback with a given period (or once after some delay), and allow specific boards to define more non-standard behaviour (which thus won’t be portable to other boards).
+
+	[View Doc](https://docs.micropython.org/en/latest/library/machine.Timer.html)
 	'''
 	# Constants
 	# Timer operating mode.
@@ -1362,6 +1388,8 @@ class WDT(object):
 	After enabling, the application must "feed" the watchdog periodically to prevent it from expiring and resetting the system.
 
 	Availability of this class: pyboard, WiPy, esp8266, esp32, rp2040, mimxrt.
+
+	[View Doc](https://docs.micropython.org/en/latest/library/machine.WDT.html)
 	'''
 	def __init__(self, id: int = 0, timeout: int = 5000):
 		'''

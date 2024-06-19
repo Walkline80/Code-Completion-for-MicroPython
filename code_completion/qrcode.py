@@ -2,9 +2,9 @@
 MicroPython QRCode CModule
 
 生成并显示指定内容的二维码
-'''
-# Docs: https://gitee.com/walkline/micropython-qrcode-cmodule/blob/master/DOCS.md
 
+[View Doc](https://gitee.com/walkline/micropython-qrcode-cmodule/blob/master/DOCS.md)
+'''
 # Constants
 ECC_LOW = ... # 7% 容错率
 ECC_MED = ... # 15% 容错率

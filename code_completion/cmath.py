@@ -8,9 +8,9 @@ For more information, refer to the original CPython documentation: cmath.
 The cmath module provides some basic mathematical functions for working with complex numbers.
 
 Availability: not available on WiPy and ESP8266. Floating point support required for this module.
-'''
-# Docs: https://docs.micropython.org/en/latest/library/cmath.html
 
+[View Doc](https://docs.micropython.org/en/latest/library/cmath.html)
+'''
 # Functions
 def cos(z):
 	'''Return the cosine of `z`.'''

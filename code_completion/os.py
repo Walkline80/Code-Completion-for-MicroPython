@@ -6,9 +6,9 @@ This module implements a subset of the corresponding CPython module, as describe
 For more information, refer to the original CPython documentation: os.
 
 The os module contains functions for filesystem access and mounting, terminal redirection and duplication, and the uname and urandom functions.
-'''
-# Docs: https://docs.micropython.org/en/latest/library/os.html
 
+[View Doc](https://docs.micropython.org/en/latest/library/os.html)
+'''
 # General functions
 def uname() -> tuple:
 	'''

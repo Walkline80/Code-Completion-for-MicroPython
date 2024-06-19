@@ -8,11 +8,9 @@ A device may operate in multiple roles concurrently.
 Pairing (and bonding) is supported on some ports.
 
 This API is intended to match the low-level Bluetooth protocol and provide building-blocks for higher-level abstractions such as specific device types.
+
+[View Doc](https://docs.micropython.org/en/latest/library/bluetooth.html)
 '''
-# Docs: https://docs.micropython.org/en/latest/library/bluetooth.html
-
-
-# class BLE
 class BLE(object):
 	'''Returns the singleton BLE object.'''
 	# Configuration
@@ -400,7 +398,6 @@ class BLE(object):
 		'''
 
 
-# class UUID
 class UUID(object):
 	'''
 	Creates a UUID instance with the specified `value`.

@@ -8,9 +8,9 @@ For more information, refer to the original CPython documentation: platform.
 This module tries to retrieve as much platform-identifying data as possible.
 
 It makes this information available via function APIs.
-'''
-# Docs: https://docs.micropython.org/en/latest/library/platform.html
 
+[View Doc](https://docs.micropython.org/en/latest/library/platform.html)
+'''
 # Functions
 def platform():
 	'''

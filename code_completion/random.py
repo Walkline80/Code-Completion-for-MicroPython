@@ -10,9 +10,9 @@ For more information, refer to the original CPython documentation: random.
 Note:
 
 	The `randrange()`, `randint()` and `choice()` functions are only available if the `MICROPY_PY_RANDOM_EXTRA_FUNCS` configuration option is enabled.
-'''
-# Docs: https://docs.micropython.org/en/latest/library/random.html
 
+[View Doc](https://docs.micropython.org/en/latest/library/random.html)
+'''
 # Functions for integers
 def getrandbits(n: int) -> int:
 	'''Return an integer with `n` random bits (0 <= n <= 32).'''

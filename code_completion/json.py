@@ -6,9 +6,9 @@ This module implements a subset of the corresponding CPython module, as describe
 For more information, refer to the original CPython documentation: json.
 
 This modules allows to convert between Python objects and the JSON data format.
-'''
-# Docs: https://docs.micropython.org/en/latest/library/json.html
 
+[View Doc](https://docs.micropython.org/en/latest/library/json.html)
+'''
 # Functions
 def dump(obj, stream, separators=None):
 	'''

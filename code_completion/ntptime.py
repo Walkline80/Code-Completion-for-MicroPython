@@ -1,8 +1,8 @@
 '''
 a NTP client.
-'''
-# Docs: https://github.com/micropython/micropython-lib/blob/master/micropython/net/ntptime/ntptime.py
 
+[View Doc](https://github.com/micropython/micropython-lib/blob/master/micropython/net/ntptime/ntptime.py)
+'''
 host = ... # host can be configured at runtime by doing: ntptime.host = 'myhost.org'
 timeout = ... # timeout can be configured at runtime by doing: ntptime.timeout = 2
 

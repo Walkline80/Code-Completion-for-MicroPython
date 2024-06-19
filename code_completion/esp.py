@@ -4,9 +4,9 @@ functions related to the ESP8266 and ESP32
 The esp module contains specific functions related to both the ESP8266 and ESP32 modules.
 
 Some functions are only available on one or the other of these ports.
-'''
-# Docs: https://docs.micropython.org/en/latest/library/esp.html
 
+[View Doc](https://docs.micropython.org/en/latest/library/esp.html)
+'''
 # Functions
 def sleep_type(sleep_type: int = None):
 	'''

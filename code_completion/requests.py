@@ -16,12 +16,10 @@ Limitations:
 - File upload is not supported.
 
 - Chunked encoding in responses is not supported.
+
+[View Doc requests](https://github.com/micropython/micropython-lib/blob/master/python-ecosys/requests/README.md)
+[View Doc api](https://requests.readthedocs.io/en/latest/api/)
 '''
-# Docs:
-#	https://github.com/micropython/micropython-lib/blob/master/python-ecosys/requests/README.md
-#	https://requests.readthedocs.io/en/latest/api/
-
-
 class Response:
 	'''
 	The Response object, which contains a server’s response to an HTTP request.

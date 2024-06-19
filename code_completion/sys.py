@@ -4,9 +4,9 @@ system specific functions
 This module implements a subset of the corresponding CPython module, as described below.
 
 For more information, refer to the original CPython documentation: sys.
-'''
-# Docs: https://docs.micropython.org/en/latest/library/sys.html
 
+[View Doc](https://docs.micropython.org/en/latest/library/sys.html)
+'''
 # Constants
 stderr = ... # Standard error stream.
 stdin = ... # Standard input stream.

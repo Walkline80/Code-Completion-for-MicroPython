@@ -24,10 +24,9 @@ Among the algorithms which may be implemented:
 - MD5 - A legacy algorithm, not considered cryptographically secure.
 
 	Only selected boards, targeting interoperability with legacy applications, will offer this.
+
+[View Doc](https://docs.micropython.org/en/latest/library/hashlib.html)
 '''
-# Docs: https://docs.micropython.org/en/latest/library/hashlib.html
-
-
 class sha256(object):
 	def __init__(self, data=None):
 		'''Create an SHA256 hasher object and optionally feed data into it.'''
@@ -49,6 +48,7 @@ class sha256(object):
 
 		Use binascii.hexlify(hash.digest()) to achieve a similar effect.
 		'''
+
 
 class sha1(object):
 	def __init__(self, data=None):

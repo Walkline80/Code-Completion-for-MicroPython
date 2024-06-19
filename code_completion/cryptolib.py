@@ -1,8 +1,8 @@
 '''
 cryptographic ciphers
-'''
-# Docs: https://docs.micropython.org/en/latest/library/cryptolib.html
 
+[View Doc](https://docs.micropython.org/en/latest/library/cryptolib.html)
+'''
 class aes(object):
 	@classmethod
 	def __init__(cls, key, mode, IV=None):

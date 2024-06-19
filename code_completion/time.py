@@ -6,9 +6,9 @@ This module implements a subset of the corresponding CPython module, as describe
 For more information, refer to the original CPython documentation: time.
 
 The time module provides functions for getting the current time and date, measuring time intervals, and for delays.
-'''
-# Docs: https://docs.micropython.org/en/latest/library/time.html
 
+[View Doc](https://docs.micropython.org/en/latest/library/time.html)
+'''
 # Functions
 def gmtime(secs: tuple = None):
 	'''

@@ -8,9 +8,9 @@ Keys are stored sorted in the database, and besides efficient retrieval by a key
 On the application interface side, BTree database work as close a possible to a way standard dict type works, one notable difference is that both keys and values must be bytes-like objects (so, if you want to store objects of other types, you need to first serialize them to str or bytes or another type that supports the buffer protocol).
 
 The module is based on the well-known BerkelyDB library, version 1.xx.
-'''
-# Docs: https://docs.micropython.org/en/latest/library/btree.html
 
+[View Doc](https://docs.micropython.org/en/latest/library/btree.html)
+'''
 # Functions
 def open(stream, *, flags: int = 0, pagesize: int = 0, cachesize: int = 0, minkeypage: int = 0):
 	'''

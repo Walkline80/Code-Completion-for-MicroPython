@@ -8,10 +8,9 @@ Very easy to integrate and very light with 3 files only :
 - 'microWebSrv.py' - The Web server
 - 'microWebSocket.py' - The optional support of WebSockets
 - 'microWebTemplate.py' - The optional templating language for .pyhtml rendered pages
+
+[View Doc](https://github.com/jczic/MicroWebSrv)
 '''
-# Docs: https://github.com/jczic/MicroWebSrv
-
-
 class MicroWebSrvRoute :
 	def __init__(self, route, method, func, routeArgNames, routeRegex) :
 		'''Initialize class'''

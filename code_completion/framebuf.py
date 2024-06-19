@@ -2,10 +2,9 @@
 frame buffer manipulation
 
 This module provides a general frame buffer which can be used to create bitmap images, which can then be sent to a display.
+
+[View Doc](https://docs.micropython.org/en/latest/library/framebuf.html)
 '''
-# Docs: https://docs.micropython.org/en/latest/library/framebuf.html
-
-
 class FrameBuffer(object):
 	'''
 	The FrameBuffer class provides a pixel buffer which can be drawn upon with pixels, lines, rectangles, ellipses, polygons, text and even other FrameBuffers.

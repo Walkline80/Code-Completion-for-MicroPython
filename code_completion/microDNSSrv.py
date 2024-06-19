@@ -8,10 +8,9 @@ Simple but effective :
 - Use a list of multiple domains
 - Include wildcards in the scheme of names
 - Use it to make a captive portal simply
+
+[View Doc](https://github.com/jczic/MicroDNSSrv)
 '''
-# Docs: https://github.com/jczic/MicroDNSSrv
-
-
 class MicroDNSSrv :
 	def Create(self, domainsList) :
 		'''

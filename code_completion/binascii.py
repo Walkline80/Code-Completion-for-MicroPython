@@ -6,9 +6,9 @@ This module implements a subset of the corresponding CPython module, as describe
 For more information, refer to the original CPython documentation: binascii.
 
 This module implements conversions between binary data and various encodings of it in ASCII form (in both directions).
-'''
-# Docs: https://docs.micropython.org/en/latest/library/binascii.html
 
+[View Doc](https://docs.micropython.org/en/latest/library/binascii.html)
+'''
 # Functions
 def hexlify(data, sep=None) -> bytes:
 	'''

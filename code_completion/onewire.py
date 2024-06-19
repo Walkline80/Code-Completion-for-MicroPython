@@ -2,10 +2,9 @@
 1-Wire driver for MicroPython
 
 The OneWire driver is implemented in software and works on all pins.
+
+[View Doc](https://docs.micropython.org/en/latest/esp32/quickref.html#onewire-driver)
 '''
-# Docs: https://docs.micropython.org/en/latest/esp32/quickref.html#onewire-driver
-
-
 class OneWireError(Exception):
 	pass
 

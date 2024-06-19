@@ -4,9 +4,9 @@ pack and unpack primitive data types
 This module implements a subset of the corresponding CPython module, as described below.
 
 For more information, refer to the original CPython documentation: struct.
-'''
-# Docs: https://docs.micropython.org/en/latest/library/struct.html
 
+[View Doc](https://docs.micropython.org/en/latest/library/struct.html)
+'''
 # Functions
 def calcsize(fmt: str) -> int:
 	'''Return the number of bytes needed to store the given `fmt`.'''

@@ -8,10 +8,9 @@ Note:
 	This module is only included by default on the ESP8266, ESP32 and RP2 ports.
 
 	On STM32 / Pyboard and others, you can either install the neopixel package using mip, or you can download the module directly from micropython-lib and copy it to the filesystem.
+
+[View Doc](https://docs.micropython.org/en/latest/library/neopixel.html)
 '''
-# Docs: https://docs.micropython.org/en/latest/library/neopixel.html
-
-
 class NeoPixel(object):
 	'''
 	This class stores pixel data for a WS2812 LED strip connected to a pin.

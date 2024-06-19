@@ -8,9 +8,9 @@ For more information, refer to the original CPython documentation: heapq.
 This module implements the min heap queue algorithm.
 
 A heap queue is essentially a list that has its elements stored in such a way that the first item of the list is always the smallest.
-'''
-# Docs: https://docs.micropython.org/en/latest/library/heapq.html
 
+[View Doc](https://docs.micropython.org/en/latest/library/heapq.html)
+'''
 # Functions
 def heappush(heap, item):
 	'''Push the `item` onto the `heap`.'''

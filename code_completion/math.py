@@ -10,9 +10,9 @@ The math module provides some basic mathematical functions for working with floa
 Note: On the pyboard, floating-point numbers have 32-bit precision.
 
 Availability: Not available on WiPy. Floating point support required for this module.
-'''
-# Docs: https://docs.micropython.org/en/latest/library/math.html
 
+[View Doc](https://docs.micropython.org/en/latest/library/math.html)
+'''
 # Functions
 def acos(x):
 	'''Return the inverse cosine of `x`.'''
