@@ -84,7 +84,7 @@ implementation = ...
 '''
 Maximum value which a native integer type can hold on the current platform, or maximum value representable by MicroPython integer type, if it’s smaller than platform max value (that is the case for MicroPython ports without long int support).
 
-This attribute is useful for detecting “bitness” of a platform (32-bit vs 64-bit, etc.).
+This attribute is useful for detecting "bitness" of a platform (32-bit vs 64-bit, etc.).
 
 It’s recommended to not compare this attribute to some value directly, but instead count number of bits in it:
 '''

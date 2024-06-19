@@ -85,7 +85,7 @@ def sleep():
 	Note: This function is deprecated, use `lightsleep()` instead with no arguments.
 	'''
 
-def lightsleep(time_ms: int | None = None):
+def lightsleep(time_ms: int | None):
 	'''
 	Stops execution in an attempt to enter a low power state.
 
@@ -104,7 +104,7 @@ def lightsleep(time_ms: int | None = None):
 		Upon wake execution is resumed from the point where the sleep was requested, with all subsystems operational.
 	'''
 
-def deepsleep(time_ms: int | None = None):
+def deepsleep(time_ms: int | None):
 	'''
 	Stops execution in an attempt to enter a low power state.
 

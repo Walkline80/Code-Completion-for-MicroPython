@@ -86,7 +86,7 @@ def keys(start_key=None, end_key=None, flags=None):
 
 	For example, `values()` method will iterate over values corresponding to they key range given.
 
-	None values for `start_key` means “from the first key”, no `end_key` or its value of None means “until the end of database”.
+	None values for `start_key` means "from the first key", no `end_key` or its value of None means "until the end of database".
 
 	By default, range is inclusive of `start_key` and exclusive of `end_key`, you can include `end_key` in iteration by passing `flags` of btree.INCL.
 
@@ -103,7 +103,7 @@ def values(start_key=None, end_key=None, flags=None):
 
 	For example, `values()` method will iterate over values corresponding to they key range given.
 
-	None values for `start_key` means “from the first key”, no `end_key` or its value of None means “until the end of database”.
+	None values for `start_key` means "from the first key", no `end_key` or its value of None means "until the end of database".
 
 	By default, range is inclusive of `start_key` and exclusive of `end_key`, you can include `end_key` in iteration by passing `flags` of btree.INCL.
 
@@ -120,7 +120,7 @@ def items(start_key=None, end_key=None, flags=None):
 
 	For example, `values()` method will iterate over values corresponding to they key range given.
 
-	None values for `start_key` means “from the first key”, no `end_key` or its value of None means “until the end of database”.
+	None values for `start_key` means "from the first key", no `end_key` or its value of None means "until the end of database".
 
 	By default, range is inclusive of `start_key` and exclusive of `end_key`, you can include `end_key` in iteration by passing `flags` of btree.INCL.
 

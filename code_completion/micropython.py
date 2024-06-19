@@ -145,15 +145,15 @@ def kbd_intr(chr: int = 3):
 
 def schedule(func: function, arg):
 	'''
-	Schedule the function `func` to be executed “very soon”.
+	Schedule the function `func` to be executed "very soon".
 
-	The function is passed the value `arg` as its single argument. “Very soon” means that the MicroPython runtime will do its best to execute the function at the earliest possible time, given that it is also trying to be efficient, and that the following conditions hold:
+	The function is passed the value `arg` as its single argument. "Very soon" means that the MicroPython runtime will do its best to execute the function at the earliest possible time, given that it is also trying to be efficient, and that the following conditions hold:
 
 	- A scheduled function will never preempt another scheduled function.
 
-	- Scheduled functions are always executed “between opcodes” which means that all fundamental Python operations (such as appending to a list) are guaranteed to be atomic.
+	- Scheduled functions are always executed "between opcodes" which means that all fundamental Python operations (such as appending to a list) are guaranteed to be atomic.
 
-	- A given port may define “critical regions” within which scheduled functions will never be executed. Functions may be scheduled within a critical region but they will not be executed until that region is exited. An example of a critical region is a preempting interrupt handler (an IRQ).
+	- A given port may define "critical regions" within which scheduled functions will never be executed. Functions may be scheduled within a critical region but they will not be executed until that region is exited. An example of a critical region is a preempting interrupt handler (an IRQ).
 
 	A use for this function is to schedule a callback from a preempting IRQ.
 

@@ -108,7 +108,7 @@ def osdebug(uart_no, level: int = None):
 
 	Note:
 
-		Log output on ESP32 is automatically suspended in “Raw REPL” mode, to prevent communications issues.
+		Log output on ESP32 is automatically suspended in "Raw REPL" mode, to prevent communications issues.
 
 		This means OS level logging is never seen when using mpremote run and similar tools.
 	'''

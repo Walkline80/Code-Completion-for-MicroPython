@@ -16,7 +16,7 @@ This API is intended to match the low-level Bluetooth protocol and provide build
 class BLE(object):
 	'''Returns the singleton BLE object.'''
 	# Configuration
-	def active(self, active: bool | None = None, /):
+	def active(self, active: bool | None, /):
 		'''
 		Optionally changes the active state of the BLE radio, and returns the current state.
 
@@ -68,7 +68,7 @@ class BLE(object):
 
 		- 'bond': Sets whether bonding will be enabled during pairing.
 
-			When enabled, pairing requests will set the “bond” flag and the keys will be stored by both devices.
+			When enabled, pairing requests will set the "bond" flag and the keys will be stored by both devices.
 
 		- 'mitm': Sets whether MITM-protection is required for pairing.
 
@@ -80,9 +80,9 @@ class BLE(object):
 			- _IO_CAPABILITY_NO_INPUT_OUTPUT = const(3)
 			- _IO_CAPABILITY_KEYBOARD_DISPLAY = const(4)
 
-		'le_secure': Sets whether “LE Secure” pairing is required.
+		'le_secure': Sets whether "LE Secure" pairing is required.
 
-			Default is false (i.e. allow “Legacy Pairing”).
+			Default is false (i.e. allow "Legacy Pairing").
 		'''
 
 	# Event Handling
@@ -358,7 +358,7 @@ class BLE(object):
 
 		The specified buffer cannot be larger than the remote (peer) MTU, and no more than twice the size of the local MTU.
 
-		This will return False if the channel is now “stalled”, which means that l2cap_send must not be called again until the `_IRQ_L2CAP_SEND_READY` event is received (which will happen when the remote device grants more credits, typically after it has received and processed the data).
+		This will return False if the channel is now "stalled", which means that l2cap_send must not be called again until the `_IRQ_L2CAP_SEND_READY` event is received (which will happen when the remote device grants more credits, typically after it has received and processed the data).
 		'''
 
 	def l2cap_recvinto(self, conn_handle: int, cid, buf, /):
