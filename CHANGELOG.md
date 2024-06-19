@@ -2,6 +2,27 @@
 
 ## [Unreleased]
 
+
+## [Version 0.0.6]: 2024-06-19
+
+### Added
+
+增加代码补全类库文件：
+
+* asyncio.py
+
+* re.py
+
+* select.py
+* socket.py
+
+* uasyncio.py
+
+### Updated
+
+各类库文件增加参考文档链接。
+
+
 ## [Version 0.0.5]: 2024-06-19
 
 ### Added
@@ -30,11 +51,13 @@
 
 修改命令面板中显示命令的标题，使其具有分组效果。
 
+
 ## [Version 0.0.4]: 2024-06-17
 
 ### Added
 
 增加 `Reset Code Completion for MicroPython` 命令，用于清除之前的设置。
+
 
 ## [Version 0.0.3]: 2024-06-17
 
@@ -69,6 +92,7 @@
 
 * time.py
 
+
 ## [Version 0.0.2]: 2024-06-16
 
 ### Added
@@ -84,6 +108,7 @@
 
 * micropython.py
 
+
 ## [Version 0.0.1]: 2024-06-16
 
 ### Added
@@ -98,7 +123,9 @@
 
 * 删除无用文件
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.5...HEAD
+
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.6...HEAD
+[Version 0.0.6]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.5...v0.0.6
 [Version 0.0.5]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.4...v0.0.5
 [Version 0.0.4]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.3...v0.0.4
 [Version 0.0.3]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.2...v0.0.3
