@@ -2,14 +2,14 @@
 
 <p align="center"><img src="https://img.shields.io/badge/Licence-MIT-green.svg?style=for-the-badge" /></p>
 
-**Code Completion for MicroPython** 用于为 VSCode 提供 MicroPython 自有类库的代码补全功能。
+**Code Completion for MicroPython** 扩展程序用于为 VSCode 提供 MicroPython 类库代码补全功能。
 
 ## 使用方法
 
 使用快捷键 <kbd>F1</kbd> 打开命令面板，输入 `MicroPython`，然后：
 
-* 选择 `Setup Code Completion for MicroPython` 可以启用代码补全功能
-* 选择 `Reset Code Completion for MicroPython` 可以复位代码补全功能
+* 选择 `MicroPython: Enable Code Completion` 可以启用代码补全功能
+* 选择 `MicroPython: Disable Code Completion` 可以禁用代码补全功能
 
 ## 类库列表
 
@@ -27,21 +27,36 @@
 - [x] btree
 
 - [x] cmath
+- [x] cryptolib
 
 - [x] esp
 - [x] esp32
 
+- [x] framebuf
+
 - [x] gc
+
+- [x] hashlib
+- [x] heapq
 
 - [x] json
 
 - [x] machine
 - [x] math
 - [x] micropython
+- [x] mip
+
+- [x] neopixel
+- [x] network
+- [x] ntptime
 
 - [x] platform
 
+- [x] onewire
+- [x] os
+
 - [x] random
+- [x] requests
 
 - [x] struct
 - [x] sys
@@ -50,12 +65,10 @@
 
 </details>
 
-- [ ] _asyncio
-- [ ] _boot
-- [ ] _espnow
-- [ ] _onewire
+<details>
+<summary>未完成的类库</summary>
+
 - [ ] _thread
-- [ ] _webrepl
 
 - [ ] aioespnow
 - [ ] apa106
@@ -67,10 +80,7 @@
 - [ ] asyncio/lock
 - [ ] asyncio/stream
 
-- [ ] builtins
-
 - [ ] collections
-- [ ] cryptolib
 
 - [ ] deflate
 - [ ] ds18x20
@@ -80,24 +90,9 @@
 - [ ] espnow
 
 - [ ] flashbdev
-- [ ] framebuf
 
-- [ ] hashlib
-- [ ] heapq
-
-- [ ] inisetup
 - [ ] io
 
-- [ ] mip/__init__
-
-- [ ] neopixel
-- [ ] network
-- [ ] ntptime
-
-- [ ] onewire
-- [ ] os
-
-- [ ] requests/__init__
 - [ ] re
 
 - [ ] select
@@ -111,13 +106,14 @@
 - [ ] umqtt/robust
 - [ ] umqtt/simple
 - [ ] upysh
-- [ ] urequests
 
 - [ ] vfs
 
 - [ ] webrepl
 - [ ] webrepl_setup
 - [ ] websocket
+
+</details>
 
 ### 其它类库
 
@@ -137,7 +133,8 @@
 
 </details>
 
-- [ ] fontlib
+<details>
+<summary>未完成的类库</summary>
 
 - [ ] logging
 
@@ -145,9 +142,9 @@
 
 - [ ] st7789
 
-- [ ] uftpd
-
 - [ ] wtools
+
+</details>
 
 ## 项目主页
 
