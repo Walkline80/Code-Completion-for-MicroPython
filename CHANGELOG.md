@@ -2,6 +2,34 @@
 
 ## [Unreleased]
 
+## [Version 0.0.5]: 2024-06-19
+
+### Added
+
+增加代码补全类库文件：
+
+* cryptolib.py
+
+* framebuf.py
+
+* hashlib
+* heapq.py
+
+* mip.py
+
+* neopixel.py
+* network.py: 包含 WLAN 类模块
+* ntptime.py
+
+* onewire.py
+* os.py
+
+* requests.py
+
+### Updated
+
+修改命令面板中显示命令的标题，使其具有分组效果。
+
 ## [Version 0.0.4]: 2024-06-17
 
 ### Added
@@ -12,30 +40,40 @@
 
 ### Added
 
-增加代码补全类库文件
+增加代码补全类库文件：
 
 * ble_config.py
+
 * cmath.py
+
 * dispatcher.py
+
 * gc.py
+
 * json.py
+
 * machine.py
 * math.py
 * microDNSSrv.py
 * microWebSrv.py
+
 * platform.py
+
 * qrcode.py
+
 * random.py
+
 * smartconfig.py
 * struct.py
 * sys.py
+
 * time.py
 
 ## [Version 0.0.2]: 2024-06-16
 
 ### Added
 
-增加代码补全类库文件
+增加代码补全类库文件：
 
 * binascii.py
 * bluetooth.py
@@ -50,7 +88,7 @@
 
 ### Added
 
-初始化项目
+初始化项目：
 
 * 增加 .gitignore 文件
 * 增加 vscode extension 脚手架文件
@@ -60,7 +98,8 @@
 
 * 删除无用文件
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.4...HEAD
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.5...HEAD
+[Version 0.0.5]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.4...v0.0.5
 [Version 0.0.4]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.3...v0.0.4
 [Version 0.0.3]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.2...v0.0.3
 [Version 0.0.2]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.1...v0.0.2
