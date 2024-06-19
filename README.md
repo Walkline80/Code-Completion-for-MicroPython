@@ -22,6 +22,8 @@
 <details>
 <summary>已完成的类库</summary>
 
+- [x] asyncio
+
 - [x] binascii
 - [x] bluetooth
 - [x] btree
@@ -56,12 +58,18 @@
 - [x] os
 
 - [x] random
+- [x] re
 - [x] requests
 
+- [x] select
+- [x] socket
 - [x] struct
 - [x] sys
 
 - [x] time
+
+- [x] uasyncio
+
 
 </details>
 
@@ -73,12 +81,6 @@
 - [ ] aioespnow
 - [ ] apa106
 - [ ] array
-- [ ] asyncio/__init__
-- [ ] asyncio/core
-- [ ] asyncio/event
-- [ ] asyncio/funcs
-- [ ] asyncio/lock
-- [ ] asyncio/stream
 
 - [ ] collections
 
@@ -89,23 +91,15 @@
 - [ ] errno
 - [ ] espnow
 
-- [ ] flashbdev
-
 - [ ] io
 
-- [ ] re
-
-- [ ] select
-- [ ] socket
 - [ ] ssl
 
 - [ ] tls
 
-- [ ] uasyncio
 - [ ] uctypes
 - [ ] umqtt/robust
 - [ ] umqtt/simple
-- [ ] upysh
 
 - [ ] vfs
 
