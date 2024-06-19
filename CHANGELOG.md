@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [Version 0.0.7]: 2024-06-19
+
+### Fixed
+
+优化 `update_configuration()` 函数执行顺序，并增加错误捕捉。
+
 
 ## [Version 0.0.6]: 2024-06-19
 
@@ -124,7 +130,8 @@
 * 删除无用文件
 
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.6...HEAD
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.7...HEAD
+[Version 0.0.7]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.6...v0.0.7
 [Version 0.0.6]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.5...v0.0.6
 [Version 0.0.5]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.4...v0.0.5
 [Version 0.0.4]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.3...v0.0.4
