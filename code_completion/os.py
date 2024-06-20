@@ -135,24 +135,20 @@ def umount(mount_point):
 
 class VfsFat(object):
 	'''See `vfs.VfsFat`.'''
-	def __init__(self, block_dev):
-		pass
+	def __init__(self, block_dev): ...
 
 
 class VfsLfs1(object):
 	'''See `vfs.VfsLfs1`.'''
 
-	def __init__(self, block_dev, readsize=32, progsize=32, lookahead=32):
-		pass
+	def __init__(self, block_dev, readsize=32, progsize=32, lookahead=32): ...
 
 
 class VfsLfs2(object):
 	'''See `vfs.VfsLfs2`.'''
-	def __init__(self, block_dev, readsize=32, progsize=32, lookahead=32, mtime=True):
-		pass
+	def __init__(self, block_dev, readsize=32, progsize=32, lookahead=32, mtime=True): ...
 
 
 class VfsPosix(object):
 	'''See `vfs.VfsPosix`.'''
-	def __init__(self, root=None):
-		pass
+	def __init__(self, root=None): ...

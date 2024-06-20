@@ -24,8 +24,7 @@ class Response:
 	'''
 	The Response object, which contains a server’s response to an HTTP request.
 	'''
-	def __init__(self, f):
-		pass
+	def __init__(self, f): ...
 
 	def close(self):
 		'''

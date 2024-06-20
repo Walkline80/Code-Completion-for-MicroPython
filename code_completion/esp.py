@@ -61,14 +61,11 @@ def flash_size():
 def flash_user_start():
 	'''Read the memory offset at which the user flash space begins.'''
 
-def flash_read(byte_offset, length_or_buffer):
-	pass
+def flash_read(byte_offset, length_or_buffer): ...
 
-def flash_write(byte_offset, bytes):
-	pass
+def flash_write(byte_offset, bytes): ...
 
-def flash_erase(sector_no):
-	pass
+def flash_erase(sector_no): ...
 
 def osdebug(uart_no, level: int = None):
 	'''

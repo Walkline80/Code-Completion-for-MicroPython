@@ -11,5 +11,5 @@ mip will automatically fetch compiled .mpy file when downloading from micropytho
 
 [View Doc](https://docs.micropython.org/en/latest/reference/packages.html)
 '''
-def install(package: str, index=None, target: str = None, version: str = None, mpy: bool = True):
-    pass
+def install(package: str, index=None, target: str = None,
+	version: str = None, mpy: bool = True): ...

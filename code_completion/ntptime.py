@@ -6,8 +6,7 @@ a NTP client.
 host = ... # host can be configured at runtime by doing: ntptime.host = 'myhost.org'
 timeout = ... # timeout can be configured at runtime by doing: ntptime.timeout = 2
 
-def time():
-	pass
+def time(): ...
 
 def settime():
 	'''
