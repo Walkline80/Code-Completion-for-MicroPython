@@ -1,6 +1,6 @@
 <h1 align="center">Code Completion for MicroPython</h1>
 
-<p align="center"><img src="https://img.shields.io/badge/Licence-MIT-green.svg?style=for-the-badge" /></p>
+<p align="center"><img src="https://img.shields.io/badge/Licence-MIT-green.svg?style=for-the-badge&&logo=gitee" /></p>
 
 **Code Completion for MicroPython** 扩展程序用于为 VSCode 提供 MicroPython 类库代码补全功能。
 
@@ -22,6 +22,7 @@
 <details>
 <summary>已完成的类库</summary>
 
+- [x] array
 - [x] asyncio
 
 - [x] binascii
@@ -29,8 +30,14 @@
 - [x] btree
 
 - [x] cmath
+- [x] collections
 - [x] cryptolib
 
+- [x] deflate
+- [x] dht
+- [x] ds18x20
+
+- [x] errno
 - [x] esp
 - [x] esp32
 
@@ -63,13 +70,16 @@
 
 - [x] select
 - [x] socket
+- [x] ssl
 - [x] struct
 - [x] sys
 
 - [x] time
 
 - [x] uasyncio
-
+- [x] uctypes
+- [x] umqtt/robust
+- [x] umqtt/simple
 
 </details>
 
@@ -80,26 +90,12 @@
 
 - [ ] aioespnow
 - [ ] apa106
-- [ ] array
 
-- [ ] collections
-
-- [ ] deflate
-- [ ] ds18x20
-- [ ] dht
-
-- [ ] errno
 - [ ] espnow
 
 - [ ] io
 
-- [ ] ssl
-
 - [ ] tls
-
-- [ ] uctypes
-- [ ] umqtt/robust
-- [ ] umqtt/simple
 
 - [ ] vfs
 
@@ -130,8 +126,6 @@
 <details>
 <summary>未完成的类库</summary>
 
-- [ ] logging
-
 - [ ] MicroWebSrv2
 
 - [ ] st7789
@@ -142,7 +136,7 @@
 
 ## 项目主页
 
-* [Code completion for MicroPython](https://gitee.com/walkline/code-completion-for-micropython)
+* [Gitee: Code completion for MicroPython](https://gitee.com/walkline/code-completion-for-micropython)
 
 ## 合作交流
 
