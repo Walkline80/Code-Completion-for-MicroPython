@@ -2,6 +2,29 @@
 
 ## [Unreleased]
 
+
+## [Version 0.0.8]: 2024-06-20
+
+### Added
+
+增加代码补全类库文件：
+
+* array.py
+* collections.py
+* deflate.py
+* dht.py
+* ds18x20.py
+* errno.py
+* ssl.py
+* uctypes.py
+* umqtt/robust.py
+* umqtt/simple.py
+
+### Updated
+
+优化调整代码补全类库文件内容格式
+
+
 ## [Version 0.0.7]: 2024-06-19
 
 ### Fixed
@@ -130,7 +153,8 @@
 * 删除无用文件
 
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.7...HEAD
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.8...HEAD
+[Version 0.0.8]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.7...v0.0.8
 [Version 0.0.7]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.6...v0.0.7
 [Version 0.0.6]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.5...v0.0.6
 [Version 0.0.5]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.4...v0.0.5
