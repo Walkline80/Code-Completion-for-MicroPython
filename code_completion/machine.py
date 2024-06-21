@@ -544,7 +544,8 @@ class UART(object):
 	RTS = ...
 	CTS = ...
 
-	RX_ANY = ... # IRQ trigger sources. Availability: WiPy.
+	RX_ANY = ...
+	'''IRQ trigger sources. Availability: WiPy.'''
 
 	def __init__(self, id):
 		'''Construct a UART object of the given id.'''
@@ -692,10 +693,18 @@ class SPI(object):
 	[View Doc](https://docs.micropython.org/en/latest/library/machine.SPI.html)
 	'''
 	# Constants
-	CONTROLLER = ... # for initialising the SPI bus to controller; this is only used for the WiPy
+	CONTROLLER = ...
+	'''
+	for initialising the SPI bus to controller
 
-	MSB = ... # set the first bit to be the most significant bit
-	LSB = ... # set the first bit to be the least significant bit
+	this is only used for the WiPy
+	'''
+
+	MSB = ...
+	'''set the first bit to be the most significant bit'''
+
+	LSB = ...
+	'''set the first bit to be the least significant bit'''
 
 	def __init__(self, id):
 		'''
@@ -776,10 +785,18 @@ class SoftSPI(object):
 	[View Doc](https://docs.micropython.org/en/latest/library/machine.SPI.html)
 	'''
 	# Constants
-	CONTROLLER = ... # for initialising the SPI bus to controller; this is only used for the WiPy
+	CONTROLLER = ...
+	'''
+	for initialising the SPI bus to controller
 
-	MSB = ... # set the first bit to be the most significant bit
-	LSB = ... # set the first bit to be the least significant bit
+	this is only used for the WiPy
+	'''
+
+	MSB = ...
+	'''set the first bit to be the most significant bit'''
+
+	LSB = ...
+	'''set the first bit to be the least significant bit'''
 
 	def __init__(self, baudrate: int = 500000, *, polarity: int = 0, phase: int = 0, bits: int = 8,
 			firstbit: int = MSB, sck=None, mosi=None, miso=None):
@@ -1152,10 +1169,17 @@ class I2S(object):
 	[View Doc](https://docs.micropython.org/en/latest/library/machine.I2S.html)
 	'''
 	# Constants
-	RX = ... # for initialising the I2S bus mode to receive
-	TX = ... # for initialising the I2S bus mode to transmit
-	STEREO = ... # for initialising the I2S bus format to stereo
-	MONO = ... # for initialising the I2S bus format to mono
+	RX = ...
+	'''for initialising the I2S bus mode to receive'''
+
+	TX = ...
+	'''for initialising the I2S bus mode to transmit'''
+
+	STEREO = ...
+	'''for initialising the I2S bus format to stereo'''
+
+	MONO = ...
+	'''for initialising the I2S bus format to mono'''
 
 	def __init__(self, id, *, sck, ws, sd, mck=None, mode, bits, format, rate, ibuf):
 		'''
@@ -1246,7 +1270,8 @@ class RTC(object):
 	[View Doc](https://docs.micropython.org/en/latest/library/machine.RTC.html)
 	'''
 	# Constants
-	ALARM0 = ... # irq trigger source
+	ALARM0 = ...
+	'''irq trigger source'''
 
 	def __init__(self, id: int = 0):
 		'''Create an RTC object.'''

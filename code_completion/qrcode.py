@@ -6,16 +6,29 @@ MicroPython QRCode CModule
 [View Doc](https://gitee.com/walkline/micropython-qrcode-cmodule/blob/master/DOCS.md)
 '''
 # Constants
-ECC_LOW = ... # 7% 容错率
-ECC_MED = ... # 15% 容错率
-ECC_QUART = ... # 25% 容错率
-ECC_HIGH = ... # 30% 容错率
+ECC_LOW = ...
+'''7% 容错率'''
 
-VERSION_MIN = ... # 二维码支持的最低版本：1
-VERSION_MAX = ... # 二维码支持的最高版本：40
+ECC_MED = ...
+'''15% 容错率'''
 
-FORMAT_MONO_HLSB = ... # 指定 `buffer_data()` 函数填充数组的方式，适用于 OLED 屏幕
-FORMAT_RGB565 = ... # 指定 `buffer_data()` 函数填充数组的方式，适用于 TFT 屏幕
+ECC_QUART = ...
+'''25% 容错率'''
+
+ECC_HIGH = ...
+'''30% 容错率'''
+
+VERSION_MIN = ...
+'''二维码支持的最低版本：1'''
+
+VERSION_MAX = ...
+'''二维码支持的最高版本：40'''
+
+FORMAT_MONO_HLSB = ...
+'''指定 `buffer_data()` 函数填充数组的方式，适用于 OLED 屏幕'''
+
+FORMAT_RGB565 = ...
+'''指定 `buffer_data()` 函数填充数组的方式，适用于 TFT 屏幕'''
 
 
 class QRCODE(object):

@@ -17,10 +17,17 @@ class FrameBuffer(object):
 	MONO_HLSB = ...
 	MONO_HMSB = ...
 
-	RGB565 = ... # Red Green Blue (16-bit, 5+6+5) color format
-	GS2_HMSB = ... # Grayscale (2-bit) color format
-	GS4_HMSB = ... # Grayscale (4-bit) color format
-	GS8 = ... # Grayscale (8-bit) color format
+	RGB565 = ...
+	'''Red Green Blue (16-bit, 5+6+5) color format'''
+
+	GS2_HMSB = ...
+	'''Grayscale (2-bit) color format'''
+
+	GS4_HMSB = ...
+	'''Grayscale (4-bit) color format'''
+
+	GS8 = ...
+	'''Grayscale (8-bit) color format'''
 
 	def __init__(self, buffer, width: int, height: int, format: int, stride: int, /):
 		'''

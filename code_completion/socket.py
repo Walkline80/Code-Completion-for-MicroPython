@@ -18,30 +18,28 @@ AF_INET6 = ...
 SOCK_STREAM = ...
 SOCK_DGRAM = ...
 
-'''
-IP protocol numbers. Availability depends on a particular MicroPython port.
-Note that you don’t need to specify these in a call to `socket.socket()`, because `SOCK_STREAM`` socket type automatically selects `IPPROTO_TCP`, and `SOCK_DGRAM - IPPROTO_UDP`.
-Thus, the only real use of these constants is as an argument to `setsockopt()`.
-'''
+# IP protocol numbers. Availability depends on a particular MicroPython port.
+# Note that you don’t need to specify these in a call to `socket.socket()`, because `SOCK_STREAM`` socket type automatically selects `IPPROTO_TCP`, and `SOCK_DGRAM - IPPROTO_UDP`.
+# Thus, the only real use of these constants is as an argument to `setsockopt()`.
 IPPROTO_UDP = ... 
 IPPROTO_TCP = ...
 
-'''
-Socket option levels (an argument to `setsockopt()`).
-The exact inventory depends on a MicroPython port.
-'''
+# Socket option levels (an argument to `setsockopt()`).
+# The exact inventory depends on a MicroPython port.
 SOL_SOCKET = ...
 
-'''
-Socket options (an argument to `setsockopt()`).
-The exact inventory depends on a MicroPython port.
-'''
+# Socket options (an argument to `setsockopt()`).
+# The exact inventory depends on a MicroPython port.
 SO_REUSEADDR = ...
 SO_BROADCAST = ...
 SO_BINDTODEVICE = ...
 
-# Constants specific to WiPy:
-IPPROTO_SEC = ... # Special protocol value to create SSL-compatible socket.
+IPPROTO_SEC = ...
+'''
+Constants specific to WiPy
+
+Special protocol value to create SSL-compatible socket.
+'''
 
 # Functions
 def getaddrinfo(host: str, port: int, af: int = 0, type: int = 0, proto: int = 0, flags: int = 0, /) -> tuple:

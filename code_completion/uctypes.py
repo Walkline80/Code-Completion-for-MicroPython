@@ -25,22 +25,26 @@ INT64 = ...
 FLOAT32 = ...
 FLOAT64 = ...
 
-# VOID is an alias for `UINT8`, and is provided to conveniently define C’s void pointers: (`uctypes.PTR`, `uctypes.VOID`).
 VOID = ...
+'''VOID is an alias for `UINT8`, and is provided to conveniently define C’s void pointers: (`uctypes.PTR`, `uctypes.VOID`).'''
 
 # Type constants for pointers and arrays.
 # Note that there is no explicit constant for structures, it’s implicit: an aggregate type without PTR or ARRAY flags is a structure.
 PTR = ...
 ARRAY = ...
 
-# Layout type for a little-endian packed structure.
-# Packed means that every field occupies exactly as many bytes as defined in the descriptor, i.e. the alignment is 1.
 LITTLE_ENDIAN = ...
+'''
+Layout type for a little-endian packed structure.
 
-BIG_ENDIAN = ... # Layout type for a big-endian packed structure.
+Packed means that every field occupies exactly as many bytes as defined in the descriptor, i.e. the alignment is 1.
+'''
 
-# Layout type for a native structure - with data endianness and alignment conforming to the ABI of the system on which MicroPython runs.
+BIG_ENDIAN = ...
+'''Layout type for a big-endian packed structure.'''
+
 NATIVE = ...
+'''Layout type for a native structure - with data endianness and alignment conforming to the ABI of the system on which MicroPython runs.'''
 
 
 class struct(object):

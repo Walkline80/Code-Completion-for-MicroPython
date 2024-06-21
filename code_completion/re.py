@@ -12,7 +12,8 @@ Regular expression syntax supported is a subset of CPython re module (and actual
 [View Doc](https://docs.micropython.org/en/latest/library/re.html)
 '''
 # Constants
-DEBUG = ... # Flag value, display debug information about compiled expression.
+DEBUG = ...
+'''Flag value, display debug information about compiled expression.'''
 
 
 class Regex(object):

@@ -48,5 +48,8 @@ def sqrt(z):
 	'''Return the square-root of `z`.'''
 
 # Constants
-e = ... # base of the natural logarithm
-pi = ... # the ratio of a circle’s circumference to its diameter
+e = ...
+'''base of the natural logarithm'''
+
+pi = ...
+'''the ratio of a circle’s circumference to its diameter'''

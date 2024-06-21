@@ -139,5 +139,8 @@ def trunc(x) -> int:
 	'''Return an integer, being `x` rounded towards 0.'''
 
 # Constants
-e = ... # base of the natural logarithm
-pi = ... # the ratio of a circle’s circumference to its diameter
+e = ...
+'''base of the natural logarithm'''
+
+pi = ...
+'''the ratio of a circle’s circumference to its diameter'''

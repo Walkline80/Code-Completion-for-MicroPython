@@ -8,9 +8,14 @@ For more information, refer to the original CPython documentation: sys.
 [View Doc](https://docs.micropython.org/en/latest/library/sys.html)
 '''
 # Constants
-stderr = ... # Standard error stream.
-stdin = ... # Standard input stream.
-stdout = ... # Standard output stream.
+stderr = ...
+'''Standard error stream.'''
+
+stdin = ...
+'''Standard input stream.'''
+
+stdout = ...
+'''Standard output stream.'''
 
 # Functions
 def exit(retval: int = 0, /):
@@ -58,9 +63,13 @@ def settrace(tracefunc):
 	'''
 
 # Constants
-argv = ... # A mutable list of arguments the current program was started with.
-byteorder = ... # The byte order of the system ("little" or "big").
+argv = ...
+'''A mutable list of arguments the current program was started with.'''
 
+byteorder = ...
+'''The byte order of the system ("little" or "big").'''
+
+implementation = ...
 '''
 Object with information about the current Python implementation.
 
@@ -79,8 +88,8 @@ Difference to CPython:
 
 	CPython mandates more attributes for this object, but the actual useful bare minimum is implemented in MicroPython.
 '''
-implementation = ...
 
+maxsize = ...
 '''
 Maximum value which a native integer type can hold on the current platform, or maximum value representable by MicroPython integer type, if it’s smaller than platform max value (that is the case for MicroPython ports without long int support).
 
@@ -88,20 +97,35 @@ This attribute is useful for detecting "bitness" of a platform (32-bit vs 64-bit
 
 It’s recommended to not compare this attribute to some value directly, but instead count number of bits in it:
 '''
-maxsize = ...
 
-modules = ... # Dictionary of loaded modules. On some ports, it may not include builtin modules.
-path = ... # A mutable list of directories to search for imported modules.
-platform = ... # The platform that MicroPython is running on.
+modules = ...
+'''
+Dictionary of loaded modules.
 
+On some ports, it may not include builtin modules.
+'''
+
+path = ...
+'''A mutable list of directories to search for imported modules.'''
+
+platform = ...
+'''The platform that MicroPython is running on.'''
+
+ps1 = ...
 '''
 Mutable attributes holding strings, which are used for the REPL prompt.
 
-The defaults give the standard Python prompt of >>> and ....
+The defaults give the standard Python prompt of >>>
 '''
-ps1 = ... 
-ps2 = ...
 
+ps2 = ...
+'''
+Mutable attributes holding strings, which are used for the REPL prompt.
+
+The defaults give the standard Python prompt of ....
+'''
+
+tracebacklimit = ...
 '''
 A mutable attribute holding an integer value which is the maximum number of traceback entries to store in an exception.
 
@@ -109,10 +133,11 @@ Set to 0 to disable adding tracebacks. Defaults to 1000.
 
 Note: this is not available on all ports.
 '''
-tracebacklimit = ...
 
-version = ... # Python language version that this implementation conforms to, as a string.
+version = ...
+'''Python language version that this implementation conforms to, as a string.'''
 
+version_info = ...
 '''
 Python language version that this implementation conforms to, as a tuple of ints.
 
@@ -120,4 +145,3 @@ Difference to CPython:
 
 	Only the first three version numbers (major, minor, micro) are supported and they can be referenced only by index, not by name.
 '''
-version_info = ...
