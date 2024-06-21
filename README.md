@@ -11,6 +11,8 @@
 * 选择 `MicroPython: Enable Code Completion` 可以启用代码补全功能
 * 选择 `MicroPython: Disable Code Completion` 可以禁用代码补全功能
 
+> 如果代码补全功能失效或提示内容不是最新的，可能是因为插件版本升级所致，重新启用代码补全功能即可修复。
+
 ## 类库列表
 
 类库列表包含了 MicroPython 官方提供的类库，以及从互联网获取的一些有用的类库。
