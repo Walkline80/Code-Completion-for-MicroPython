@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [Version 0.0.9]: 2024-06-21
+
+### Updated
+
+为类库文件中的常量增加注释。
+
 
 ## [Version 0.0.8]: 2024-06-20
 
@@ -22,7 +28,7 @@
 
 ### Updated
 
-优化调整代码补全类库文件内容格式
+优化调整代码补全类库文件内容格式。
 
 
 ## [Version 0.0.7]: 2024-06-19
@@ -150,10 +156,11 @@
 
 ### Removed
 
-* 删除无用文件
+删除无用文件。
 
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.8...HEAD
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.9...HEAD
+[Version 0.0.9]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.8...v0.0.9
 [Version 0.0.8]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.7...v0.0.8
 [Version 0.0.7]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.6...v0.0.7
 [Version 0.0.6]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.5...v0.0.6
