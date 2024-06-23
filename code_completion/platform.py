@@ -1,7 +1,8 @@
 '''
 access to underlying platform’s identifying data
 
-This module implements a subset of the corresponding CPython module, as described below.
+This module implements a subset of the corresponding CPython module, as described
+below.
 
 For more information, refer to the original CPython documentation: platform.
 
@@ -16,7 +17,8 @@ def platform():
 	'''
 	Returns a string identifying the underlying platform.
 
-	This string is composed of several substrings in the following order, delimited by dashes (-):
+	This string is composed of several substrings in the following order,
+	delimited by dashes (-):
 
 	- the name of the platform system (e.g. Unix, Windows or MicroPython)
 	- the MicroPython version
@@ -32,7 +34,8 @@ def python_compiler():
 
 def libc_ver():
 	'''
-	Returns a tuple of strings (lib, version), where lib is the name of the libc that MicroPython is linked to,
+	Returns a tuple of strings (lib, version), where lib is the name of the libc
+	that MicroPython is linked to,
 
 	and version the corresponding version of this libc.
 	'''

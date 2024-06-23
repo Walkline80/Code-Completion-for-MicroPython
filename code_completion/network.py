@@ -8,6 +8,9 @@ The following concrete classes implement the AbstractNIC interface and provide a
 [View Doc network](https://docs.micropython.org/en/latest/library/network.html)
 [View Doc network.WLAN](https://docs.micropython.org/en/latest/library/network.WLAN.html)
 '''
+from typing import overload
+
+
 # Constants
 STA_IF = ...
 AP_IF = ...
@@ -58,35 +61,67 @@ STAT_ASSOC_FAIL = ...
 STAT_HANDSHAKE_TIMEOUT = ...
 
 # Network functions
-def country(code: str | None):
+@overload
+def country() -> str:
 	'''
-	Get or set the two-letter ISO 3166-1 Alpha-2 country code to be used for radio compliance.
+	Get the two-letter ISO 3166-1 Alpha-2 country code to be used for radio
+	compliance.
 
-	If the `code` parameter is provided, the country will be set to this value.
-
-	If the function is called without parameters, it returns the current country.
+	This function returns the current country.
 
 	The default code "XX" represents the "worldwide" region.
 	'''
 
-def hostname(name: str | None):
+@overload
+def country(code: str):
 	'''
-	Get or set the hostname that will identify this device on the network. It will be used by all interfaces.
+	Set the two-letter ISO 3166-1 Alpha-2 country code to be used for radio
+	compliance.
+
+	The country will be set to this `code`.
+
+	The default code "XX" represents the "worldwide" region.
+	'''
+
+@overload
+def hostname():
+	'''
+	Get the hostname that will identify this device on the network.
+
+	It will be used by all interfaces.
 
 	This hostname is used for:
 
 	- Sending to the DHCP server in the client request. (If using DHCP)
 	- Broadcasting via mDNS. (If enabled)
 
-	If the `name` parameter is provided, the hostname will be set to this value.
+	This function returns the current hostname.
 
-	If the function is called without parameters, it returns the current hostname.
+	The default hostname is typically the name of the board.
+	'''
+
+@overload
+def hostname(name: str):
+	'''
+	Set the hostname that will identify this device on the network.
+
+	It will be used by all interfaces.
+
+	This hostname is used for:
+
+	- Sending to the DHCP server in the client request. (If using DHCP)
+	- Broadcasting via mDNS. (If enabled)
+
+	The hostname will be set to this `name`.
 
 	A change in hostname is typically only applied during connection.
 
-	For DHCP this is because the hostname is part of the DHCP client request, and the implementation of mDNS in most ports only initialises the hostname once during connection.
+	For DHCP this is because the hostname is part of the DHCP client request,
+	and the implementation of mDNS in most ports only initialises the hostname
+	once during connection.
 
-	For this reason, you must set the hostname before activating/connecting your network interfaces.
+	For this reason, you must set the hostname before activating/connecting your
+	network interfaces.
 
 	The length of the hostname is limited to 32 characters.
 
@@ -97,13 +132,28 @@ def hostname(name: str | None):
 	The default hostname is typically the name of the board.
 	'''
 
-def phy_mode(mode: int | None):
+@overload
+def phy_mode():
 	'''
-	Get or set the PHY mode.
+	Get the PHY mode.
 
-	If the `mode` parameter is provided, the PHY mode will be set to this value.
+	This function returns the current PHY mode.
 
-	If the function is called without parameters, it returns the current PHY mode.
+	The possible modes are defined as constants:
+
+	- `MODE_11B` – IEEE 802.11b,
+	- `MODE_11G` – IEEE 802.11g,
+	- `MODE_11N` – IEEE 802.11n.
+
+	Availability: ESP8266.
+	'''
+
+@overload
+def phy_mode(mode: int):
+	'''
+	Set the PHY mode.
+
+	The PHY mode will be set to this `mode`.
 
 	The possible modes are defined as constants:
 
@@ -135,16 +185,19 @@ class WLAN(object):
 	SEC_WAPI = ...
 	SEC_OWE = ...
 
-	'''
-	Allowed values for the `WLAN.config(pm=...)` network interface parameter:
-
-	- PM_PERFORMANCE: enable WiFi power management to balance power savings and WiFi performance
-	- PM_POWERSAVE: enable WiFi power management with additional power savings and reduced WiFi performance
-	- PM_NONE: disable wifi power management
-	'''
 	PM_PERFORMANCE = ...
+	'''
+	enable WiFi power management to balance power savings and WiFi performance
+	'''
+
 	PM_POWERSAVE = ...
+	'''
+	enable WiFi power management with additional power savings and reduced WiFi
+	performance
+	'''
+
 	PM_NONE = ...
+	'''disable wifi power management'''
 
 	def __init__(self, interface_id: int):
 		'''
@@ -152,7 +205,8 @@ class WLAN(object):
 
 		Supported interfaces are:
 
-		- `network.STA_IF` (station aka client, connects to upstream WiFi access points)
+		- `network.STA_IF` (station aka client, connects to upstream WiFi access
+		points)
 		- `network.AP_IF` (access point, allows other WiFi clients to connect).
 
 		Availability of the methods below depends on interface type.
@@ -161,11 +215,15 @@ class WLAN(object):
 		'''
 
 	# Methods
-	def active(self, is_active: bool | None):
-		'''
-		Activate ("up") or deactivate ("down") network interface, if boolean argument is passed.
+	@overload
+	def active(self):
+		'''Query current state if no argument is provided.'''
 
-		Otherwise, query current state if no argument is provided.
+	@overload
+	def active(self, is_active: bool):
+		'''
+		Activate ("up") or deactivate ("down") network interface, if boolean
+		argument is passed.
 
 		Most other methods require active interface.
 		'''
@@ -174,7 +232,8 @@ class WLAN(object):
 		'''
 		Connect to the specified wireless network, using the specified key.
 
-		If `bssid` is given then the connection will be restricted to the access-point with that MAC address
+		If `bssid` is given then the connection will be restricted to the
+		access-point with that MAC address
 
 		the `ssid` must also be specified in this case.
 		'''
@@ -186,7 +245,8 @@ class WLAN(object):
 		'''
 		Scan for the available wireless networks.
 
-		Hidden networks – where the SSID is not broadcast – will also be scanned if the WLAN interface allows it.
+		Hidden networks – where the SSID is not broadcast – will also be scanned
+		if the WLAN interface allows it.
 
 		Scanning is only possible on STA interface.
 
@@ -194,7 +254,8 @@ class WLAN(object):
 
 			(ssid, bssid, channel, RSSI, security, hidden)
 
-		`bssid` is hardware address of an access point, in binary form, returned as bytes object.
+		`bssid` is hardware address of an access point, in binary form, returned
+		as bytes object.
 
 		You can use `binascii.hexlify()` to convert it to ASCII form.
 
@@ -212,11 +273,25 @@ class WLAN(object):
 		- 1 – hidden
 		'''
 
-	def status(self, param: str | None) -> int:
+	@overload
+	def status(self) -> int:
+		'''
+		Returns value describes the network link status.
+
+		The possible statuses are defined as constants:
+
+		- STAT_IDLE – no connection and no activity,
+		- STAT_CONNECTING – connecting in progress,
+		- STAT_WRONG_PASSWORD – failed due to incorrect password,
+		- STAT_NO_AP_FOUND – failed because no access point replied,
+		- STAT_CONNECT_FAIL – failed due to other problems,
+		- STAT_GOT_IP – connection successful.
+		'''
+
+	@overload
+	def status(self, param: str) -> int:
 		'''
 		Return the current status of the wireless connection.
-
-		When called with no argument the return value describes the network link status.
 
 		The possible statuses are defined as constants:
 
@@ -227,61 +302,80 @@ class WLAN(object):
 		- STAT_CONNECT_FAIL – failed due to other problems,
 		- STAT_GOT_IP – connection successful.
 
-		When called with one argument param should be a string naming the status parameter to retrieve.
+		Should be a string naming the status parameter to retrieve.
 
 		Supported parameters in WiFI STA mode are: `'rssi'`.
 		'''
 
 	def isconnected(self):
 		'''
-		In case of STA mode, returns True if connected to a WiFi access point and has a valid IP address.
+		In case of STA mode, returns True if connected to a WiFi access point
+		and has a valid IP address.
 
 		In AP mode returns True when a station is connected.
 
 		Returns False otherwise.
 		'''
 
-	def ifconfig(if_info: tuple | None):
+	@overload
+	def ifconfig(self):
 		'''
-		Get/set IP-level network interface parameters: IP address, subnet mask, gateway and DNS server.
+		Get IP-level network interface parameters: IP address, subnet mask,
+		gateway and DNS server.
 
-		When called with no arguments, this method returns a 4-tuple with the above information.
+		This method returns a 4-tuple with the above information.
+		'''
+
+	@overload
+	def ifconfig(self, if_info: tuple):
+		'''
+		Set IP-level network interface parameters: IP address, subnet mask,
+		gateway and DNS server.
 
 		To set the above values, pass a 4-tuple with the required information.
 
 		For example:
 
-			nic.ifconfig(('192.168.0.4', '255.255.255.0', '192.168.0.1', '8.8.8.8'))
+			`nic.ifconfig(('192.168.0.4', '255.255.255.0', '192.168.0.1', '8.8.8.8'))`
 		'''
 
-	def ipconfig(ip_info: tuple | None):
+	@overload
+	def ipconfig(self):
 		'''
-		Get/set IP-level network interface parameters: IP address, subnet mask, gateway and DNS server.
+		Get IP-level network interface parameters: IP address, subnet mask,
+		gateway and DNS server.
 
-		When called with no arguments, this method returns a 4-tuple with the above information.
+		This method returns a 4-tuple with the above information.
+		'''
+
+	@overload
+	def ipconfig(self, ip_info: tuple):
+		'''
+		Set IP-level network interface parameters: IP address, subnet mask,
+		gateway and DNS server.
 
 		To set the above values, pass a 4-tuple with the required information.
 
 		For example:
 
-			nic.ifconfig(('192.168.0.4', '255.255.255.0', '192.168.0.1', '8.8.8.8'))
+			`nic.ifconfig(('192.168.0.4', '255.255.255.0', '192.168.0.1', '8.8.8.8'))`
 		'''
 
-	def config(param: str):
+	@overload
+	def config(self, param: str):
 		'''
-		config(param=value, ...)
+		Get general network interface parameters.
 
-		Get or set general network interface parameters.
-
-		These methods allow to work with additional parameters beyond standard IP configuration (as dealt with by `WLAN.ifconfig()`).
+		These methods allow to work with additional parameters beyond standard IP
+		configuration (as dealt with by `WLAN.ifconfig()`).
 
 		These include network-specific and hardware-specific parameters.
 
-		For setting parameters, keyword argument syntax should be used, multiple parameters can be set at once.
+		Parameters name should be quoted as a string, and only one parameter can
+		be queries at time.
 
-		For querying, parameters name should be quoted as a string, and only one parameter can be queries at time.
-
-		Following are commonly supported parameters (availability of a specific parameter depends on network technology type, driver, and MicroPython port).
+		Following are commonly supported parameters (availability of a specific
+		parameter depends on network technology type, driver, and MicroPython port).
 
 		- mac - MAC address (bytes)
 		- ssid - WiFi access point name (string)
@@ -289,11 +383,46 @@ class WLAN(object):
 		- hidden - Whether SSID is hidden (boolean)
 		- security - Security protocol supported (see module constants)
 		- key - Access key (string)
-		- hostname - The hostname that will be sent to DHCP (STA interfaces) and mDNS (if supported, both STA and AP).
+		- hostname - The hostname that will be sent to DHCP (STA interfaces) and
+		mDNS (if supported, both STA and AP).
 
 			(Deprecated, use `network.hostname()` instead)
 
-		- reconnects - Number of reconnect attempts to make (integer, 0=none, -1=unlimited)
+		- reconnects - Number of reconnect attempts to make (integer, 0=none,
+		-1=unlimited)
+		- txpower - Maximum transmit power in dBm (integer or float)
+		- pm - WiFi Power Management setting (see module constants)
+		'''
+
+	@overload
+	def config(self, **params):
+		'''
+		Set general network interface parameters.
+
+		These methods allow to work with additional parameters beyond standard IP
+		configuration (as dealt with by `WLAN.ifconfig()`).
+
+		These include network-specific and hardware-specific parameters.
+
+		Keyword argument syntax should be used, multiple parameters can be set
+		at once.
+
+		Following are commonly supported parameters (availability of a specific
+		parameter depends on network technology type, driver, and MicroPython port).
+
+		- mac - MAC address (bytes)
+		- ssid - WiFi access point name (string)
+		- channel - WiFi channel (integer)
+		- hidden - Whether SSID is hidden (boolean)
+		- security - Security protocol supported (see module constants)
+		- key - Access key (string)
+		- hostname - The hostname that will be sent to DHCP (STA interfaces) and
+		mDNS (if supported, both STA and AP).
+
+			(Deprecated, use `network.hostname()` instead)
+
+		- reconnects - Number of reconnect attempts to make (integer, 0=none,
+		-1=unlimited)
 		- txpower - Maximum transmit power in dBm (integer or float)
 		- pm - WiFi Power Management setting (see module constants)
 		'''

@@ -1,7 +1,8 @@
 '''
 asynchronous I/O scheduler
 
-This module implements a subset of the corresponding CPython module, as described below.
+This module implements a subset of the corresponding CPython module, as described
+below.
 
 For more information, refer to the original CPython documentation: asyncio
 
@@ -11,7 +12,8 @@ class Task(object):
 	'''
 	This object wraps a coroutine into a running task.
 
-	Tasks can be waited on using await task, which will wait for the task to complete and return the return value of the task.
+	Tasks can be waited on using await task, which will wait for the task to
+	complete and return the return value of the task.
 
 	Tasks should not be created directly, rather use `create_task` to create them.
 	'''
@@ -60,13 +62,16 @@ def sleep_ms(t: int):
 # Additional functions
 def wait_for(awaitable, timeout: int | float):
 	'''
-	Wait for the `awaitable` to complete, but cancel it if it takes longer than `timeout` seconds.
+	Wait for the `awaitable` to complete, but cancel it if it takes longer than
+	`timeout` seconds.
 
 	If `awaitable` is not a task then a task will be created from it.
 
-	If a timeout occurs, it cancels the task and raises `asyncio.TimeoutError`: this should be trapped by the caller.
+	If a timeout occurs, it cancels the task and raises `asyncio.TimeoutError`: this
+	should be trapped by the caller.
 
-	The task receives `asyncio.CancelledError` which may be ignored or trapped using `try...except` or `try...finally` to run cleanup code.
+	The task receives `asyncio.CancelledError` which may be ignored or trapped
+	using `try...except` or `try...finally` to run cleanup code.
 
 	Returns the return value of awaitable.
 
@@ -111,7 +116,8 @@ class Event(object):
 
 			This must be called from within a task.
 
-			It is not safe to call this from an IRQ, scheduler callback, or other thread.
+			It is not safe to call this from an IRQ, scheduler callback, or other
+			thread.
 
 			See `ThreadSafeFlag`.
 		'''
@@ -131,7 +137,8 @@ class Event(object):
 
 class ThreadSafeFlag(object):
 	'''
-	Create a new flag which can be used to synchronise a task with code running outside the asyncio loop, such as other threads, IRQs, or scheduler callbacks.
+	Create a new flag which can be used to synchronise a task with code running
+	outside the asyncio loop, such as other threads, IRQs, or scheduler callbacks.
 
 	Flags start in the cleared state.
 	'''
@@ -146,7 +153,8 @@ class ThreadSafeFlag(object):
 		'''
 		Clear the flag.
 
-		This may be used to ensure that a possibly previously-set flag is clear before waiting for it.
+		This may be used to ensure that a possibly previously-set flag is clear
+		before waiting for it.
 		'''
 
 	def wait(self):
@@ -176,7 +184,8 @@ class Lock(object):
 
 	def acquire(self):
 		'''
-		Wait for the lock to be in the unlocked state and then lock it in an atomic way.
+		Wait for the lock to be in the unlocked state and then lock it in an
+		atomic way.
 
 		Only one task can acquire the lock at any one time.
 
@@ -215,15 +224,18 @@ def open_connection(host, port, ssl=None):
 	'''
 	Open a TCP connection to the given `host` and `port`.
 
-	The `host` address will be resolved using `socket.getaddrinfo`, which is currently a blocking call.
+	The `host` address will be resolved using `socket.getaddrinfo`, which is
+	currently a blocking call.
 
-	If `ssl` is a `ssl.SSLContext` object, this context is used to create the transport;
+	If `ssl` is a `ssl.SSLContext` object, this context is used to create the
+	transport;
 
 	If `ssl` is True, a default context is used.
 
 	Returns a pair of streams: a reader and a writer stream.
 
-	Will raise a socket-specific `OSError` if the host could not be resolved or if the connection could not be made.
+	Will raise a socket-specific `OSError` if the host could not be resolved or
+	if the connection could not be made.
 
 	This is a coroutine.
 	'''
@@ -232,9 +244,11 @@ def start_server(callback, host, port, backlog=5, ssl=None) -> Server:
 	'''
 	Start a TCP server on the given `host` and `port`.
 
-	The `callback` will be called with incoming, accepted connections, and be passed 2 arguments: reader and writer streams for the connection.
+	The `callback` will be called with incoming, accepted connections, and be
+	passed 2 arguments: reader and writer streams for the connection.
 
-	If `ssl` is a `ssl.SSLContext` object, this context is used to create the transport.
+	If `ssl` is a `ssl.SSLContext` object, this context is used to create the
+	transport.
 
 	Returns a `Server` object.
 
@@ -246,7 +260,8 @@ class Stream(object):
 	'''
 	This represents a TCP stream connection.
 
-	To minimise code this class implements both a reader and a writer, and both `StreamReader` and `StreamWriter` alias to this class.
+	To minimise code this class implements both a reader and a writer, and both
+	`StreamReader` and `StreamWriter` alias to this class.
 	'''
 	def get_extra_info(self, v):
 		'''
@@ -271,7 +286,8 @@ class Stream(object):
 
 		If `n` is not provided or -1 then read all bytes until EOF.
 
-		The returned value will be an empty bytes object if EOF is encountered before any bytes are read.
+		The returned value will be an empty bytes object if EOF is encountered
+		before any bytes are read.
 
 		This is a coroutine.
 		'''
@@ -307,7 +323,8 @@ class Stream(object):
 
 		The data is only flushed when `Stream.drain` is called.
 
-		It is recommended to call `Stream.drain` immediately after calling this function.
+		It is recommended to call `Stream.drain` immediately after calling this
+		function.
 		'''
 
 	def drain(self):
@@ -346,7 +363,8 @@ class Loop(object):
 
 	def set_exception_handler(self, handler):
 		'''
-		Set the exception handler to call when a Task raises an exception that is not caught.
+		Set the exception handler to call when a Task raises an exception that
+		is not caught.
 
 		The `handler` should accept two arguments: `(loop, context)`.
 		'''
@@ -365,7 +383,8 @@ class Loop(object):
 		'''
 		Call the current exception handler.
 
-		The argument `context` is passed through and is a dictionary containing keys: `'message'`, `'exception'`, `'future'`.
+		The argument `context` is passed through and is a dictionary containing
+		keys: `'message'`, `'exception'`, `'future'`.
 		'''
 
 
@@ -378,6 +397,6 @@ def new_event_loop():
 
 	Note:
 
-		since MicroPython only has a single event loop this function just resets the loop’s state, it does not create a new one.
+		since MicroPython only has a single event loop this function just resets
+		the loop’s state, it does not create a new one.
 	'''
-

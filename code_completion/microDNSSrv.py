@@ -1,5 +1,6 @@
 '''
-MicroDNSSrv is a micro DNS server for MicroPython to simply respond to A queries (principally used on ESP32 and Pycom modules)
+MicroDNSSrv is a micro DNS server for MicroPython to simply respond to A queries
+(principally used on ESP32 and Pycom modules)
 
 Simple but effective :
 

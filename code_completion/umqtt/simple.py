@@ -28,7 +28,8 @@ class MQTTClient:
 
 		Returns True if this connection uses persisten session stored on a server.
 
-		This will be always False if `clean_session=True` argument is used (default).
+		This will be always False if `clean_session=True` argument is used
+		(default).
 		'''
 
 	def disconnect(self):
@@ -47,7 +48,8 @@ class MQTTClient:
 		'''
 		Wait for a server message.
 
-		A subscription message will be delivered to a callback set with `set_callback()`, any other messages will be processed internally.
+		A subscription message will be delivered to a callback set with
+		`set_callback()`, any other messages will be processed internally.
 		'''
 
 	def check_msg(self):

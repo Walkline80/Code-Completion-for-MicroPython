@@ -5,25 +5,22 @@ a NTP client.
 '''
 host = ...
 '''
-host can be configured at runtime by doing:
+host can be configured at runtime by doing::
 
-```python
 ntptime.host = 'myhost.org'
-```
 '''
 
 timeout = ...
 '''
-timeout can be configured at runtime by doing:
+timeout can be configured at runtime by doing::
 
-```python
 ntptime.timeout = 2
-```
 '''
 
 def time(): ...
 
 def settime():
 	'''
-	There's currently no timezone support in MicroPython, and the RTC is set in UTC time.
+	There's currently no timezone support in MicroPython, and the RTC is set in
+	UTC time.
 	'''

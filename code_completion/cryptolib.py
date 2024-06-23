@@ -5,13 +5,15 @@ cryptographic ciphers
 '''
 class aes(object):
 	@classmethod
-	def __init__(cls, key, mode, IV=None):
+	def __init__(cls, key, mode: int, IV=None):
 		'''
 		Initialize cipher object, suitable for encryption/decryption.
 
-		Note: after initialization, cipher object can be use only either for encryption or decryption.
+		Note: after initialization, cipher object can be use only either for
+		encryption or decryption.
 
-		Running `decrypt()` operation after `encrypt()` or vice versa is not supported.
+		Running `decrypt()` operation after `encrypt()` or vice versa is not
+		supported.
 
 		Parameters are:
 
@@ -31,11 +33,13 @@ class aes(object):
 		'''
 		Encrypt `in_buf`.
 
-		If no `out_buf` is given result is returned as a newly allocated bytes object.
+		If no `out_buf` is given result is returned as a newly allocated bytes
+		object.
 
 		Otherwise, result is written into mutable buffer `out_buf`.
 
-		`in_buf` and `out_buf` can also refer to the same mutable buffer, in which case data is encrypted in-place.
+		`in_buf` and `out_buf` can also refer to the same mutable buffer, in
+		which case data is encrypted in-place.
 		'''
 
 	def decrypt(self, in_buf, out_buf=None):

@@ -7,7 +7,9 @@ Note:
 
 	This module is only included by default on the ESP8266, ESP32 and RP2 ports.
 
-	On STM32 / Pyboard and others, you can either install the neopixel package using mip, or you can download the module directly from micropython-lib and copy it to the filesystem.
+	On STM32 / Pyboard and others, you can either install the neopixel package
+	using mip, or you can download the module directly from micropython-lib and
+	copy it to the filesystem.
 
 [View Doc](https://docs.micropython.org/en/latest/library/neopixel.html)
 '''
@@ -15,7 +17,8 @@ class NeoPixel(object):
 	'''
 	This class stores pixel data for a WS2812 LED strip connected to a pin.
 
-	The application should set pixel data and then call `NeoPixel.write()` when it is ready to update the strip.
+	The application should set pixel data and then call `NeoPixel.write()` when
+	it is ready to update the strip.
 	'''
 	def __init__(self, pin, n: int, *, bpp: int = 3, timing: int = 1):
 		'''
@@ -29,7 +32,10 @@ class NeoPixel(object):
 
 	# Pixel access methods
 	def fill(self, pixel: tuple):
-		'''Sets the value of all pixels to the specified `pixel` value (i.e. an RGB/RGBW tuple).'''
+		'''
+		Sets the value of all pixels to the specified `pixel` value (i.e. an
+		RGB/RGBW tuple).
+		'''
 
 	def __len__(self):
 		'''Returns the number of LEDs in the strip.'''

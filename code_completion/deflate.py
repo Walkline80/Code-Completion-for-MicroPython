@@ -1,15 +1,19 @@
 '''
 deflate compression & decompression
 
-This module allows compression and decompression of binary data with the DEFLATE algorithm (commonly used in the zlib library and gzip archiver).
+This module allows compression and decompression of binary data with the DEFLATE
+algorithm (commonly used in the zlib library and gzip archiver).
 
 Availability:
 
 - Added in MicroPython v1.21.
 
-- Decompression: Enabled via the `MICROPY_PY_DEFLATE` build option, on by default on ports with the "extra features" level or higher (which is most boards).
+- Decompression: Enabled via the `MICROPY_PY_DEFLATE` build option, on by default
+on ports with the "extra features" level or higher (which is most boards).
 
-- Compression: Enabled via the `MICROPY_PY_DEFLATE_COMPRESS` build option, on by default on ports with the "full features" level or higher (generally this means you need to build your own firmware to enable this).
+- Compression: Enabled via the `MICROPY_PY_DEFLATE_COMPRESS` build option, on by
+default on ports with the "full features" level or higher (generally this means
+you need to build your own firmware to enable this).
 
 [View Doc](https://docs.micropython.org/en/latest/library/deflate.html)
 '''
@@ -24,37 +28,52 @@ GZIP = ...
 class DeflateIO(object):
 	def __init__(self, stream, format: int = AUTO, wbits: int = 0, close: bool = False, /):
 		'''
-		This class can be used to wrap a stream which is any `stream-like` object such as a file, socket, or stream (including `io.BytesIO`).
+		This class can be used to wrap a stream which is any `stream-like` object
+		such as a file, socket, or stream (including `io.BytesIO`).
 
-		It is itself a stream and implements the standard read/readinto/write/close methods.
+		It is itself a stream and implements the standard read/readinto/write/
+		close methods.
 
 		- The `stream` must be a blocking stream.
 
 			Non-blocking streams are currently not supported.
 
-		- The `format` can be set to any of the defined constants, and defaults to `AUTO` which for decompressing will auto-detect gzip or zlib streams, and for compressing it will generate a raw stream.
+		- The `format` can be set to any of the defined constants, and defaults
+		to `AUTO` which for decompressing will auto-detect gzip or zlib streams,
+		and for compressing it will generate a raw stream.
 
-		- The `wbits` parameter sets the base-2 logarithm of the DEFLATE dictionary window size.
+		- The `wbits` parameter sets the base-2 logarithm of the DEFLATE
+		dictionary window size.
 
-			So for example, setting wbits to `10` sets the window size to 1024 bytes.
+			So for example, setting wbits to `10` sets the window size to 1024
+			bytes.
 
-			Valid values are `5` to `15` inclusive (corresponding to window sizes of 32 to 32k bytes).
+			Valid values are `5` to `15` inclusive (corresponding to window sizes
+			of 32 to 32k bytes).
 
-		If `wbits` is set to `0` (the default), then for compression a window size of 256 bytes will be used (as if wbits was set to 8).
+		If `wbits` is set to `0` (the default), then for compression a window
+		size of 256 bytes will be used (as if wbits was set to 8).
 
 		For decompression, it depends on the format:
 
 		- `RAW` will use 256 bytes (corresponding to `wbits` set to 8).
 
-		- `ZLIB` (or `AUTO` with zlib detected) will use the value from the zlib header.
+		- `ZLIB` (or `AUTO` with zlib detected) will use the value from the zlib
+		header.
 
-		- `GZIP` (or `AUTO` with gzip detected) will use 32 kilobytes (corresponding to `wbits` set to 15).
+		- `GZIP` (or `AUTO` with gzip detected) will use 32 kilobytes (corresponding
+		to `wbits` set to 15).
 
-		If `close` is set to True then the underlying stream will be closed automatically when the `deflate.DeflateIO` stream is closed.
+		If `close` is set to True then the underlying stream will be closed
+		automatically when the `deflate.DeflateIO` stream is closed.
 
-		This is useful if you want to return a `deflate.DeflateIO` stream that wraps another stream and not have the caller need to know about managing the underlying stream.
+		This is useful if you want to return a `deflate.DeflateIO` stream that
+		wraps another stream and not have the caller need to know about managing
+		the underlying stream.
 
-		If compression is enabled, a given `deflate.DeflateIO` instance supports both reading and writing.
+		If compression is enabled, a given `deflate.DeflateIO` instance supports
+		both reading and writing.
 
-		For example, a bidirectional stream like a socket can be wrapped, which allows for compression/decompression in both directions.
+		For example, a bidirectional stream like a socket can be wrapped, which
+		allows for compression/decompression in both directions.
 		'''

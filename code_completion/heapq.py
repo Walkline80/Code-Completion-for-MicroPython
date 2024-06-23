@@ -1,13 +1,15 @@
 '''
 heap queue algorithm
 
-This module implements a subset of the corresponding CPython module, as described below.
+This module implements a subset of the corresponding CPython module, as described
+below.
 
 For more information, refer to the original CPython documentation: heapq.
 
 This module implements the min heap queue algorithm.
 
-A heap queue is essentially a list that has its elements stored in such a way that the first item of the list is always the smallest.
+A heap queue is essentially a list that has its elements stored in such a way
+that the first item of the list is always the smallest.
 
 [View Doc](https://docs.micropython.org/en/latest/library/heapq.html)
 '''

@@ -58,7 +58,8 @@ class QRCODE(object):
 	def raw_data(self):
 		'''获取二维码点阵元组数据'''
 
-	def buffer_data(self, byetarray, format: int, scales: int = 1, color: int = 1, bg_color: int = 0):
+	def buffer_data(self, byetarray, format: int, scales: int = 1, color: int = 1,
+		bg_color: int = 0):
 		'''
 		将二维码数据以指定格式填充到数组，其中：
 

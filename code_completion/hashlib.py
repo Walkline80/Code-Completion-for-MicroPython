@@ -1,7 +1,8 @@
 '''
 hashing algorithms
 
-This module implements a subset of the corresponding CPython module, as described below.
+This module implements a subset of the corresponding CPython module, as described
+below.
 
 For more information, refer to the original CPython documentation: hashlib.
 
@@ -15,15 +16,19 @@ Among the algorithms which may be implemented:
 
 	It is suitable for cryptographically-secure purposes.
 
-	Included in the MicroPython core and any board is recommended to provide this, unless it has particular code size constraints.
+	Included in the MicroPython core and any board is recommended to provide this,
+	unless it has particular code size constraints.
 
 - SHA1 - A previous generation algorithm.
 
-	Not recommended for new usages, but SHA1 is a part of number of Internet standards and existing applications, so boards targeting network connectivity and interoperability will try to provide this.
+	Not recommended for new usages, but SHA1 is a part of number of Internet
+	standards and existing applications, so boards targeting network connectivity
+	and interoperability will try to provide this.
 
 - MD5 - A legacy algorithm, not considered cryptographically secure.
 
-	Only selected boards, targeting interoperability with legacy applications, will offer this.
+	Only selected boards, targeting interoperability with legacy applications,
+	will offer this.
 
 [View Doc](https://docs.micropython.org/en/latest/library/hashlib.html)
 '''
@@ -39,7 +44,8 @@ class sha256(object):
 		'''
 		Return hash for all data passed through hash, as a bytes object.
 
-		After this method is called, more data cannot be fed into the hash any longer.
+		After this method is called, more data cannot be fed into the hash any
+		longer.
 		'''
 
 	def hexdigest(self):
@@ -62,7 +68,8 @@ class sha1(object):
 		'''
 		Return hash for all data passed through hash, as a bytes object.
 
-		After this method is called, more data cannot be fed into the hash any longer.
+		After this method is called, more data cannot be fed into the hash any
+		longer.
 		'''
 
 	def hexdigest(self):
@@ -85,7 +92,8 @@ class md5(object):
 		'''
 		Return hash for all data passed through hash, as a bytes object.
 
-		After this method is called, more data cannot be fed into the hash any longer.
+		After this method is called, more data cannot be fed into the hash any
+		longer.
 		'''
 
 	def hexdigest(self):

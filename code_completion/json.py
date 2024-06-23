@@ -1,7 +1,8 @@
 '''
 JSON encoding and decoding
 
-This module implements a subset of the corresponding CPython module, as described below.
+This module implements a subset of the corresponding CPython module, as described
+below.
 
 For more information, refer to the original CPython documentation: json.
 
@@ -18,7 +19,8 @@ def dump(obj, stream, separators=None):
 
 	The default is (', ', ': ').
 
-	To get the most compact JSON representation, you should specify (',', ':') to eliminate whitespace.
+	To get the most compact JSON representation, you should specify (',', ':')
+	to eliminate whitespace.
 	'''
 
 def dumps(obj, separators=None):
@@ -30,7 +32,8 @@ def dumps(obj, separators=None):
 
 def load(stream):
 	'''
-	Parse the given `stream`, interpreting it as a JSON string and deserialising the data to a Python object.
+	Parse the given `stream`, interpreting it as a JSON string and deserialising
+	the data to a Python object.
 
 	The resulting object is returned.
 

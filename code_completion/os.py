@@ -1,18 +1,24 @@
 '''
 basic "operating system" services
 
-This module implements a subset of the corresponding CPython module, as described below.
+This module implements a subset of the corresponding CPython module, as
+described below.
 
 For more information, refer to the original CPython documentation: os.
 
-The os module contains functions for filesystem access and mounting, terminal redirection and duplication, and the uname and urandom functions.
+The os module contains functions for filesystem access and mounting, terminal
+redirection and duplication, and the uname and urandom functions.
 
 [View Doc](https://docs.micropython.org/en/latest/library/os.html)
 '''
+from typing import overload
+
+
 # General functions
 def uname() -> tuple:
 	'''
-	Return a tuple (possibly a named tuple) containing information about the underlying machine and/or its operating system.
+	Return a tuple (possibly a named tuple) containing information about the
+	underlying machine and/or its operating system.
 
 	The tuple has five fields in the following order, each of them being a string:
 
@@ -37,33 +43,67 @@ def chdir(path: str):
 def getcwd() -> str:
 	'''Get the current directory.'''
 
-def ilistdir(dir: str | None):
+@overload
+def ilistdir():
 	'''
-	This function returns an iterator which then yields tuples corresponding to the entries in the directory that it is listing.
+	This function returns an iterator which then yields tuples corresponding to
+	the entries in the directory that it is listing.
 
-	With no argument it lists the current directory, otherwise it lists the directory given by dir.
+	It lists the current directory.
 
-	The tuples have the form (name, type, inode[, size]):
+	The tuples have the form `(name, type, inode[, size])`:
 
-	- `name` is a string (or bytes if dir is a bytes object) and is the name of the entry;
+	- `name` is a string (or bytes if dir is a bytes object) and is the name of
+	the entry;
 
-	- `type` is an integer that specifies the type of the entry, with 0x4000 for directories and 0x8000 for regular files;
+	- `type` is an integer that specifies the type of the entry, with 0x4000 for
+	directories and 0x8000 for regular files;
 
-	- `inode` is an integer corresponding to the inode of the file, and may be 0 for filesystems that don’t have such a notion.
+	- `inode` is an integer corresponding to the inode of the file, and may be 0
+	for filesystems that don’t have such a notion.
 
 	- Some platforms may return a 4-tuple that includes the entry’s size.
 
-		For file entries, size is an integer representing the size of the file or -1 if unknown.
+		For file entries, size is an integer representing the size of the file
+		or -1 if unknown.
 
 		Its meaning is currently undefined for directory entries.
 	'''
 
-def listdir(dir: str | None):
+@overload
+def ilistdir(dir: str):
 	'''
-	With no argument, list the current directory.
+	This function returns an iterator which then yields tuples corresponding to
+	the entries in the directory that it is listing.
 
-	Otherwise list the given directory.
+	It lists the directory given by `dir`.
+
+	The tuples have the form `(name, type, inode[, size])`:
+
+	- `name` is a string (or bytes if dir is a bytes object) and is the name of
+	the entry;
+
+	- `type` is an integer that specifies the type of the entry, with 0x4000 for
+	directories and 0x8000 for regular files;
+
+	- `inode` is an integer corresponding to the inode of the file, and may be 0
+	for filesystems that don’t have such a notion.
+
+	- Some platforms may return a 4-tuple that includes the entry’s size.
+
+		For file entries, size is an integer representing the size of the file
+		or -1 if unknown.
+
+		Its meaning is currently undefined for directory entries.
 	'''
+
+@overload
+def listdir():
+	'''List the current directory.'''
+
+@overload
+def listdir(dir: str):
+	'''List the given directory.'''
 
 def mkdir(path: str):
 	'''Create a new directory.'''
@@ -80,7 +120,7 @@ def rename(old_path: str, new_path: str):
 def stat(path: str):
 	'''Get the status of a file or directory.'''
 
-def statvfs(path: str):
+def statvfs(path: str) -> tuple:
 	'''
 	Get the status of a filesystem.
 
@@ -97,7 +137,9 @@ def statvfs(path: str):
 	- `f_flag` – mount flags
 	- `f_namemax` – maximum filename length
 
-	Parameters related to inodes: `f_files`, `f_ffree`, `f_avail` and the `f_flags` parameter may return 0 as they can be unavailable in a port-specific implementation.
+	Parameters related to inodes: `f_files`, `f_ffree`, `f_avail` and the
+	`f_flags` parameter may return 0 as they can be unavailable in a
+	port-specific implementation.
 	'''
 
 def sync():
@@ -106,26 +148,35 @@ def sync():
 # Terminal redirection and duplication
 def dupterm(stream_object, index: int = 0, /):
 	'''
-	Duplicate or switch the MicroPython terminal (the REPL) on the given stream-like object.
+	Duplicate or switch the MicroPython terminal (the REPL) on the given
+	stream-like object.
 
-	The `stream_object` argument must be a native stream object, or derive from `io.IOBase` and implement the `readinto()` and `write()` methods.
+	The `stream_object` argument must be a native stream object, or derive from
+	`io.IOBase` and implement the `readinto()` and `write()` methods.
 
-	The stream should be in non-blocking mode and `readinto()` should return None if there is no data available for reading.
+	The stream should be in non-blocking mode and `readinto()` should return None
+	if there is no data available for reading.
 
-	After calling this function all terminal output is repeated on this stream, and any input that is available on the stream is passed on to the terminal input.
+	After calling this function all terminal output is repeated on this stream,
+	and any input that is available on the stream is passed on to the terminal
+	input.
 
-	The `index` parameter should be a non-negative integer and specifies which duplication slot is set.
+	The `index` parameter should be a non-negative integer and specifies which
+	duplication slot is set.
 
-	A given port may implement more than one slot (slot 0 will always be available) and in that case terminal input and output is duplicated on all the slots that are set.
+	A given port may implement more than one slot (slot 0 will always be available)
+	and in that case terminal input and output is duplicated on all the slots that are set.
 
-	If None is passed as the `stream_object` then duplication is cancelled on the slot given by `index`.
+	If None is passed as the `stream_object` then duplication is cancelled on the
+	slot given by `index`.
 
 	The function returns the previous stream-like object in the given slot.
 	'''
 
 # Filesystem mounting
 # The following functions and classes have been moved to the vfs module.
-# They are provided in this module only for backwards compatibility and will be removed in version 2 of MicroPython.
+# They are provided in this module only for backwards compatibility and will be
+# removed in version 2 of MicroPython.
 def mount(fsobj, mount_point, *, readonly):
 	'''See `vfs.mount`.'''
 

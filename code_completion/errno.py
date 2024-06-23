@@ -12,18 +12,14 @@ A particular inventory of codes depends on MicroPython port.
 [View Doc](https://docs.micropython.org/en/latest/library/errno.html)
 '''
 # Constants
-# Dictionary mapping numeric error codes to strings with symbolic error code.
 errorcode = ...
+'''Dictionary mapping numeric error codes to strings with symbolic error code.'''
 
-'''
-Error codes, based on ANSI C/POSIX standard.
-
-All error codes start with "E".
-
-As mentioned above, inventory of the codes depends on MicroPython port.
-
-Errors are usually accessible as `exc.errno` where `exc` is an instance of `OSError`. 
-'''
+# Error codes, based on ANSI C/POSIX standard.
+# All error codes start with "E".
+# As mentioned above, inventory of the codes depends on MicroPython port.
+# Errors are usually accessible as `exc.errno` where `exc` is an instance of
+# `OSError`. 
 EPERM = ...
 ENOENT = ...
 EIO = ...

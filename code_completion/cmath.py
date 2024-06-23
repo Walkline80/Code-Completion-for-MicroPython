@@ -1,16 +1,26 @@
 '''
 mathematical functions for complex numbers
 
-This module implements a subset of the corresponding CPython module, as described below.
+This module implements a subset of the corresponding CPython module, as described
+below.
 
 For more information, refer to the original CPython documentation: cmath.
 
-The cmath module provides some basic mathematical functions for working with complex numbers.
+The cmath module provides some basic mathematical functions for working with
+complex numbers.
 
-Availability: not available on WiPy and ESP8266. Floating point support required for this module.
+Availability: not available on WiPy and ESP8266. Floating point support required
+for this module.
 
 [View Doc](https://docs.micropython.org/en/latest/library/cmath.html)
 '''
+# Constants
+e = ...
+'''base of the natural logarithm'''
+
+pi = ...
+'''the ratio of a circle’s circumference to its diameter'''
+
 # Functions
 def cos(z):
 	'''Return the cosine of `z`.'''
@@ -46,10 +56,3 @@ def sin(z):
 
 def sqrt(z):
 	'''Return the square-root of `z`.'''
-
-# Constants
-e = ...
-'''base of the natural logarithm'''
-
-pi = ...
-'''the ratio of a circle’s circumference to its diameter'''

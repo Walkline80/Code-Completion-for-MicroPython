@@ -5,10 +5,10 @@
 '''
 # Constants
 # 配网协议类型
-TYPE_ESPTOUCH = ... # EspTouch
-TYPE_AIRKISS = ... # AirKiss
-TYPE_ESPTOUCH_AIRKISS = ... # EspTouch + AirKiss
-TYPE_ESPTOUCH_V2 = ... # EspTouch V2
+TYPE_ESPTOUCH = ...
+TYPE_AIRKISS = ...
+TYPE_ESPTOUCH_AIRKISS = ...
+TYPE_ESPTOUCH_V2 = ...
 
 def start() -> None:
 	'''开启配网功能'''

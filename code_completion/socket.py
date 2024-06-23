@@ -9,6 +9,9 @@ This module provides access to the BSD socket interface.
 
 [View Doc](https://docs.micropython.org/en/latest/library/socket.html)
 '''
+from typing import overload
+
+
 # Constants
 # Address family types. Availability depends on a particular MicroPython port.
 AF_INET = ...
@@ -19,7 +22,9 @@ SOCK_STREAM = ...
 SOCK_DGRAM = ...
 
 # IP protocol numbers. Availability depends on a particular MicroPython port.
-# Note that you don’t need to specify these in a call to `socket.socket()`, because `SOCK_STREAM`` socket type automatically selects `IPPROTO_TCP`, and `SOCK_DGRAM - IPPROTO_UDP`.
+# Note that you don’t need to specify these in a call to `socket.socket()`,
+# because `SOCK_STREAM`` socket type automatically selects `IPPROTO_TCP`, and
+# `SOCK_DGRAM - IPPROTO_UDP`.
 # Thus, the only real use of these constants is as an argument to `setsockopt()`.
 IPPROTO_UDP = ... 
 IPPROTO_TCP = ...
@@ -42,45 +47,51 @@ Special protocol value to create SSL-compatible socket.
 '''
 
 # Functions
-def getaddrinfo(host: str, port: int, af: int = 0, type: int = 0, proto: int = 0, flags: int = 0, /) -> tuple:
+def getaddrinfo(host: str, port: int, af: int = 0, type: int = 0, proto: int = 0,
+	flags: int = 0, /) -> tuple:
 	'''
-	Translate the host/port argument into a sequence of 5-tuples that contain all the necessary arguments for creating a socket connected to that service.
+	Translate the host/port argument into a sequence of 5-tuples that contain all
+	the necessary arguments for creating a socket connected to that service.
 
-	Arguments `af`, `type`, and `proto` (which have the same meaning as for the `socket()` function) can be used to filter which kind of addresses are returned.
+	Arguments `af`, `type`, and `proto` (which have the same meaning as for the
+	`socket()` function) can be used to filter which kind of addresses are
+	returned.
 
-	If a parameter is not specified or zero, all combinations of addresses can be returned (requiring filtering on the user side).
+	If a parameter is not specified or zero, all combinations of addresses can
+	be returned (requiring filtering on the user side).
 
 	The resulting list of 5-tuples has the following structure:
 
-		(family, type, proto, canonname, sockaddr)
+		`(family, type, proto, canonname, sockaddr)`
 	'''
 
 def inet_ntop(af: int, bin_addr: bytes):
 	'''
-	Convert a binary network address `bin_addr` of the given address family `af` to a textual representation:
+	Convert a binary network address `bin_addr` of the given address family `af`
+	to a textual representation::
 
-	    ```bash
 	    >>> socket.inet_ntop(socket.AF_INET, b"\\x7f\\x00\\x00\\x01")
-	    '127.0.0.1'
-	    ```
+	    >>> '127.0.0.1'
 	'''
 
 def inet_pton(af: int, txt_addr: str):
 	'''
-	Convert a textual network address `txt_addr` of the given address family `af` to a binary representation:
+	Convert a textual network address `txt_addr` of the given address family `af`
+	to a binary representation::
 
-	    ```bash
 	    >>> socket.inet_pton(socket.AF_INET, "1.2.3.4")
-	    b'\\x01\\x02\\x03\\x04'
-	    '''
+	    >>> b'\\x01\\x02\\x03\\x04'
+	'''
 
 
 class socket(object):
 	def __init__(self, af: int = AF_INET, type: int = SOCK_STREAM, proto: int = IPPROTO_TCP, /):
 		'''
-		Create a new socket using the given address family, socket type and protocol number.
+		Create a new socket using the given address family, socket type and
+		protocol number.
 
-		Note that specifying `proto` in most cases is not required (and not recommended, as some MicroPython ports may omit `IPPROTO_*` constants).
+		Note that specifying `proto` in most cases is not required (and not
+		recommended, as some MicroPython ports may omit `IPPROTO_*` constants).
 
 		Instead, `type` argument will select needed protocol automatically.
 		'''
@@ -94,7 +105,9 @@ class socket(object):
 
 		The remote end will receive EOF indication if supported by protocol.
 
-		Sockets are automatically closed when they are garbage-collected, but it is recommended to `close()` them explicitly as soon you finished working with them.
+		Sockets are automatically closed when they are garbage-collected, but it
+		is recommended to `close()` them explicitly as soon you finished working
+		with them.
 		'''
 
 	def bind(self, address):
@@ -104,13 +117,22 @@ class socket(object):
 		The socket must not already be bound.
 		'''
 
-	def listen(self, backlog: int | None):
+	@overload
+	def listen(self):
 		'''
 		Enable a server to accept connections.
 
-		If `backlog` is specified, it must be at least 0 (if it’s lower, it will be set to 0); and specifies the number of unaccepted connections that the system will allow before refusing new connections.
+		A default reasonable value is chosen.
+		'''
 
-		If not specified, a default reasonable value is chosen.
+	@overload
+	def listen(self, backlog: int):
+		'''
+		Enable a server to accept connections.
+
+		`backlog` must be at least 0 (if it’s lower, it will be set to 0); and
+		specifies the number of unaccepted connections that the system will allow
+		before refusing new connections.
 		'''
 
 	def accept(self) -> tuple:
@@ -119,7 +141,9 @@ class socket(object):
 
 		The socket must be bound to an address and listening for connections.
 
-		The return value is a pair (conn, address) where conn is a new socket object usable to send and receive data on the connection, and address is the address bound to the socket on the other end of the connection.
+		The return value is a pair (conn, address) where conn is a new socket
+		object usable to send and receive data on the connection, and address
+		is the address bound to the socket on the other end of the connection.
 		'''
 
 	def connect(self, address):
@@ -131,7 +155,8 @@ class socket(object):
 
 		The socket must be connected to a remote socket.
 
-		Returns number of bytes sent, which may be smaller than the length of data (“short write”).
+		Returns number of bytes sent, which may be smaller than the length of
+		data ("short write").
 		'''
 
 	def sendall(self, bytes) -> int:
@@ -140,11 +165,14 @@ class socket(object):
 
 		The socket must be connected to a remote socket.
 
-		Unlike `send()`, this method will try to send all of data, by sending data chunk by chunk consecutively.
+		Unlike `send()`, this method will try to send all of data, by sending
+		data chunk by chunk consecutively.
 
 		The behaviour of this method on non-blocking sockets is undefined.
 
-		Due to this, on MicroPython, it’s recommended to use `write()` method instead, which has the same "no short writes" policy for blocking sockets, and will return number of bytes sent on non-blocking sockets.
+		Due to this, on MicroPython, it’s recommended to use `write()` method
+		instead, which has the same "no short writes" policy for blocking sockets,
+		and will return number of bytes sent on non-blocking sockets.
 		'''
 
 	def recv(self, bufsize: int) -> bytes:
@@ -153,41 +181,48 @@ class socket(object):
 
 		The return value is a bytes object representing the data received.
 
-		The maximum amount of data to be received at once is specified by `bufsize`.
+		The maximum amount of data to be received at once is specified by
+		`bufsize`.
 		'''
 
 	def sendto(self, bytes, address):
 		'''
 		Send data to the socket.
 
-		The socket should not be connected to a remote socket, since the destination socket is specified by `address`.
+		The socket should not be connected to a remote socket, since the
+		destination socket is specified by `address`.
 		'''
 
 	def recvfrom(self, bufsize) -> tuple:
 		'''
 		Receive data from the socket.
 
-		The return value is a pair `(bytes, address)` where `bytes` is a bytes object representing the data received and `address` is the address of the socket sending the data.
+		The return value is a pair `(bytes, address)` where `bytes` is a bytes
+		object representing the data received and `address` is the address of
+		the socket sending the data.
 		'''
 
 	def setsockopt(self, level, optname, value):
 		'''
 		Set the value of the given socket option.
 
-		The needed symbolic constants are defined in the socket module (SO_* etc.).
+		The needed symbolic constants are defined in the socket module
+		(SO_* etc.).
 
-		The `value` can be an integer or a bytes-like object representing a buffer.
+		The `value` can be an integer or a bytes-like object representing a
+		buffer.
 		'''
 
 	def settimeout(self, value: float | None):
 		'''
-		Note: Not every port supports this method, see below.
-
 		Set a timeout on blocking socket operations.
 
-		The `value` argument can be a nonnegative floating point number expressing seconds, or None.
+		The `value` argument can be a nonnegative floating point number expressing
+		seconds, or None.
 
-		- If a non-zero value is given, subsequent socket operations will raise an `OSError` exception if the timeout period value has elapsed before the operation has completed.
+		- If a non-zero value is given, subsequent socket operations will raise
+		an `OSError` exception if the timeout period value has elapsed before
+		the operation has completed.
 
 		- If zero is given, the socket is put in non-blocking mode.
 
@@ -198,7 +233,8 @@ class socket(object):
 
 	def setblocking(self, flag: bool):
 		'''
-		Set blocking or non-blocking mode of the socket: if `flag` is False, the socket is set to non-blocking, else to blocking mode.
+		Set blocking or non-blocking mode of the socket: if `flag` is False, the
+		socket is set to non-blocking, else to blocking mode.
 
 		This method is a shorthand for certain `settimeout()` calls:
 
@@ -219,31 +255,60 @@ class socket(object):
 
 		Difference to CPython:
 
-			As MicroPython doesn’t support buffered streams, values of `buffering` parameter is ignored and treated as if it was 0 (unbuffered).
+			As MicroPython doesn’t support buffered streams, values of `buffering`
+			parameter is ignored and treated as if it was 0 (unbuffered).
 
-			Closing the file object returned by `makefile()` WILL close the original socket as well.
+			Closing the file object returned by `makefile()` WILL close the
+			original socket as well.
 		'''
 
-	def read(self, size: int | None) -> bytes:
+	@overload
+	def read(self) -> bytes:
 		'''
 		Read up to `size` bytes from the socket.
 
 		Return a bytes object.
 
-		If `size` is not given, it reads all data available from the socket until EOF; as such the method will not return until the socket is closed.
+		It reads all data available from the socket until EOF; as such the method
+		will not return until the socket is closed.
 
 		This function tries to read as much data as requested (no "short reads").
 
-		This may be not possible with non-blocking socket though, and then less data will be returned.
+		This may be not possible with non-blocking socket though, and then less
+		data will be returned.
 		'''
 
-	def readinto(self, buf, nbytes: int | None) -> int:
+	@overload
+	def read(self, size: int) -> bytes:
+		'''
+		Read up to `size` bytes from the socket.
+
+		Return a bytes object.
+
+		This function tries to read as much data as requested (no "short reads").
+
+		This may be not possible with non-blocking socket though, and then less
+		data will be returned.
+		'''
+
+	@overload
+	def readinto(self, buf) -> int:
 		'''
 		Read bytes into the `buf`.
 
-		If `nbytes` is specified then read at most that many bytes.
+		Read at most `len(buf)` bytes.
 
-		Otherwise, read at most `len(buf)` bytes.
+		Just as `read()`, this method follows "no short reads" policy.
+
+		Return value: number of bytes read and stored into buf.
+		'''
+
+	@overload
+	def readinto(self, buf, nbytes: int) -> int:
+		'''
+		Read bytes into the `buf`.
+
+		Read at most that many bytes.
 
 		Just as `read()`, this method follows "no short reads" policy.
 
@@ -263,7 +328,8 @@ class socket(object):
 
 		This function will try to write all data to a socket (no "short writes").
 
-		This may be not possible with a non-blocking socket though, and returned value will be less than the length of `buf`.
+		This may be not possible with a non-blocking socket though, and returned
+		value will be less than the length of `buf`.
 
 		Return value: number of bytes written.
 		'''

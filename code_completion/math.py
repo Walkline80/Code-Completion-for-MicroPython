@@ -1,15 +1,18 @@
 '''
 mathematical functions
 
-This module implements a subset of the corresponding CPython module, as described below.
+This module implements a subset of the corresponding CPython module, as described
+below.
 
 For more information, refer to the original CPython documentation: math.
 
-The math module provides some basic mathematical functions for working with floating-point numbers.
+The math module provides some basic mathematical functions for working with
+floating-point numbers.
 
 Note: On the pyboard, floating-point numbers have 32-bit precision.
 
-Availability: Not available on WiPy. Floating point support required for this module.
+Availability: Not available on WiPy. Floating point support required for this
+module.
 
 [View Doc](https://docs.micropython.org/en/latest/library/math.html)
 '''
@@ -77,7 +80,8 @@ def frexp(x):
 
 	The returned value is the tuple (m, e) such that x == m * 2**e exactly.
 
-	If x == 0 then the function returns (0.0, 0), otherwise the relation 0.5 <= abs(m) < 1 holds.
+	If x == 0 then the function returns (0.0, 0), otherwise the relation 0.5 <=
+	abs(m) < 1 holds.
 	'''
 
 def gamma(x):

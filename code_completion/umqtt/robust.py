@@ -1,7 +1,8 @@
 '''
 Lightweight MQTT client for MicroPython ("robust" version).
 
-umqtt.robust is built on top of umqtt.simple and adds auto-reconnect facilities for some of networking errors.
+umqtt.robust is built on top of umqtt.simple and adds auto-reconnect facilities
+for some of networking errors.
 
 [View Doc](https://github.com/micropython/micropython-lib/blob/master/micropython/umqtt.robust/README.rst)
 '''
@@ -28,7 +29,8 @@ class MQTTClient(simple.MQTTClient):
 		'''
 		Wait for a server message.
 
-		A subscription message will be delivered to a callback set with `set_callback()`, any other messages will be processed internally.
+		A subscription message will be delivered to a callback set with
+		`set_callback()`, any other messages will be processed internally.
 		'''
 
 	def check_msg(self, attempts=2):

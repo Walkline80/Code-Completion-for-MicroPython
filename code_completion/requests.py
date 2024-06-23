@@ -3,13 +3,15 @@ requests
 
 This module provides a lightweight version of the Python requests library.
 
-It includes support for all HTTP verbs, https, json decoding of responses, redirects, basic authentication.
+It includes support for all HTTP verbs, https, json decoding of responses,
+redirects, basic authentication.
 
 Limitations:
 
 - Certificate validation is not currently supported.
 
-- A dictionary passed as post data will not do automatic JSON or multipart-form encoding of post data (this can be done manually).
+- A dictionary passed as post data will not do automatic JSON or multipart-form
+encoding of post data (this can be done manually).
 
 - Compressed requests/responses are not currently supported.
 
@@ -30,7 +32,8 @@ class Response:
 		'''
 		Releases the connection back to the pool.
 
-		Once this method has been called the underlying raw object must not be accessed again.
+		Once this method has been called the underlying raw object must not be
+		accessed again.
 		'''
 
 	@property
@@ -52,7 +55,8 @@ def request(method: str, url: str, data=None, json=None, headers=None,
 
 	Parameters:
 
-	- `method` – method for the new Request object: `GET`, `HEAD`, `POST`, `PUT`, `PATCH`, or `DELETE`.
+	- `method` – method for the new Request object: `GET`, `HEAD`, `POST`, `PUT`,
+	`PATCH`, or `DELETE`.
 
 	- `url` – URL for the new Request object.
 
