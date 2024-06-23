@@ -3,6 +3,13 @@
 ## [Unreleased]
 
 
+## [Version 0.0.12]: 2024-06-23
+
+### Added
+
+增加代码补全文件多语言文档支持，并计划开始翻译中文文档。
+
+
 ## [Version 0.0.11]: 2024-06-23
 
 ### Added
@@ -175,7 +182,8 @@
 删除无用文件。
 
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.11...HEAD
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.12...HEAD
+[Version 0.0.12]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.11...v0.0.12
 [Version 0.0.11]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.10...v0.0.11
 [Version 0.0.10]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.9...v0.0.10
 [Version 0.0.9]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.8...v0.0.9
