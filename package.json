@@ -19,7 +19,7 @@
   },
   "publisher": "WalklineWang",
   "icon": "images/icon.png",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "engines": {
     "vscode": "^1.80.0"
   },
@@ -39,6 +39,11 @@
           "type": "boolean",
           "default": false,
           "description": "%micropython.codeCompletion.enabled%"
+        },
+        "micropython.multiLanguage.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "%micropython.multiLanguage.enabled%"
         }
       }
     },
@@ -51,6 +56,11 @@
       {
         "command": "extension.disable",
         "title": "%extension.disable%",
+        "category": "MicroPython"
+      },
+      {
+        "command": "extension.multiLanguage",
+        "title": "%extension.multiLanguage%",
         "category": "MicroPython"
       }
     ]

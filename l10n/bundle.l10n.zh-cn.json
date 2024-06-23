@@ -1,6 +1,14 @@
 {
 	"Update Settings Successed": "更新扩展设置成功。",
 	"Update settings failed: Configuration key {0} not found.": "更新扩展设置失败：找不到设置项 \"{0}\"。",
-	"OK": "确定",
-	"Update settings failed: {0}": "更新扩展设置失败： {0}"
+	"Update settings failed: {0}": "更新扩展设置失败：{0}",
+	"Enable multi-language documents support": "启用多语言文档支持",
+	"Disable multi-language documents support": "禁用多语言文档支持",
+	"Whether to enable multi-language documents or not.": "是否启用多语言文档支持？",
+	"Reload window now": "立即重新加载窗口",
+	"Manually reload later": "稍后手动加载窗口",
+	"Reload window now for the settings to take effect?": "立即重新加载窗口使设置生效？",
+	"Enable": "启用",
+	"Disable": "禁用",
+	"OK": "确定"
 }
