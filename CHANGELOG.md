@@ -3,6 +3,14 @@
 ## [Unreleased]
 
 
+## [Version 0.0.11]: 2024-06-23
+
+### Added
+
+* 增加多语言支持
+* 增加自动更新插件设置功能，用于在扩展自动更新后刷新插件设置
+
+
 ## [Version 0.0.10]: 2024-06-23
 
 ### Updated
@@ -167,7 +175,8 @@
 删除无用文件。
 
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.10...HEAD
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.11...HEAD
+[Version 0.0.11]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.10...v0.0.11
 [Version 0.0.10]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.9...v0.0.10
 [Version 0.0.9]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.8...v0.0.9
 [Version 0.0.8]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.7...v0.0.8
