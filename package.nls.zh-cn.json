@@ -1,0 +1,5 @@
+{
+	"extension.enable": "启用代码补全功能",
+	"extension.disable": "禁用代码补全功能",
+	"micropython.codeCompletion.enabled": "是否启用代码补全扩展。"
+}

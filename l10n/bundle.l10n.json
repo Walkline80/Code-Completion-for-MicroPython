@@ -1,0 +1,6 @@
+{
+	"Update Settings Successed": "Update Settings Successed",
+	"Update settings failed: Configuration key {0} not found.": "Update settings failed: Configuration key \"{0}\" not found.",
+	"OK": "OK",
+	"Update settings failed: {0}": "Update settings failed: {0}"
+}

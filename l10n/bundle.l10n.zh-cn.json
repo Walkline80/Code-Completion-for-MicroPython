@@ -1,0 +1,6 @@
+{
+	"Update Settings Successed": "更新扩展设置成功。",
+	"Update settings failed: Configuration key {0} not found.": "更新扩展设置失败：找不到设置项 \"{0}\"。",
+	"OK": "确定",
+	"Update settings failed: {0}": "更新扩展设置失败： {0}"
+}

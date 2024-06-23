@@ -1,0 +1,5 @@
+{
+	"extension.enable": "Enable Code Completion",
+	"extension.disable": "Disable Code Completion",
+	"micropython.codeCompletion.enabled": "Whether to enable the extension or not."
+}

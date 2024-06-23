@@ -19,25 +19,38 @@
   },
   "publisher": "WalklineWang",
   "icon": "images/icon.png",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "engines": {
     "vscode": "^1.80.0"
   },
   "categories": [
-    "Other"
+    "Programming Languages"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "l10n": "./l10n",
   "main": "./dist/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "MicroPython",
+      "properties": {
+        "micropython.codeCompletion.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "%micropython.codeCompletion.enabled%"
+        }
+      }
+    },
     "commands": [
       {
         "command": "extension.enable",
-        "title": "Enable Code Completion",
+        "title": "%extension.enable%",
         "category": "MicroPython"
       },
       {
         "command": "extension.disable",
-        "title": "Disable Code Completion",
+        "title": "%extension.disable%",
         "category": "MicroPython"
       }
     ]
@@ -59,6 +72,10 @@
     "eslint": "^8.57.0",
     "typescript": "^5.4.5",
     "@vscode/test-cli": "^0.0.9",
-    "@vscode/test-electron": "^2.4.0"
-  }
+    "@vscode/test-electron": "^2.4.0",
+    "@vscode/l10n-dev": "^0.0.18"
+  },
+	"dependencies": {
+		"@vscode/l10n": "^0.0.10"
+	}
 }
