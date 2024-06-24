@@ -7,11 +7,11 @@ ESP32 modules.
 [View Doc](https://docs.micropython.org/en/latest/library/esp32.html)
 '''
 # Constants
-HEAP_DATA = ...
-HEAP_EXEC = ...
+HEAP_DATA: int = ...
+HEAP_EXEC: int = ...
 
-WAKEUP_ALL_LOW = ...
-WAKEUP_ANY_HIGH = ...
+WAKEUP_ALL_LOW: bool = ...
+WAKEUP_ANY_HIGH: bool = ...
 
 # Functions
 def wake_on_touch(wake: bool):
@@ -94,11 +94,11 @@ class Partition(object):
 	includes methods to enable over-the-air (OTA) updates.
 	'''
 	# Constants
-	BOOT = ...
-	RUNNING = ...
+	BOOT: int = ...
+	RUNNING: int = ...
 
-	TYPE_APP = ...
-	TYPE_DATA = ...
+	TYPE_APP: int = ...
+	TYPE_DATA: int = ...
 
 	def __init__(self, id: str | int, block_size: int = 4096, /):
 		'''
@@ -110,9 +110,9 @@ class Partition(object):
 		- `block_size` specifies the byte size of an individual block.
 		'''
 
-	@classmethod
-	def find(cls, type: int = TYPE_APP, subtype: int = 0xff, label: str = None,
-		block_size: int = 4096):
+	@staticmethod
+	def find(type: int = TYPE_APP, subtype: int = 0xff, label: str = None,
+		block_size: int = 4096) -> list:
 		'''
 		Find a partition specified by type, subtype and label.
 
@@ -126,7 +126,7 @@ class Partition(object):
 		returned objects.
 	'''
 
-	def info(self):
+	def info(self) -> tuple:
 		'''
 		Returns a 6-tuple `(type, subtype, addr, size, label, encrypted)`.
 		'''
@@ -198,7 +198,7 @@ class RMT(object):
 	digital signals.
 	'''
 	# Constants
-	PULSE_MAX = ...
+	PULSE_MAX: int = ...
 
 	def __init__(self, channel: int, *, pin=None, clock_div: int = 8,
 		idle_level: bool = False, tx_carrier=None):
@@ -220,8 +220,8 @@ class RMT(object):
 		- output level to apply the carrier to (a boolean as per `idle_level`)
 		'''
 
-	@classmethod
-	def source_freq(cls):
+	@staticmethod
+	def source_freq():
 		'''
 		Returns the source clock frequency.
 

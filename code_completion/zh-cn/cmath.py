@@ -15,10 +15,10 @@ for this module.
 [View Doc](https://docs.micropython.org/en/latest/library/cmath.html)
 '''
 # Constants
-e = ...
+e: float = ...
 '''base of the natural logarithm'''
 
-pi = ...
+pi: float = ...
 '''the ratio of a circle’s circumference to its diameter'''
 
 # Functions
@@ -43,7 +43,7 @@ def log10(z):
 	'''
 
 def phase(z):
-	'''Returns the phase of the number `z`, in the range (-pi, +pi].'''
+	'''Returns the phase of the number `z`, in the range `(-pi, +pi)`.'''
 
 def polar(z):
 	'''Returns, as a tuple, the polar form of `z`.'''

@@ -14,8 +14,12 @@ is a subset of POSIX extended regular expressions).
 [View Doc](https://docs.micropython.org/en/latest/library/re.html)
 '''
 # Constants
-DEBUG = ...
-'''Flag value, display debug information about compiled expression.'''
+DEBUG: bool = ...
+'''
+Flag value, display debug information about compiled expression.
+
+Availability depends on MicroPython port.
+'''
 
 
 class Regex(object):

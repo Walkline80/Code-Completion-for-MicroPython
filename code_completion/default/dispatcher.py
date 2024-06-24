@@ -5,75 +5,55 @@ MicroPython 定时器调度管理器，可以使用一个定时器管理多个�
 '''
 class Worker(object):
 	'''定时器任务'''
-	def __init__(self, work: function, period: int, *params):
-		...
+	def __init__(self, work: function, period: int, *params): ...
 
 	@property
-	def counter(self):
-		...
+	def counter(self): ...
 	
 	@counter.setter
-	def counter(self, count):
-		...
+	def counter(self, count): ...
 
 	@property
-	def period(self):
-		...
+	def period(self): ...
 
-	def do_work(self):
-		...
+	def do_work(self): ...
 
 
 class Dispatcher(object):
 	'''定时器任务调度器'''
-	__DEFAULT_PERIOD = ...
+	__DEFAULT_PERIOD: int = ...
 
-	def __init__(self, adjusting_rate: int = 1, timer_id: int = 0):
-		...
+	def __init__(self, adjusting_rate: int = 1, timer_id: int = 0): ...
 
-	def deinit(self):
-		...
+	def deinit(self): ...
 
-	def __worker_callback(self, _):
-		...
+	def __worker_callback(self, _): ...
 
 	def add_work(self, work: function, period: int, *params) -> bool:
 		'''
-		添加一个调度任务
-
-		参数：
+		添加一个调度任务，参数如下：
 		- work：任务函数
 		- period：任务执行间隔，单位 毫秒
 		- params：任务函数参数列表
 		'''
-		...
 
 	def has_work(self, work: function) -> bool:
 		'''
-		判断任务是否在队列中
-
-		参数：
+		判断任务是否在队列中，参数如下：
 		- work：任务函数
 		'''
-		...
 
 	def del_work(self, work: function = None):
 		'''
-		删除指定或最后添加的任务
-
-		参数：
+		删除指定或最后添加的任务，参数如下：
 		- work：任务函数，默认值 None
 		'''
-		...
 
 	def del_works(self):
 		'''删除所有任务'''
-		...
 
 	def pause(self):
 		'''暂停/开启 所有任务'''
-		...
 	
 	def is_paused(self):
 		'''判断所有任务是否正在运行'''
-		...

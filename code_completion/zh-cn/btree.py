@@ -19,8 +19,8 @@ The module is based on the well-known BerkelyDB library, version 1.xx.
 [View Doc](https://docs.micropython.org/en/latest/library/btree.html)
 '''
 # Constants
-INCL = ...
-DESC = ...
+INCL: int = ...
+DESC: int = ...
 
 # Functions
 def open(stream, *, flags: int = 0, pagesize: int = 0, cachesize: int = 0, minkeypage: int = 0):
@@ -115,7 +115,7 @@ def keys(start_key=None, end_key=None, flags=None):
 	value of None means "until the end of database".
 
 	By default, range is inclusive of `start_key` and exclusive of `end_key`,
-	you can include `end_key` in iteration by passing `flags` of btree.INCL.
+	you can include `end_key` in iteration by passing `flags` of `btree.INCL`.
 
 	You can iterate in descending key direction by passing `flags` of `btree.DESC`.
 
@@ -138,7 +138,7 @@ def values(start_key=None, end_key=None, flags=None):
 	value of None means "until the end of database".
 
 	By default, range is inclusive of `start_key` and exclusive of `end_key`,
-	you can include `end_key` in iteration by passing `flags` of btree.INCL.
+	you can include `end_key` in iteration by passing `flags` of `btree.INCL`.
 
 	You can iterate in descending key direction by passing `flags` of `btree.DESC`.
 
@@ -161,7 +161,7 @@ def items(start_key=None, end_key=None, flags=None):
 	value of None means "until the end of database".
 
 	By default, range is inclusive of `start_key` and exclusive of `end_key`,
-	you can include `end_key` in iteration by passing `flags` of btree.INCL.
+	you can include `end_key` in iteration by passing `flags` of `btree.INCL`.
 
 	You can iterate in descending key direction by passing `flags` of `btree.DESC`.
 

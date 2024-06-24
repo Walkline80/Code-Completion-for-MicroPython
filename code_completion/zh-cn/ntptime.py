@@ -3,14 +3,14 @@ a NTP client.
 
 [View Doc](https://github.com/micropython/micropython-lib/blob/master/micropython/net/ntptime/ntptime.py)
 '''
-host = ...
+host: str = ...
 '''
 host can be configured at runtime by doing::
 
 ntptime.host = 'myhost.org'
 '''
 
-timeout = ...
+timeout: int = ...
 '''
 timeout can be configured at runtime by doing::
 
