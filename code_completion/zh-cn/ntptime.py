@@ -1,18 +1,18 @@
 '''
-a NTP client.
+NTP 客户端。
 
-[View Doc](https://github.com/micropython/micropython-lib/blob/master/micropython/net/ntptime/ntptime.py)
+[查看文档](https://github.com/micropython/micropython-lib/blob/master/micropython/net/ntptime/ntptime.py)
 '''
 host: str = ...
 '''
-host can be configured at runtime by doing::
+可以通过以下操作在运行时配置`host`::
 
 ntptime.host = 'myhost.org'
 '''
 
 timeout: int = ...
 '''
-timeout can be configured at runtime by doing::
+可以通过以下操作在运行时配置`timeout`::
 
 ntptime.timeout = 2
 '''
@@ -20,7 +20,4 @@ ntptime.timeout = 2
 def time(): ...
 
 def settime():
-	'''
-	There's currently no timezone support in MicroPython, and the RTC is set in
-	UTC time.
-	'''
+	'''目前 MicroPython 中没有时区支持，`RTC`设置为`UTC`时间。'''

@@ -1,19 +1,15 @@
 '''
-Package management
+包管理器
 
-Installing packages with mip
+支持网络的开发板包含`mip`模块，它可以从 [micropython-lib](https://docs.micropython.org/en/latest/reference/glossary.html#term-micropython-lib)
+和第三方站点（包括 GitHub、GitLab）安装软件包。
 
-Network-capable boards include the mip module, which can install packages from
-micropython-lib and from third-party sites (including GitHub, GitLab).
+`mip`（“mip 安装包”）在概念上类似于 Python 的`pip`工具，但它不使用 PyPI 索引，
+而是默认使用`micropython-lib`作为索引。
 
-mip ("mip installs packages") is similar in concept to Python’s pip tool, however
-it does not use the PyPI index, rather it uses micropython-lib as its index by
-default.
+从`micropython-lib`下载时，`mip`将自动获取已编译的`.mpy`文件。
 
-mip will automatically fetch compiled .mpy file when downloading from
-micropython-lib.
-
-[View Doc](https://docs.micropython.org/en/latest/reference/packages.html)
+[查看文档](https://docs.micropython.org/en/latest/reference/packages.html)
 '''
 def install(package: str, index=None, target: str = None,
 	version: str = None, mpy: bool = True): ...
