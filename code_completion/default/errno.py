@@ -3,7 +3,7 @@ system error codes
 
 This module implements a subset of the corresponding CPython module, as described below.
 
-For more information, refer to the original CPython documentation: errno.
+For more information, refer to the original CPython documentation: [errno](https://docs.python.org/3.5/library/errno.html#module-errno).
 
 This module provides access to symbolic error codes for `OSError` exception.
 

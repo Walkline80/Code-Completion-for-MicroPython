@@ -1,7 +1,7 @@
 '''
 NTP 客户端。
 
-[查看文档](https://github.com/micropython/micropython-lib/blob/master/micropython/net/ntptime/ntptime.py)
+[查看 ntptime 源码](https://github.com/micropython/micropython-lib/blob/master/micropython/net/ntptime/ntptime.py)
 '''
 host: str = ...
 '''

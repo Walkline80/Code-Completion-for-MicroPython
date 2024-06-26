@@ -1,8 +1,8 @@
 '''
 DS18x20温度传感器驱动程序。
 
-[查看 OneWire 文档](https://docs.micropython.org/en/latest/esp8266/tutorial/onewire.html)
-[查看 DS18X20 文档](https://github.com/micropython/micropython-lib/blob/master/micropython/drivers/sensor/ds18x20/ds18x20.py)
+[查看 OneWire Driver 文档](https://docs.micropython.org/en/latest/esp8266/tutorial/onewire.html)
+[查看 ds18x20 源码](https://github.com/micropython/micropython-lib/blob/master/micropython/drivers/sensor/ds18x20/ds18x20.py)
 '''
 import onewire
 

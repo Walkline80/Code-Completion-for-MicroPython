@@ -1,10 +1,10 @@
 '''
 pack and unpack primitive data types
 
-This module implements a subset of the corresponding CPython module, as described
+This module implements a subset of the corresponding `CPython` module, as described
 below.
 
-For more information, refer to the original CPython documentation: struct.
+For more information, refer to the original `CPython` documentation: [struct](https://docs.python.org/3.5/library/struct.html#module-struct).
 
 [View Doc](https://docs.micropython.org/en/latest/library/struct.html)
 '''
@@ -12,16 +12,16 @@ For more information, refer to the original CPython documentation: struct.
 def calcsize(fmt: str) -> int:
 	'''Return the number of bytes needed to store the given `fmt`.'''
 
-def pack(fmt: str, v1, v2) -> bytes:
+def pack(fmt: str, *values) -> bytes:
 	'''
-	Pack the values `v1`, `v2`, `…` according to the format string `fmt`.
+	Pack the `values` according to the format string `fmt`.
 
-	The return value is a bytes object encoding the values.
+	The return value is a bytes object encoding the `values`.
 	'''
 
-def pack_into(fmt: str, buffer, offset: int, v1, v2):
+def pack_into(fmt: str, buffer, offset: int, *values):
 	'''
-	Pack the values `v1`, `v2`, `…` according to the format string `fmt` into a
+	Pack the `values` according to the format string `fmt` into a
 	`buffer` starting at `offset`.
 
 	`offset` may be negative to count from the end of `buffer`.

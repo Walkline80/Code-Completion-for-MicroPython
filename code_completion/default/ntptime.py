@@ -1,7 +1,7 @@
 '''
 a NTP client.
 
-[View Doc](https://github.com/micropython/micropython-lib/blob/master/micropython/net/ntptime/ntptime.py)
+[View ntptime.py](https://github.com/micropython/micropython-lib/blob/master/micropython/net/ntptime/ntptime.py)
 '''
 host: str = ...
 '''

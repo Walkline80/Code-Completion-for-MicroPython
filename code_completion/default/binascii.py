@@ -1,10 +1,10 @@
 '''
 binary/ASCII conversions
 
-This module implements a subset of the corresponding CPython module, as described
+This module implements a subset of the corresponding `CPython` module, as described
 below.
 
-For more information, refer to the original CPython documentation: binascii.
+For more information, refer to the original `CPython` documentation: [binascii](https://docs.python.org/3.5/library/binascii.html#module-binascii).
 
 This module implements conversions between binary data and various encodings of
 it in ASCII form (in both directions).
@@ -22,9 +22,12 @@ def hexlify(data, sep=None) -> bytes:
 	between hexadecimal values.
 	'''
 
-def unhexlify(data):
+def unhexlify(data) -> bytes:
 	'''
-	Convert hexadecimal `data` to binary representation. Returns bytes string.
+	Convert hexadecimal `data` to binary representation.
+
+	Returns bytes string.
+
 	(i.e. inverse of hexlify)
 	'''
 
@@ -32,15 +35,15 @@ def a2b_base64(data) -> bytes:
 	'''
 	Decode base64-encoded `data`, ignoring invalid characters in the input.
 
-	Conforms to RFC 2045 s.6.8.
+	Conforms to [RFC 2045 s.6.8](https://tools.ietf.org/html/rfc2045#section-6.8).
 
 	Returns a bytes object.
 	'''
 
 def b2a_base64(data, *, newline=True) -> bytes:
 	'''
-	Encode binary `data` in base64 format, as in RFC 3548.
+	Encode binary `data` in base64 format, as in [RFC 3548](https://tools.ietf.org/html/rfc3548.html).
 
 	Returns the encoded data followed by a newline character if `newline` is
-	True, as a bytes object.
+	`True`, as a bytes object.
 	'''

@@ -1,8 +1,8 @@
 '''
 DS18x20 temperature sensor driver.
 
-[View OneWire Doc](https://docs.micropython.org/en/latest/esp8266/tutorial/onewire.html)
-[View DS18X20 Doc](https://github.com/micropython/micropython-lib/blob/master/micropython/drivers/sensor/ds18x20/ds18x20.py)
+[View OneWire Driver Doc](https://docs.micropython.org/en/latest/esp8266/tutorial/onewire.html)
+[View ds18x20.py](https://github.com/micropython/micropython-lib/blob/master/micropython/drivers/sensor/ds18x20/ds18x20.py)
 '''
 import onewire
 
