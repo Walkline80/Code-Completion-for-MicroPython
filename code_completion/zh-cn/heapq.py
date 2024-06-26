@@ -1,34 +1,28 @@
 '''
-heap queue algorithm
+堆队列算法
 
-This module implements a subset of the corresponding CPython module, as described
-below.
+此模块实现相应`CPython`模块的子集，如下所述。
 
-For more information, refer to the original CPython documentation: heapq.
+有关详细信息，请参阅原始`CPython`文档：[heapq](https://docs.python.org/3.5/library/heapq.html#module-heapq)。
 
-This module implements the min heap queue algorithm.
+此模块实现最小堆队列算法。
 
-A heap queue is essentially a list that has its elements stored in such a way
-that the first item of the list is always the smallest.
+堆队列本质上是一个列表，其元素的存储方式使列表的第一项始终是最小的。
 
-[View Doc](https://docs.micropython.org/en/latest/library/heapq.html)
+[查看文档](https://docs.micropython.org/en/latest/library/heapq.html)
 '''
 # Functions
 def heappush(heap, item):
-	'''Push the `item` onto the `heap`.'''
+	'''将`item`推到`heap`上。'''
 
 def heappop(heap):
 	'''
-	Pop the first item from the `heap`, and return it.
+	从`heap`中弹出第一项并返回它。
 
-	Raise `IndexError` if `heap` is empty.
+	如果`heap`为空，则引发`IndexError`。
 
-	The returned item will be the smallest item in the heap.
+	返回的项将是堆中最小的项。
 	'''
 
 def heapify(x):
-	'''
-	Convert the list `x` into a heap.
-
-	This is an in-place operation.
-	'''
+	'''将列表`x`转换为堆。这是就地操作。'''

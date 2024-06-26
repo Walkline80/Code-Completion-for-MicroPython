@@ -1,150 +1,144 @@
 '''
-mathematical functions
+数学函数
 
-This module implements a subset of the corresponding CPython module, as described
-below.
+此模块实现相应`CPython`模块的子集，如下所述。有关详细信息，请参阅原始`CPython`文档：[math](https://docs.python.org/3.5/library/math.html#module-math)。
 
-For more information, refer to the original CPython documentation: math.
+`math`模块提供了一些用于处理浮点数的基本数学函数。
 
-The math module provides some basic mathematical functions for working with
-floating-point numbers.
+注意：在 pyboard 上，浮点数具有 32 位精度。
 
-Note: On the pyboard, floating-point numbers have 32-bit precision.
+可用性：在 WiPy 上不可用。此模块需要浮点支持。
 
-Availability: Not available on WiPy. Floating point support required for this
-module.
-
-[View Doc](https://docs.micropython.org/en/latest/library/math.html)
+[查看文档](https://docs.micropython.org/en/latest/library/math.html)
 '''
+# Constants
+e: float = ...
+'''自然对数的底'''
+
+pi: float = ...
+'''圆的周长与其直径的比值'''
+
 # Functions
 def acos(x):
-	'''Return the inverse cosine of `x`.'''
+	'''返回`x`的反余弦。'''
 
 def acosh(x):
-	'''Return the inverse hyperbolic cosine of `x`.'''
+	'''返回`x`的反双曲余弦。'''
 
 def asin(x):
-	'''Return the inverse sine of `x`.'''
+	'''返回`x`的反正弦。'''
 
 def asinh(x):
-	'''Return the inverse hyperbolic sine of `x`.'''
+	'''返回`x`的反双曲正弦。'''
 
 def atan(x):
-	'''Return the inverse tangent of `x`.'''
+	'''返回`x`的反正切。'''
 
 def atan2(y, x):
-	'''Return the principal value of the inverse tangent of `y/x`.'''
+	'''返回`y/x`的反正切的主值。'''
 
 def atanh(x):
-	'''Return the inverse hyperbolic tangent of `x`.'''
+	'''返回`x`的反双曲正切。'''
 
 def ceil(x) -> int:
-	'''Return an integer, being `x` rounded towards positive infinity.'''
+	'''返回一个整数，将`x`舍入到正无穷大。'''
 
 def copysign(x, y):
-	'''Return `x` with the sign of `y`.'''
+	'''返回带有符号`y`的`x`。'''
 
 def cos(x):
-	'''Return the cosine of `x`.'''
+	'''返回`x`的余弦。'''
 
 def cosh(x):
-	'''Return the hyperbolic cosine of `x`.'''
+	'''返回`x`的双曲余弦。'''
 
 def degrees(x):
-	'''Return radians `x` converted to degrees.'''
+	'''将弧度`x`转换为度数。'''
 
 def erf(x):
-	'''Return the error function of `x`.'''
+	'''返回`x`的错误函数。'''
 
 def erfc(x):
-	'''Return the complementary error function of `x`.'''
+	'''返回`x`的互补误差函数。'''
 
 def exp(x):
-	'''Return the exponential of `x`.'''
+	'''返回`x`的指数。'''
 
 def expm1(x):
-	'''Return `exp(x) - 1`.'''
+	'''返回`exp(x) - 1`。'''
 
 def fabs(x):
-	'''Return the absolute value of `x`.'''
+	'''返回`x`的绝对值。'''
 
 def floor(x) -> int:
-	'''Return an integer, being `x` rounded towards negative infinity.'''
+	'''返回一个整数，将`x`舍入到负无穷大。'''
 
 def fmod(x, y):
-	'''Return the remainder of `x/y`.'''
+	'''返回`x/y`的余数。'''
 
-def frexp(x):
+def frexp(x) -> tuple:
 	'''
-	Decomposes a floating-point number into its mantissa and exponent.
+	将浮点数分解为其尾数和指数。
 
-	The returned value is the tuple (m, e) such that x == m * 2**e exactly.
+	返回的值是元组`(m, e)`，使得`x == m * 2**e`成立。
 
-	If x == 0 then the function returns (0.0, 0), otherwise the relation 0.5 <=
-	abs(m) < 1 holds.
+	如果`x == 0`，则函数返回`(0.0， 0)`，否则关系式`0.5 <= abs(m) < 1`成立。
 	'''
 
 def gamma(x):
-	'''Return the gamma function of `x`.'''
+	'''返回`x`的 gamma 函数。'''
 
-def isfinite(x):
-	'''Return True if `x` is finite.'''
+def isfinite(x) -> bool:
+	'''如果`x`是有限的，则返回`True`。'''
 
-def isinf(x):
-	'''Return True if `x` is infinite.'''
+def isinf(x) -> bool:
+	'''如果`x`无穷大，则返回`True`。'''
 
-def isnan(x):
-	'''Return True if `x` is not-a-number'''
+def isnan(x) -> bool:
+	'''如果`x`不是数字，则返回`True`'''
 
 def ldexp(x, exp):
-	'''Return `x * (2**exp)`.'''
+	'''返回`x * (2**exp)`。'''
 
 def lgamma(x):
-	'''Return the natural logarithm of the gamma function of `x`.'''
+	'''返回`x`的 gamma 函数的自然对数。'''
 
 def log(x):
-	'''Return the natural logarithm of `x`.'''
+	'''返回`x`的自然对数。'''
 
 def log10(x):
-	'''Return the base-10 logarithm of `x`.'''
+	'''返回`x`的以 10 为底的对数。'''
 
 def log2(x):
-	'''Return the base-2 logarithm of `x`.'''
+	'''返回`x`的以 2 为底的对数。'''
 
 def modf(x):
 	'''
-	Return a tuple of two floats, being the fractional and integral parts of `x`.
+	返回两个浮点数的元组，它们是`x`的分数和整数部分。
 
-	Both return values have the same sign as `x`.
+	两个返回值都具有与`x`相同的符号。
 	'''
 
 def pow(x, y):
-	'''Returns `x` to the power of `y`.'''
+	'''返回`x`的`y`次方。'''
 
 def radians(x):
-	'''Return degrees `x` converted to radians.'''
+	'''将度数`x`转换为弧度。'''
 
 def sin(x):
-	'''Return the sine of `x`.'''
+	'''返回`x`的正弦值。'''
 
 def sinh(x):
-	'''Return the hyperbolic sine of `x`.'''
+	'''返回`x`的双曲正弦。'''
 
 def sqrt(x):
-	'''Return the square root of `x`.'''
+	'''返回`x`的平方根。'''
 
 def tan(x):
-	'''Return the tangent of `x`.'''
+	'''返回`x`的正切。'''
 
 def tanh(x):
-	'''Return the hyperbolic tangent of `x`.'''
+	'''返回`x`的双曲正切。'''
 
 def trunc(x) -> int:
-	'''Return an integer, being `x` rounded towards 0.'''
-
-# Constants
-e: float = ...
-'''base of the natural logarithm'''
-
-pi: float = ...
-'''the ratio of a circle’s circumference to its diameter'''
+	'''返回一个整数，将`x`舍入到 0。'''
