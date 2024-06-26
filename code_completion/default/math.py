@@ -1,12 +1,12 @@
 '''
 mathematical functions
 
-This module implements a subset of the corresponding CPython module, as described
+This module implements a subset of the corresponding `CPython` module, as described
 below.
 
-For more information, refer to the original CPython documentation: math.
+For more information, refer to the original `CPython` documentation: [math](https://docs.python.org/3.5/library/math.html#module-math).
 
-The math module provides some basic mathematical functions for working with
+The `math` module provides some basic mathematical functions for working with
 floating-point numbers.
 
 Note: On the pyboard, floating-point numbers have 32-bit precision.
@@ -16,6 +16,13 @@ module.
 
 [View Doc](https://docs.micropython.org/en/latest/library/math.html)
 '''
+# Constants
+e: float = ...
+'''base of the natural logarithm'''
+
+pi: float = ...
+'''the ratio of a circle’s circumference to its diameter'''
+
 # Functions
 def acos(x):
 	'''Return the inverse cosine of `x`.'''
@@ -141,10 +148,3 @@ def tanh(x):
 
 def trunc(x) -> int:
 	'''Return an integer, being `x` rounded towards 0.'''
-
-# Constants
-e: float = ...
-'''base of the natural logarithm'''
-
-pi: float = ...
-'''the ratio of a circle’s circumference to its diameter'''

@@ -1,10 +1,10 @@
 '''
 heap queue algorithm
 
-This module implements a subset of the corresponding CPython module, as described
+This module implements a subset of the corresponding `CPython` module, as described
 below.
 
-For more information, refer to the original CPython documentation: heapq.
+For more information, refer to the original `CPython` documentation: [heapq](https://docs.python.org/3.5/library/heapq.html#module-heapq).
 
 This module implements the min heap queue algorithm.
 
