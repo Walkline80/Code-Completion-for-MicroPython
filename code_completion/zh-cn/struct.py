@@ -1,45 +1,42 @@
 '''
-pack and unpack primitive data types
+打包和解包原始数据类型
 
-This module implements a subset of the corresponding CPython module, as described
-below.
+此模块实现相应 CPython 模块的子集，如下所述。
 
-For more information, refer to the original CPython documentation: struct.
+有关详细信息，请参阅原始`CPython`文档：[struct](https://docs.python.org/3.5/library/struct.html#module-struct)。
 
-[View Doc](https://docs.micropython.org/en/latest/library/struct.html)
+[查看文档](https://docs.micropython.org/en/latest/library/struct.html)
 '''
 # Functions
 def calcsize(fmt: str) -> int:
-	'''Return the number of bytes needed to store the given `fmt`.'''
+	'''返回存储给定`fmt`所需的字节数。'''
 
-def pack(fmt: str, v1, v2) -> bytes:
+def pack(fmt: str, *values) -> bytes:
 	'''
-	Pack the values `v1`, `v2`, `…` according to the format string `fmt`.
+	根据格式字符串`fmt`打包`values`数据。
 
-	The return value is a bytes object encoding the values.
+	返回值是对`values`进行编码的字节对象。
 	'''
 
-def pack_into(fmt: str, buffer, offset: int, v1, v2):
+def pack_into(fmt: str, buffer, offset: int, *values):
 	'''
-	Pack the values `v1`, `v2`, `…` according to the format string `fmt` into a
-	`buffer` starting at `offset`.
+	根据格式字符串`fmt`将`values`打包到从`offset`开始的`buffer`中。
 
-	`offset` may be negative to count from the end of `buffer`.
+	`offset`可能是负数，从`buffer`的末尾开始计数。
 	'''
 
 def unpack(fmt: str, data) -> tuple:
 	'''
-	Unpack from the `data` according to the format string `fmt`.
+	根据格式字符串`fmt`从`data`中解包数据。
 
-	The return value is a tuple of the unpacked values.
+	返回值是包含解包数据的元组。
 	'''
 
 def unpack_from(fmt: str, data, offset: int = 0, /) -> tuple:
 	'''
-	Unpack from the `data` starting at `offset` according to the format string
-	`fmt`.
+	根据格式字符串`fmt`从`offset`开始的`data`解包。
 
-	`offset` may be negative to count from the end of data.
+	`offset`可能是负数，从`data`的末尾开始计数。
 
-	The return value is a tuple of the unpacked values.
+	返回值是包含解包数据的元组。
 	'''

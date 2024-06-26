@@ -1,19 +1,19 @@
 '''
-system error codes
+系统错误代码
 
-This module implements a subset of the corresponding CPython module, as described below.
+此模块实现相应`CPython`模块的子集，如下所述。
 
-For more information, refer to the original CPython documentation: errno.
+有关更多信息，请参阅原始`CPython`文档：[errno](https://docs.python.org/3.5/library/errno.html#module-errno)。
 
-This module provides access to symbolic error codes for `OSError` exception.
+此模块提供对`OSError`异常的符号错误代码的访问。
 
-A particular inventory of codes depends on MicroPython port.
+特定的代码清单取决于 MicroPython 端口。
 
-[View Doc](https://docs.micropython.org/en/latest/library/errno.html)
+[查看文档](https://docs.micropython.org/en/latest/library/errno.html)
 '''
 # Constants
 errorcode: dict = ...
-'''Dictionary mapping numeric error codes to strings with symbolic error code.'''
+'''将数字错误代码映射到具有符号错误代码字符串的字典。'''
 
 # Error codes, based on ANSI C/POSIX standard.
 # All error codes start with "E".

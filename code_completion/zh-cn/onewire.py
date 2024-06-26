@@ -1,9 +1,10 @@
 '''
-1-Wire driver for MicroPython
+用于 MicroPython 的 OneWire 驱动程序。
 
-The OneWire driver is implemented in software and works on all pins.
+OneWire 驱动程序在软件中实现，适用于所有引脚。
 
-[View Doc](https://docs.micropython.org/en/latest/esp32/quickref.html#onewire-driver)
+[查看 OneWire Driver 文档](https://docs.micropython.org/en/latest/esp32/quickref.html#onewire-driver)
+[查看 onewire 源码](https://github.com/micropython/micropython-lib/blob/master/micropython/drivers/bus/onewire/onewire.py)
 '''
 class OneWireError(Exception): ...
 
@@ -16,29 +17,29 @@ class OneWire(object):
 	def __init__(self, pin): ...
 
 	def reset(self, required: bool = False):
-		'''Reset the bus.'''
+		'''重置总线。'''
 
 	def readbit(self):
-		'''Read a bit.'''
+		'''读取一位数据。'''
 
 	def readbyte(self) -> bytes:
-		'''Read a byte.'''
+		'''读取一字节数据'''
 
 	def readinto(self, buf): ...
 
 	def writebit(self, value):
-		'''Write a bit on the bus.'''
+		'''在总线上写入一位数据。'''
 
 	def writebyte(self, value):
-		'''Write a byte on the bus.'''
+		'''在总线上写入一字节数据。'''
 
 	def write(self, buf):
-		'''Write bytes on the bus.'''
+		'''在总线上写入一组字节数据。'''
 
 	def select_rom(self, rom):
-		'''Select a specific device by its ROM code.'''
+		'''通过其 ROM 代码选择特定设备。'''
 
 	def scan(self) -> list:
-		'''Return a list of devices on the bus.'''
+		'''返回总线上的设备列表。'''
 
 	def crc8(self, data): ...
