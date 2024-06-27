@@ -4,7 +4,7 @@ access to underlying platform’s identifying data
 This module implements a subset of the corresponding CPython module, as described
 below.
 
-For more information, refer to the original CPython documentation: platform.
+For more information, refer to the original CPython documentation: [platform](https://docs.python.org/3.5/library/platform.html#module-platform).
 
 This module tries to retrieve as much platform-identifying data as possible.
 
@@ -13,7 +13,7 @@ It makes this information available via function APIs.
 [View Doc](https://docs.micropython.org/en/latest/library/platform.html)
 '''
 # Functions
-def platform():
+def platform() -> str:
 	'''
 	Returns a string identifying the underlying platform.
 
@@ -29,13 +29,11 @@ def platform():
 	For example, this could be "MicroPython-1.20.0-xtensa-IDFv4.2.4-with-newlib3.0.0".
 	'''
 
-def python_compiler():
+def python_compiler() -> str:
 	'''Returns a string identifying the compiler used for compiling MicroPython.'''
 
-def libc_ver():
+def libc_ver() -> tuple:
 	'''
 	Returns a tuple of strings (lib, version), where lib is the name of the libc
-	that MicroPython is linked to,
-
-	and version the corresponding version of this libc.
+	that MicroPython is linked to, and version the corresponding version of this libc.
 	'''

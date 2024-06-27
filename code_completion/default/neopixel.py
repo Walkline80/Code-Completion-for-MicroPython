@@ -12,6 +12,7 @@ Note:
 	copy it to the filesystem.
 
 [View Doc](https://docs.micropython.org/en/latest/library/neopixel.html)
+[View neopixel.py](https://github.com/micropython/micropython-lib/blob/master/micropython/drivers/led/neopixel/neopixel.py)
 '''
 class NeoPixel(object):
 	'''
@@ -37,13 +38,13 @@ class NeoPixel(object):
 		RGB/RGBW tuple).
 		'''
 
-	def __len__(self):
+	def __len__(self) -> int:
 		'''Returns the number of LEDs in the strip.'''
 
 	def __setitem__(self, index: int, val: tuple):
 		'''Set the pixel at `index` to the value, which is an RGB/RGBW tuple.'''
 
-	def __getitem__(index: int):
+	def __getitem__(index: int) -> tuple:
 		'''Returns the pixel at `index` as an RGB/RGBW tuple.'''
 
 	# Output methods

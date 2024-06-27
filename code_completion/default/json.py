@@ -1,17 +1,17 @@
 '''
 JSON encoding and decoding
 
-This module implements a subset of the corresponding CPython module, as described
+This module implements a subset of the corresponding `CPython` module, as described
 below.
 
-For more information, refer to the original CPython documentation: json.
+For more information, refer to the original `CPython` documentation: [json](https://docs.python.org/3.5/library/json.html#module-json).
 
 This modules allows to convert between Python objects and the JSON data format.
 
 [View Doc](https://docs.micropython.org/en/latest/library/json.html)
 '''
 # Functions
-def dump(obj, stream, separators=None):
+def dump(obj, stream, separators: tuple = None):
 	'''
 	Serialise `obj` to a JSON string, writing it to the given `stream`.
 
@@ -23,7 +23,7 @@ def dump(obj, stream, separators=None):
 	to eliminate whitespace.
 	'''
 
-def dumps(obj, separators=None):
+def dumps(obj, separators: tuple = None):
 	'''
 	Return `obj` represented as a JSON string.
 
@@ -42,7 +42,7 @@ def load(stream):
 	A `ValueError` is raised if the data in stream is not correctly formed.
 	'''
 
-def loads(str):
+def loads(str: str):
 	'''
 	Parse the JSON `str` and return an object.
 
