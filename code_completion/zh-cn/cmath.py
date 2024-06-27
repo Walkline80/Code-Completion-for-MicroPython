@@ -1,58 +1,55 @@
 '''
-mathematical functions for complex numbers
+复数的数学函数
 
-This module implements a subset of the corresponding CPython module, as described
-below.
+此模块实现相应`CPython`模块的子集，如下所述。
 
-For more information, refer to the original CPython documentation: cmath.
+有关更多信息，请参阅原始`CPython`文档：[cmath](https://docs.python.org/3.5/library/cmath.html#module-cmath)。
 
-The cmath module provides some basic mathematical functions for working with
-complex numbers.
+`cmath`模块提供了一些用于处理复数的基本数学函数。
 
-Availability: not available on WiPy and ESP8266. Floating point support required
-for this module.
+可用性：在 WiPy 和 ESP8266 上不可用。此模块需要浮点支持。
 
-[View Doc](https://docs.micropython.org/en/latest/library/cmath.html)
+[查看文档](https://docs.micropython.org/en/latest/library/cmath.html)
 '''
 # Constants
 e: float = ...
-'''base of the natural logarithm'''
+'''自然对数的底'''
 
 pi: float = ...
-'''the ratio of a circle’s circumference to its diameter'''
+'''圆的周长与其直径的比值'''
 
 # Functions
 def cos(z):
-	'''Return the cosine of `z`.'''
+	'''返回`z`的余弦.'''
 
 def exp(z):
-	'''Return the exponential of `z`.'''
+	'''返回`z`的指数。'''
 
 def log(z):
 	'''
-	Return the natural logarithm of `z`.
+	返回`z`的自然对数。
 
-	The branch cut is along the negative real axis.
+	分支沿负实轴切割。
 	'''
 
 def log10(z):
 	'''
-	Return the base-10 logarithm of `z`.
+	返回`z`的以 10 为底的对数。
 
-	The branch cut is along the negative real axis.
+	分支沿负实轴切割。
 	'''
 
 def phase(z):
-	'''Returns the phase of the number `z`, in the range `(-pi, +pi)`.'''
+	'''返回数字`z`的相位，范围为`(-pi, +pi)`。'''
 
-def polar(z):
-	'''Returns, as a tuple, the polar form of `z`.'''
+def polar(z) -> tuple:
+	'''以元组形式返回`z`的极化形式。'''
 
 def rect(r, phi):
-	'''Returns the complex number with modulus `r` and phase `phi`.'''
+	'''返回具有模数`r`和相位`phi`的复数。'''
 
 def sin(z):
-	'''Return the sine of `z`.'''
+	'''返回`z`的正弦。'''
 
 def sqrt(z):
-	'''Return the square-root of `z`.'''
+	'''返回`z`的平方根。'''

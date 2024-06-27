@@ -1,50 +1,47 @@
 '''
-JSON encoding and decoding
+JSON 编码和解码
 
-This module implements a subset of the corresponding CPython module, as described
-below.
+此模块实现相应`CPython`模块的子集，如下所述。
 
-For more information, refer to the original CPython documentation: json.
+有关更多信息，请参阅原始`CPython文档：[json](https://docs.python.org/3.5/library/json.html#module-json)。
 
-This modules allows to convert between Python objects and the JSON data format.
+该模块允许在 Python 对象和 JSON 数据格式之间进行转换。
 
-[View Doc](https://docs.micropython.org/en/latest/library/json.html)
+[查看文档](https://docs.micropython.org/en/latest/library/json.html)
 '''
 # Functions
-def dump(obj, stream, separators=None):
+def dump(obj, stream, separators: tuple = None):
 	'''
-	Serialise `obj` to a JSON string, writing it to the given `stream`.
+	将`obj`序列化为 JSON 字符串，将其写入给定的`stream`。
 
-	If specified, `separators` should be an (item_separator, key_separator) tuple.
+	如果指定，`separators`应为`(item_separator, key_separator)`元组。
 
-	The default is (', ', ': ').
+	默认值为`(', ', ': ')`。
 
-	To get the most compact JSON representation, you should specify (',', ':')
-	to eliminate whitespace.
+	若要获得最紧凑的 JSON 表示形式，应指定`(',', ':')以消除空格。
 	'''
 
-def dumps(obj, separators=None):
+def dumps(obj, separators: tuple = None) -> str:
 	'''
-	Return `obj` represented as a JSON string.
+	返回表示为 JSON 字符串的`obj`。
 
-	The arguments have the same meaning as in dump.
+	这些参数的含义与`dump`的含义相同。
 	'''
 
 def load(stream):
 	'''
-	Parse the given `stream`, interpreting it as a JSON string and deserialising
-	the data to a Python object.
+	请将给定的`stream`解析为 JSON 字符串，并将数据反序列化为 Python 对象。
 
-	The resulting object is returned.
+	返回生成的对象。
 
-	Parsing continues until end-of-file is encountered.
+	解析将继续，直到遇到文件结尾。
 
-	A `ValueError` is raised if the data in stream is not correctly formed.
+	如果`stream`中的数据格式不正确，将引发`ValueError`。
 	'''
 
-def loads(str):
+def loads(str: str):
 	'''
-	Parse the JSON `str` and return an object.
+	解析 JSON 字符串`str`并返回一个对象。
 
-	Raises `ValueError` if the string is not correctly formed.
+	如果字符串格式不正确，将引发`ValueError`。
 	'''

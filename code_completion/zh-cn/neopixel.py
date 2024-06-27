@@ -1,51 +1,50 @@
 '''
-control of WS2812 / NeoPixel LEDs
+控制 WS2812 / NeoPixel LED
 
-This module provides a driver for WS2818 / NeoPixel LEDs.
+该模块提供用于 WS2818 / NeoPixel LED 的驱动器。
 
-Note:
+注意：
 
-	This module is only included by default on the ESP8266, ESP32 and RP2 ports.
+	默认情况下，此模块仅包含在 ESP8266、ESP32 和 RP2 端口上。
 
-	On STM32 / Pyboard and others, you can either install the neopixel package
-	using mip, or you can download the module directly from micropython-lib and
-	copy it to the filesystem.
+	在 STM32 / Pyboard 等平台上，您可以使用`mip`安装`neopixel`包，也可以直接从`micropython-lib`下载该模块并将其复制到文件系统中。
 
-[View Doc](https://docs.micropython.org/en/latest/library/neopixel.html)
+[查看文档](https://docs.micropython.org/en/latest/library/neopixel.html)
+[查看 neopixel 源码](https://github.com/micropython/micropython-lib/blob/master/micropython/drivers/led/neopixel/neopixel.py)
 '''
 class NeoPixel(object):
 	'''
-	This class stores pixel data for a WS2812 LED strip connected to a pin.
+	此类存储连接到引脚的 WS2812 LED 灯带的像素数据。
 
-	The application should set pixel data and then call `NeoPixel.write()` when
-	it is ready to update the strip.
+	应用程序应设置像素数据，然后在准备好更新灯带时调用`NeoPixel.write()`。
 	'''
 	def __init__(self, pin, n: int, *, bpp: int = 3, timing: int = 1):
 		'''
-		Construct an NeoPixel object. The parameters are:
+		构造一个 NeoPixel 对象。
 
-		- `pin` is a machine.Pin instance.
-		- `n` is the number of LEDs in the strip.
-		- `bpp` is 3 for RGB LEDs, and 4 for RGBW LEDs.
-		- `timing` is 0 for 400KHz, and 1 for 800kHz LEDs (most are 800kHz).
+		参数包括：
+
+		- `pin`是`machine.Pin`实例。
+		- `n`是灯带中的 LED 数量。
+		- `bpp`对于 RGB LED 是 3，对于 RGBW LED 是 4。
+		- `timing`对于 400KHz LED 是 0，对于 800kHz LED（大多数都是800kHz）是 1。
 		'''
 
 	# Pixel access methods
 	def fill(self, pixel: tuple):
 		'''
-		Sets the value of all pixels to the specified `pixel` value (i.e. an
-		RGB/RGBW tuple).
+		将所有像素的值设置为指定的`pixel`值（例如 RGB/RGBW 元组）。
 		'''
 
-	def __len__(self):
-		'''Returns the number of LEDs in the strip.'''
+	def __len__(self) -> int:
+		'''返回灯带中的 LED 数量。'''
 
 	def __setitem__(self, index: int, val: tuple):
-		'''Set the pixel at `index` to the value, which is an RGB/RGBW tuple.'''
+		'''将`index`处的像素设置为该值，例如 RGB/RGBW 元组。'''
 
-	def __getitem__(index: int):
-		'''Returns the pixel at `index` as an RGB/RGBW tuple.'''
+	def __getitem__(index: int) -> tuple:
+		'''以 RGB/RGBW 元组的形式返回位于`index`处的像素。'''
 
 	# Output methods
 	def write():
-		'''Writes the current pixel data to the strip.'''
+		'''将当前像素数据写入灯带。'''

@@ -1,41 +1,36 @@
 '''
-access to underlying platform’s identifying data
+访问底层平台的识别数据
 
-This module implements a subset of the corresponding CPython module, as described
-below.
+此模块实现相应`CPython`模块的子集，如下所述。
 
-For more information, refer to the original CPython documentation: platform.
+有关详细信息，请参阅原始`CPython`文档：[platform](https://docs.python.org/3.5/library/platform.html#module-platform)。
 
-This module tries to retrieve as much platform-identifying data as possible.
+此模块尝试检索尽可能多的平台标识数据。
 
-It makes this information available via function APIs.
+它通过函数 API 提供此信息。
 
-[View Doc](https://docs.micropython.org/en/latest/library/platform.html)
+[查看文档](https://docs.micropython.org/en/latest/library/platform.html)
 '''
 # Functions
-def platform():
+def platform() -> str:
 	'''
-	Returns a string identifying the underlying platform.
+	返回标识基础平台的字符串。
 
-	This string is composed of several substrings in the following order,
-	delimited by dashes (-):
+	此字符串按以下顺序由多个子字符串组成，用短划线（-）分隔：
 
-	- the name of the platform system (e.g. Unix, Windows or MicroPython)
-	- the MicroPython version
-	- the architecture of the platform
-	- the version of the underlying platform
-	- the concatenation of the name of the libc that MicroPython is linked to and its corresponding version.
+	- 平台系统的名称（例如 Unix、Windows 或 MicroPython）
+	- MicroPython 版本
+	- 平台的架构
+	- 底层平台的版本
+	- MicroPython 链接到的 libc 名称及其对应版本的串联
 
-	For example, this could be "MicroPython-1.20.0-xtensa-IDFv4.2.4-with-newlib3.0.0".
+	例如`MicroPython-1.20.0-xtensa-IDFv4.2.4-with-newlib3.0.0`。
 	'''
 
-def python_compiler():
-	'''Returns a string identifying the compiler used for compiling MicroPython.'''
+def python_compiler() -> str:
+	'''返回一个字符串，标识用于编译 MicroPython 的编译器。'''
 
 def libc_ver():
 	'''
-	Returns a tuple of strings (lib, version), where lib is the name of the libc
-	that MicroPython is linked to,
-
-	and version the corresponding version of this libc.
+	返回字符串元组`(lib, version)`，其中`lib`是 MicroPython 链接到的 libc 的名称，`version`是此 libc 的相应版本。
 	'''
