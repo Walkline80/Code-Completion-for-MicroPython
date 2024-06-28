@@ -1,68 +1,68 @@
 '''
-control the garbage collector
+控制垃圾回收
 
-This module implements a subset of the corresponding CPython module, as described
-below.
+此模块实现相应`CPython`模块的子集，如下所述。
 
-For more information, refer to the original CPython documentation: gc.
+有关更多信息，请参阅原始`CPython`文档：[gc](https://docs.python.org/3.5/library/gc.html#module-gc)。
 
-[View Doc](https://docs.micropython.org/en/latest/library/gc.html)
+[查看文档](https://docs.micropython.org/en/latest/library/gc.html)
 '''
+import typing
+
+
 # Functions
 def enable():
-	'''Enable automatic garbage collection.'''
+	'''启用自动垃圾回收。'''
 
 def disable():
 	'''
-	Disable automatic garbage collection.
+	禁用自动垃圾回收。
 
-	Heap memory can still be allocated, and garbage collection can still be
-	initiated manually using `gc.collect()`.
+	仍然可以分配堆内存，并且仍然可以使用`gc.collect()`手动启动垃圾回收。
 	'''
 
 def collect():
-	'''Run a garbage collection.'''
+	'''运行垃圾回收。'''
 
 def mem_alloc():
 	'''
-	Return the number of bytes of heap RAM that are allocated by Python code.
+	返回 Python 代码分配的堆 RAM 的字节数。
 
-	Difference to CPython: 
+	与 CPython 的区别：
 
-		This function is MicroPython extension.
+		此函数是 MicroPython 扩展。
 	'''
 
 def mem_free():
 	'''
-	Return the number of bytes of heap RAM that is available for Python code to
-	allocate, or -1 if this amount is not known.
+	返回可供 Python 代码分配的堆 RAM 的字节数，如果此数量未知，则返回`-1`。
 
-	Difference to CPython:
+	与 CPython 的区别：
 
-		This function is MicroPython extension.
+		此函数是 MicroPython 扩展。
 	'''
 
+@typing.overload
+def threshold() -> int:
+	'''
+	查询额外的 GC 分配阈值。
+
+	函数返回阈值的当前值，`-1`表示禁用了分配阈值。
+	'''
+
+@typing.overload
 def threshold(amount: int = None):
 	'''
-	Set or query the additional GC allocation threshold.
+	设置额外的 GC 分配阈值。
 
-	Normally, a collection is triggered only when a new allocation cannot be
-	satisfied, i.e. on an out-of-memory (OOM) condition.
+	通常，只有在无法满足新的分配时，即出现内存不足（OOM）的情况下，才会触发
+	垃圾回收。
 
-	If this function is called, in addition to OOM, a collection will be triggered
-	each time after `amount` bytes have been allocated (in total, since the
-	previous time such an amount of bytes have been allocated).
+	如果调用这个函数，除了 OOM 之外，每次分配`amount`字节（总的来说，因为
+	上次分配了这么多字节）后，都会触发一次垃圾回收。
 
-	`amount` is usually specified as less than the full heap size, with the
-	intention to trigger a collection earlier than when the heap becomes exhausted,
-	and in the hope that an early collection will prevent excessive memory
-	fragmentation.
+	`amount`通常被指定为小于整个堆的大小的值，目的是在堆耗尽之前更早地触发
+	垃圾回收，并希望早期的回收能够防止过多的内存碎片。
 
-	This is a heuristic measure, the effect of which will vary from application to
-	application, as well as the optimal value of the `amount` parameter.
-
-	Calling the function without argument will return the current value of the
-	threshold.
-
-	A value of -1 means a disabled allocation threshold.
+	这是一种启发式的措施，其效果会因应用程序而异，以及`amount`参数的最佳值。
 	'''
