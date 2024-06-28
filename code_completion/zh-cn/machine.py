@@ -12,7 +12,7 @@ and in extreme cases, hardware damage.
 
 [View Doc](https://docs.micropython.org/en/latest/library/machine.html)
 '''
-from typing import overload
+import typing
 
 
 # Constants
@@ -354,7 +354,7 @@ class Pin(object):
 		Availability: nrf, rp2, stm32 ports.
 		'''
 
-	@overload
+	@typing.overload
 	def mode(self):
 		'''
 		Get the pin mode.
@@ -362,7 +362,7 @@ class Pin(object):
 		Availability: cc3200, stm32 ports.
 		'''
 
-	@overload
+	@typing.overload
 	def mode(self, mode):
 		'''
 		Set the pin mode.
@@ -370,7 +370,7 @@ class Pin(object):
 		Availability: cc3200, stm32 ports.
 		'''
 
-	@overload
+	@typing.overload
 	def pull(self):
 		'''
 		Get the pin pull state.
@@ -378,7 +378,7 @@ class Pin(object):
 		Availability: cc3200, stm32 ports.
 		'''
 
-	@overload
+	@typing.overload
 	def pull(self, pull):
 		'''
 		Set the pin pull state.
@@ -386,7 +386,7 @@ class Pin(object):
 		Availability: cc3200, stm32 ports.
 		'''
 
-	@overload
+	@typing.overload
 	def drive(self):
 		'''
 		Get the pin drive strength.
@@ -394,7 +394,7 @@ class Pin(object):
 		Availability: cc3200 port.
 		'''
 
-	@overload
+	@typing.overload
 	def drive(self, drive):
 		'''
 		Set the pin drive strength.
@@ -605,7 +605,7 @@ class PWM(object):
 	def deinit(self):
 		'''Disable the PWM output.'''
 
-	@overload
+	@typing.overload
 	def freq(self) -> int:
 		'''
 		Get the current frequency of the PWM output.
@@ -613,7 +613,7 @@ class PWM(object):
 		The frequency in Hz is returned.
 		'''
 
-	@overload
+	@typing.overload
 	def freq(self, value: int):
 		'''
 		Set the current frequency of the PWM output.
@@ -624,7 +624,7 @@ class PWM(object):
 		range.
 		'''
 
-	@overload
+	@typing.overload
 	def duty_u16(self) -> int:
 		'''
 		Get the current duty cycle of the PWM output, as an unsigned 16-bit value
@@ -633,7 +633,7 @@ class PWM(object):
 		he duty cycle is returned.
 		'''
 
-	@overload
+	@typing.overload
 	def duty_u16(self, value: int):
 		'''
 		Set the current duty cycle of the PWM output, as an unsigned 16-bit value
@@ -643,7 +643,7 @@ class PWM(object):
 		as the ratio value / 65535.
 		'''
 
-	@overload
+	@typing.overload
 	def duty_ns(self) -> int:
 		'''
 		Get the current pulse width of the PWM output, as a value in nanoseconds.
@@ -651,7 +651,7 @@ class PWM(object):
 		The pulse width in nanoseconds is returned.
 		'''
 
-	@overload
+	@typing.overload
 	def duty_ns(self, value: int):
 		'''
 		Set the current pulse width of the PWM output, as a value in nanoseconds.
@@ -738,7 +738,7 @@ class UART(object):
 		for reading.
 		'''
 
-	@overload
+	@typing.overload
 	def read(self) -> bytes | None:
 		'''
 		Read characters.
@@ -752,7 +752,7 @@ class UART(object):
 		Returns None on timeout.
 		'''
 
-	@overload
+	@typing.overload
 	def read(self, nbytes: int) -> bytes | None:
 		'''
 		Read characters.
@@ -769,7 +769,7 @@ class UART(object):
 		Returns None on timeout.
 		'''
 
-	@overload
+	@typing.overload
 	def readinto(self, buf) -> int | None:
 		'''
 		Read bytes into the `buf`.
@@ -783,7 +783,7 @@ class UART(object):
 		Return value: number of bytes read and stored into buf or None on timeout.
 		'''
 
-	@overload
+	@typing.overload
 	def readinto(self, buf, nbytes: int) -> int | None:
 		'''
 		Read bytes into the `buf`.
@@ -1548,7 +1548,7 @@ class RTC(object):
 	def __init__(self, id: int = 0):
 		'''Create an RTC object.'''
 
-	@overload
+	@typing.overload
 	def datetime(self):
 		'''
 		Get the date and time of the RTC.
@@ -1561,7 +1561,7 @@ class RTC(object):
 		'''
 
 	# Methods
-	@overload
+	@typing.overload
 	def datetime(self, datetimetuple: tuple):
 		'''
 		Set the date and time of the RTC.
@@ -1615,7 +1615,7 @@ class RTC(object):
 		the system.
 		'''
 
-	@overload
+	@typing.overload
 	def memory(self) -> bytes:
 		'''
 		Reads RTC memory and returns a bytes object.
@@ -1626,7 +1626,7 @@ class RTC(object):
 		Availability: esp32, esp8266 ports.
 		'''
 
-	@overload
+	@typing.overload
 	def memory(self, data):
 		'''
 		Write data to the RTC memory, where data is any object which supports the

@@ -3,7 +3,7 @@ Access and control MicroPython internals
 
 [View Doc](https://docs.micropython.org/en/latest/library/micropython.html)
 '''
-from typing import overload
+import typing
 
 
 # Functions
@@ -32,7 +32,7 @@ def const(expr: int):
 	pattern.
 	'''
 
-@overload
+@typing.overload
 def opt_level() -> int:
 	'''
 	It returns the current optimisation level.
@@ -40,7 +40,7 @@ def opt_level() -> int:
 	The optimisation level controls the following compilation features:
 	'''
 
-@overload
+@typing.overload
 def opt_level(level: int = 0) -> None:
 	'''
 	This function sets the optimisation level for subsequent compilation of
@@ -73,7 +73,7 @@ def alloc_emergency_exception_buf(size: int):
 	for all the code following it.
 	'''
 
-@overload
+@typing.overload
 def mem_info():
 	'''
 	Print information about currently used memory.
@@ -85,7 +85,7 @@ def mem_info():
 	used and which are free.
 	'''
 
-@overload
+@typing.overload
 def mem_info(verbose):
 	'''
 	The given then extra information is printed.
@@ -97,7 +97,7 @@ def mem_info(verbose):
 	used and which are free.
 	'''
 
-@overload
+@typing.overload
 def qstr_info():
 	'''
 	Print information about currently interned strings.
@@ -108,7 +108,7 @@ def qstr_info():
 	In verbose mode it prints out the names of all RAM-interned strings.
 	'''
 
-@overload
+@typing.overload
 def qstr_info(verbose):
 	'''
 	The extra information is printed.

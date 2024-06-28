@@ -9,10 +9,10 @@ This module provides functions to efficiently wait for events on multiple stream
 
 [View Doc](https://docs.micropython.org/en/latest/library/select.html)
 '''
+import typing
+
+
 # Constants
-from typing import overload
-
-
 POLLIN: int = ...
 POLLOUT: int = ...
 POLLERR: int = ...
@@ -54,7 +54,7 @@ class Poll(object):
 		If `obj` is not registered, `OSError` is raised with error of ENOENT.
 		'''
 
-	@overload
+	@typing.overload
 	def poll(self) -> tuple:
 		'''
 		Wait for at least one of the registered objects to become ready or have
@@ -77,7 +77,7 @@ class Poll(object):
 		In case of timeout, an empty list is returned.
 		'''
 
-	@overload
+	@typing.overload
 	def poll(self, timeout: int = -1, /) -> tuple:
 		'''
 		Wait for at least one of the registered objects to become ready or have

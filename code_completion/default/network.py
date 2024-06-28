@@ -8,7 +8,7 @@ The following concrete classes implement the AbstractNIC interface and provide a
 [View Doc network](https://docs.micropython.org/en/latest/library/network.html)
 [View Doc network.WLAN](https://docs.micropython.org/en/latest/library/network.WLAN.html)
 '''
-from typing import overload
+import typing
 
 
 # Constants
@@ -61,7 +61,7 @@ STAT_ASSOC_FAIL: int = ...
 STAT_HANDSHAKE_TIMEOUT: int = ...
 
 # Network functions
-@overload
+@typing.overload
 def country() -> str:
 	'''
 	Get the two-letter ISO 3166-1 Alpha-2 country code to be used for radio
@@ -72,7 +72,7 @@ def country() -> str:
 	The default code "XX" represents the "worldwide" region.
 	'''
 
-@overload
+@typing.overload
 def country(code: str):
 	'''
 	Set the two-letter ISO 3166-1 Alpha-2 country code to be used for radio
@@ -83,7 +83,7 @@ def country(code: str):
 	The default code "XX" represents the "worldwide" region.
 	'''
 
-@overload
+@typing.overload
 def hostname():
 	'''
 	Get the hostname that will identify this device on the network.
@@ -100,7 +100,7 @@ def hostname():
 	The default hostname is typically the name of the board.
 	'''
 
-@overload
+@typing.overload
 def hostname(name: str):
 	'''
 	Set the hostname that will identify this device on the network.
@@ -132,7 +132,7 @@ def hostname(name: str):
 	The default hostname is typically the name of the board.
 	'''
 
-@overload
+@typing.overload
 def phy_mode():
 	'''
 	Get the PHY mode.
@@ -148,7 +148,7 @@ def phy_mode():
 	Availability: ESP8266.
 	'''
 
-@overload
+@typing.overload
 def phy_mode(mode: int):
 	'''
 	Set the PHY mode.
@@ -215,11 +215,11 @@ class WLAN(object):
 		'''
 
 	# Methods
-	@overload
+	@typing.overload
 	def active(self):
 		'''Query current state if no argument is provided.'''
 
-	@overload
+	@typing.overload
 	def active(self, is_active: bool):
 		'''
 		Activate ("up") or deactivate ("down") network interface, if boolean
@@ -273,7 +273,7 @@ class WLAN(object):
 		- 1 – hidden
 		'''
 
-	@overload
+	@typing.overload
 	def status(self) -> int:
 		'''
 		Returns value describes the network link status.
@@ -288,7 +288,7 @@ class WLAN(object):
 		- STAT_GOT_IP – connection successful.
 		'''
 
-	@overload
+	@typing.overload
 	def status(self, param: str) -> int:
 		'''
 		Return the current status of the wireless connection.
@@ -317,7 +317,7 @@ class WLAN(object):
 		Returns False otherwise.
 		'''
 
-	@overload
+	@typing.overload
 	def ifconfig(self):
 		'''
 		Get IP-level network interface parameters: IP address, subnet mask,
@@ -326,7 +326,7 @@ class WLAN(object):
 		This method returns a 4-tuple with the above information.
 		'''
 
-	@overload
+	@typing.overload
 	def ifconfig(self, if_info: tuple):
 		'''
 		Set IP-level network interface parameters: IP address, subnet mask,
@@ -339,7 +339,7 @@ class WLAN(object):
 			`nic.ifconfig(('192.168.0.4', '255.255.255.0', '192.168.0.1', '8.8.8.8'))`
 		'''
 
-	@overload
+	@typing.overload
 	def ipconfig(self):
 		'''
 		Get IP-level network interface parameters: IP address, subnet mask,
@@ -348,7 +348,7 @@ class WLAN(object):
 		This method returns a 4-tuple with the above information.
 		'''
 
-	@overload
+	@typing.overload
 	def ipconfig(self, ip_info: tuple):
 		'''
 		Set IP-level network interface parameters: IP address, subnet mask,
@@ -361,7 +361,7 @@ class WLAN(object):
 			`nic.ifconfig(('192.168.0.4', '255.255.255.0', '192.168.0.1', '8.8.8.8'))`
 		'''
 
-	@overload
+	@typing.overload
 	def config(self, param: str):
 		'''
 		Get general network interface parameters.
@@ -394,7 +394,7 @@ class WLAN(object):
 		- pm - WiFi Power Management setting (see module constants)
 		'''
 
-	@overload
+	@typing.overload
 	def config(self, **params):
 		'''
 		Set general network interface parameters.

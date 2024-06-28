@@ -14,7 +14,7 @@ building-blocks for higher-level abstractions such as specific device types.
 
 [View Doc](https://docs.micropython.org/en/latest/library/bluetooth.html)
 '''
-from typing import overload
+import typing
 
 
 # Constants
@@ -28,7 +28,7 @@ FLAG_WRITE_NO_RESPONSE: int = ...
 class BLE(object):
 	'''Returns the singleton BLE object.'''
 	# Configuration
-	@overload
+	@typing.overload
 	def active(self) -> bool:
 		'''
 		Optionally changes the active state of the BLE radio, and returns the
@@ -37,7 +37,7 @@ class BLE(object):
 		The radio must be made active before using any other methods on this class.
 		'''
 
-	@overload
+	@typing.overload
 	def active(self, active: bool, /) -> bool:
 		'''
 		Optionally changes the active state of the BLE radio, and returns the
@@ -46,7 +46,7 @@ class BLE(object):
 		The radio must be made active before using any other methods on this class.
 		'''
 
-	@overload
+	@typing.overload
 	def config(self, param: str, /):
 		'''
 		Get configuration values of the BLE interface.
@@ -90,7 +90,7 @@ class BLE(object):
 			connection.
 		'''
 
-	@overload
+	@typing.overload
 	def config(self, **params):
 		'''
 		Set configuration values of the BLE interface.

@@ -1,13 +1,16 @@
 '''
 control the garbage collector
 
-This module implements a subset of the corresponding CPython module, as described
+This module implements a subset of the corresponding `CPython` module, as described
 below.
 
-For more information, refer to the original CPython documentation: gc.
+For more information, refer to the original `CPython` documentation: [gc](https://docs.python.org/3.5/library/gc.html#module-gc).
 
 [View Doc](https://docs.micropython.org/en/latest/library/gc.html)
 '''
+import typing
+
+
 # Functions
 def enable():
 	'''Enable automatic garbage collection.'''
@@ -42,9 +45,20 @@ def mem_free():
 		This function is MicroPython extension.
 	'''
 
+@typing.overload
+def threshold() -> int:
+	'''
+	Query the additional GC allocation threshold.
+
+	Function will return the current value of the threshold.
+
+	A value of `-1` means a disabled allocation threshold.
+	'''
+
+@typing.overload
 def threshold(amount: int = None):
 	'''
-	Set or query the additional GC allocation threshold.
+	Set the additional GC allocation threshold.
 
 	Normally, a collection is triggered only when a new allocation cannot be
 	satisfied, i.e. on an out-of-memory (OOM) condition.
@@ -60,9 +74,4 @@ def threshold(amount: int = None):
 
 	This is a heuristic measure, the effect of which will vary from application to
 	application, as well as the optimal value of the `amount` parameter.
-
-	Calling the function without argument will return the current value of the
-	threshold.
-
-	A value of -1 means a disabled allocation threshold.
 	'''

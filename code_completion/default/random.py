@@ -3,10 +3,10 @@ generate random numbers
 
 This module implements a pseudo-random number generator (PRNG).
 
-This module implements a subset of the corresponding CPython module, as described
+This module implements a subset of the corresponding `CPython` module, as described
 below.
 
-For more information, refer to the original CPython documentation: random.
+For more information, refer to the original `CPython` documentation: [random](https://docs.python.org/3.5/library/random.html#module-random).
 
 Note:
 
@@ -15,6 +15,9 @@ Note:
 
 [View Doc](https://docs.micropython.org/en/latest/library/random.html)
 '''
+import typing
+
+
 # Functions for integers
 def getrandbits(n: int) -> int:
 	'''Return an integer with `n` random bits (0 <= n <= 32).'''
@@ -22,25 +25,29 @@ def getrandbits(n: int) -> int:
 def randint(a: int, b: int) -> int:
 	'''Return a random integer in the range `[a, b]`.'''
 
-def randrange(start: int = None, stop: int = None, step: int = None) -> int:
+@typing.overload
+def randrange(stop: int) -> int:
+	'''Returns a random integer from the range `[0, stop]`.'''
+
+@typing.overload
+def randrange(start: int, stop: int) -> int:
 	'''
-	- `randrange(stop)` returns a random integer from the range `[0, stop]`.
+	Returns a random integer from the range `[start, stop]`.'''
 
-	- `randrange(start, stop)` returns a random integer from the range `[start,
-	stop]`.
+@typing.overload
+def randrange(start: int, stop: int, step: int = None) -> int:
+	'''
+	Returns a random integer from the range `[start, stop]` in steps of `step`.
 
-	- `randrange(start, stop[, step])` returns a random integer from the range
-	`[start, stop]` in steps of `step`.
-
-	For instance, calling randrange(1, 10, 2) will return odd numbers between 1
+	For instance, calling `randrange(1, 10, 2)` will return odd numbers between 1
 	and 9 inclusive.
 	'''
 
 # Functions for floats
-def random():
-	'''Return a random floating point number in the range [0.0, 1.0).'''
+def random() -> float:
+	'''Return a random floating point number in the range `[0.0, 1.0]`.'''
 
-def uniform(a, b):
+def uniform(a, b) -> float:
 	'''
 	Return a random floating point number N such that `a` <= N <= `b` for `a` <=
 	`b`, and `b` <= N <= `a` for `b` < `a`.
@@ -60,7 +67,7 @@ def seed(n: int = None, /):
 	by the port, otherwise it raises `ValueError`.
 	'''
 
-def choice(sequence):
+def choice(sequence: typing.Any) -> typing.Any:
 	'''
 	Chooses and returns one item at random from `sequence` (tuple, list or any
 	object that supports the subscript operation).

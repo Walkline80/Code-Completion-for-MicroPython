@@ -8,11 +8,11 @@ Some functions are only available on one or the other of these ports.
 
 [View Doc](https://docs.micropython.org/en/latest/library/esp.html)
 '''
-from typing import overload
+import typing
 
 
 # Functions
-@overload
+@typing.overload
 def sleep_type():
 	'''
 	Get the sleep type.
@@ -33,7 +33,7 @@ def sleep_type():
 		ESP8266 only
 	'''
 
-@overload
+@typing.overload
 def sleep_type(sleep_type: int):
 	'''
 	Set the sleep type.

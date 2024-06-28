@@ -11,7 +11,7 @@ redirection and duplication, and the uname and urandom functions.
 
 [View Doc](https://docs.micropython.org/en/latest/library/os.html)
 '''
-from typing import overload
+import typing
 
 
 # General functions
@@ -43,7 +43,7 @@ def chdir(path: str):
 def getcwd() -> str:
 	'''Get the current directory.'''
 
-@overload
+@typing.overload
 def ilistdir():
 	'''
 	This function returns an iterator which then yields tuples corresponding to
@@ -70,7 +70,7 @@ def ilistdir():
 		Its meaning is currently undefined for directory entries.
 	'''
 
-@overload
+@typing.overload
 def ilistdir(dir: str):
 	'''
 	This function returns an iterator which then yields tuples corresponding to
@@ -97,11 +97,11 @@ def ilistdir(dir: str):
 		Its meaning is currently undefined for directory entries.
 	'''
 
-@overload
+@typing.overload
 def listdir():
 	'''List the current directory.'''
 
-@overload
+@typing.overload
 def listdir(dir: str):
 	'''List the given directory.'''
 

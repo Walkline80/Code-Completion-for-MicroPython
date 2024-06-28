@@ -9,7 +9,7 @@ This module provides access to the BSD socket interface.
 
 [View Doc](https://docs.micropython.org/en/latest/library/socket.html)
 '''
-from typing import overload
+import typing
 
 
 # Constants
@@ -121,7 +121,7 @@ class socket(object):
 		The socket must not already be bound.
 		'''
 
-	@overload
+	@typing.overload
 	def listen(self):
 		'''
 		Enable a server to accept connections.
@@ -129,7 +129,7 @@ class socket(object):
 		A default reasonable value is chosen.
 		'''
 
-	@overload
+	@typing.overload
 	def listen(self, backlog: int):
 		'''
 		Enable a server to accept connections.
@@ -266,7 +266,7 @@ class socket(object):
 			original socket as well.
 		'''
 
-	@overload
+	@typing.overload
 	def read(self) -> bytes:
 		'''
 		Read up to `size` bytes from the socket.
@@ -282,7 +282,7 @@ class socket(object):
 		data will be returned.
 		'''
 
-	@overload
+	@typing.overload
 	def read(self, size: int) -> bytes:
 		'''
 		Read up to `size` bytes from the socket.
@@ -295,7 +295,7 @@ class socket(object):
 		data will be returned.
 		'''
 
-	@overload
+	@typing.overload
 	def readinto(self, buf) -> int:
 		'''
 		Read bytes into the `buf`.
@@ -307,7 +307,7 @@ class socket(object):
 		Return value: number of bytes read and stored into buf.
 		'''
 
-	@overload
+	@typing.overload
 	def readinto(self, buf, nbytes: int) -> int:
 		'''
 		Read bytes into the `buf`.
