@@ -39,7 +39,7 @@ def load(stream):
 	如果`stream`中的数据格式不正确，将引发`ValueError`。
 	'''
 
-def loads(str: str):
+def loads(str: str) -> dict:
 	'''
 	解析 JSON 字符串`str`并返回一个对象。
 

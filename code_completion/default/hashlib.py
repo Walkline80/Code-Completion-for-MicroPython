@@ -1,10 +1,10 @@
 '''
 hashing algorithms
 
-This module implements a subset of the corresponding CPython module, as described
+This module implements a subset of the corresponding `CPython` module, as described
 below.
 
-For more information, refer to the original CPython documentation: hashlib.
+For more information, refer to the original `CPython` documentation: [hashlib](https://docs.python.org/3.5/library/hashlib.html#module-hashlib).
 
 This module implements binary data hashing algorithms.
 

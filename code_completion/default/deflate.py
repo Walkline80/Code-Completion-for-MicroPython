@@ -1,8 +1,8 @@
 '''
 deflate compression & decompression
 
-This module allows compression and decompression of binary data with the DEFLATE
-algorithm (commonly used in the zlib library and gzip archiver).
+This module allows compression and decompression of binary data with the `DEFLATE
+algorithm` (commonly used in the zlib library and gzip archiver).
 
 Availability:
 
@@ -45,16 +45,16 @@ class DeflateIO(object):
 		- The `wbits` parameter sets the base-2 logarithm of the DEFLATE
 		dictionary window size.
 
-			So for example, setting wbits to `10` sets the window size to 1024
+			So for example, setting `wbits` to `10` sets the window size to 1024
 			bytes.
 
 			Valid values are `5` to `15` inclusive (corresponding to window sizes
 			of 32 to 32k bytes).
 
 		If `wbits` is set to `0` (the default), then for compression a window
-		size of 256 bytes will be used (as if wbits was set to 8).
+		size of 256 bytes will be used (as if `wbits` was set to 8).
 
-		For decompression, it depends on the format:
+		For decompression, it depends on the `format`:
 
 		- `RAW` will use 256 bytes (corresponding to `wbits` set to 8).
 
@@ -64,7 +64,7 @@ class DeflateIO(object):
 		- `GZIP` (or `AUTO` with gzip detected) will use 32 kilobytes (corresponding
 		to `wbits` set to 15).
 
-		If `close` is set to True then the underlying stream will be closed
+		If `close` is set to `True` then the underlying stream will be closed
 		automatically when the `deflate.DeflateIO` stream is closed.
 
 		This is useful if you want to return a `deflate.DeflateIO` stream that

@@ -1,5 +1,5 @@
 '''
-requests
+requests library
 
 This module provides a lightweight version of the Python requests library.
 
@@ -19,8 +19,8 @@ encoding of post data (this can be done manually).
 
 - Chunked encoding in responses is not supported.
 
-[View Doc requests](https://github.com/micropython/micropython-lib/blob/master/python-ecosys/requests/README.md)
-[View Doc api](https://requests.readthedocs.io/en/latest/api/)
+[View requests/__init__.py](https://github.com/micropython/micropython-lib/blob/master/python-ecosys/requests/requests/__init__.py)
+[View API Doc](https://requests.readthedocs.io/en/latest/api/)
 '''
 class Response:
 	'''
@@ -37,19 +37,20 @@ class Response:
 		'''
 
 	@property
-	def content(self):
+	def content(self) -> bytes:
 		'''Content of the response, in bytes.'''
 
 	@property
-	def text(self):
+	def text(self) -> str:
 		'''Content of the response, in unicode.'''
 
-	def json(self):
+	def json(self) -> dict:
 		'''Returns the json-encoded content of a response, if any.'''
 
 
-def request(method: str, url: str, data=None, json=None, headers=None,
-		stream=None, auth=None, timeout=None, parse_headers: bool = True):
+def request(method: str, url: str, data=None, json: dict = None, headers: dict = None,
+		stream: bool = None, auth: tuple = None, timeout: float=None,
+		parse_headers: bool = True) -> Response:
 	'''
 	Constructs and sends a Request.
 
@@ -66,31 +67,31 @@ def request(method: str, url: str, data=None, json=None, headers=None,
 
 	- `headers` – (optional) Dictionary of HTTP Headers to send with the Request.
 
-	- `stream` – (optional) if False, the response content will be immediately downloaded.
+	- `stream` – (optional) if `False`, the response content will be immediately downloaded.
 
 	- `auth` – (optional) Auth tuple to enable Basic/Digest/Custom HTTP Auth.
 
 	- `timeout` – (optional) How many seconds to wait for the server to send data before giving up, as a float.
 
-	- `parse_headers` – (optional) If True, will parse headers and add them to the response.
+	- `parse_headers` – (optional) If `True`, will parse headers and add them to the response.
 
 	Returns a Response object.
 	'''
 
-def head(url: str, **kw):
+def head(url: str, **kw) -> Response:
 	'''Sends a HEAD request.'''
 
-def get(url: str, **kw):
+def get(url: str, **kw) -> Response:
 	'''Sends a GET request.'''
 
-def post(url: str, **kw):
+def post(url: str, **kw) -> Response:
 	'''Sends a POST request.'''
 
-def put(url, **kw):
+def put(url, **kw) -> Response:
 	'''Sends a PUT request.'''
 
-def patch(url, **kw):
+def patch(url, **kw) -> Response:
 	'''Sends a PATCH request.'''
 
-def delete(url, **kw):
+def delete(url, **kw) -> Response:
 	'''Sends a DELETE request.'''

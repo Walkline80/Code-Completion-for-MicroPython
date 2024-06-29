@@ -42,7 +42,7 @@ def load(stream):
 	A `ValueError` is raised if the data in stream is not correctly formed.
 	'''
 
-def loads(str: str):
+def loads(str: str) -> dict:
 	'''
 	Parse the JSON `str` and return an object.
 
