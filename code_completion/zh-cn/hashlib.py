@@ -1,104 +1,95 @@
 '''
-hashing algorithms
+哈希算法
 
-This module implements a subset of the corresponding CPython module, as described
-below.
+此模块实现相应`CPython`模块的子集，如下所述。
 
-For more information, refer to the original CPython documentation: hashlib.
+有关更多信息，请参阅原始`CPython`文档：[hashlib](https://docs.python.org/3.5/library/hashlib.html#module-hashlib)。
 
-This module implements binary data hashing algorithms.
+该模块实现二进制数据哈希算法。可用算法的确切清单取决于开发板。
 
-The exact inventory of available algorithms depends on a board.
+可能实现的算法包括：
 
-Among the algorithms which may be implemented:
+- SHA256 - 当前一代的现代哈希算法（SHA2 系列）.
 
-- SHA256 - The current generation, modern hashing algorithm (of SHA2 series).
+	它适用于加密安全目的。
 
-	It is suitable for cryptographically-secure purposes.
+	包含在 MicroPython 内核中，建议任何板提供此功能，除非它有特定的代码大小限制。
 
-	Included in the MicroPython core and any board is recommended to provide this,
-	unless it has particular code size constraints.
+- SHA1 - 上一代算法.
 
-- SHA1 - A previous generation algorithm.
+	不建议用于新用途，但 SHA1 是许多 Internet 标准和现有应用程序的一部分，因此以网络连接
+	和互操作性为目标的开发板将尝试提供这一点。
 
-	Not recommended for new usages, but SHA1 is a part of number of Internet
-	standards and existing applications, so boards targeting network connectivity
-	and interoperability will try to provide this.
+- MD5 - 一种遗留算法，不被认为是加密安全的.
 
-- MD5 - A legacy algorithm, not considered cryptographically secure.
+	只有选定的开发板，针对与传统应用的互操作性，才会提供这一功能。
 
-	Only selected boards, targeting interoperability with legacy applications,
-	will offer this.
-
-[View Doc](https://docs.micropython.org/en/latest/library/hashlib.html)
+[查看文档](https://docs.micropython.org/en/latest/library/hashlib.html)
 '''
 class sha256(object):
 	def __init__(self, data=None):
-		'''Create an SHA256 hasher object and optionally feed data into it.'''
+		'''创建一个 SHA256 哈希对象，并选择性地输入`data`到其中。'''
 
 	# Methods
 	def update(self, data):
-		'''Feed more binary data into hash.'''
+		'''将更多二进制`data`输入到哈希中。'''
 
 	def digest(self) -> bytes:
 		'''
-		Return hash for all data passed through hash, as a bytes object.
+		返回通过哈希传递的所有数据的哈希值，作为字节对象。
 
-		After this method is called, more data cannot be fed into the hash any
-		longer.
+		调用此方法后，无法再将更多数据馈送到哈希中。
 		'''
 
 	def hexdigest(self):
 		'''
-		This method is NOT implemented.
+		此方法未实现。
 
-		Use binascii.hexlify(hash.digest()) to achieve a similar effect.
+		使用`binascii.hexlify(hash.digest())`达到类似的效果。
 		'''
 
 
 class sha1(object):
 	def __init__(self, data=None):
-		'''Create an SHA1 hasher object and optionally feed data into it.'''
+		'''创建一个 SHA1 哈希对象，并选择性地输入`data`到其中。'''
 
 	# Methods
 	def update(self, data):
-		'''Feed more binary data into hash.'''
+		'''将更多二进制`data`输入到哈希中。'''
 
 	def digest(self) -> bytes:
 		'''
-		Return hash for all data passed through hash, as a bytes object.
+		返回通过哈希传递的所有数据的哈希值，作为字节对象。
 
-		After this method is called, more data cannot be fed into the hash any
-		longer.
+		调用此方法后，无法再将更多数据馈送到哈希中。
 		'''
 
 	def hexdigest(self):
 		'''
-		This method is NOT implemented.
+		此方法未实现。
 
-		Use binascii.hexlify(hash.digest()) to achieve a similar effect.
+		使用`binascii.hexlify(hash.digest())`达到类似的效果。
 		'''
 
 
 class md5(object):
 	def __init__(self, data=None):
-		'''Create an MD5 hasher object and optionally feed data into it.'''
+		'''创建一个 MD5 哈希对象，并选择性地输入`data`到其中。'''
 
 	# Methods
 	def update(self, data):
-		'''Feed more binary data into hash.'''
+		'''将更多二进制`data`输入到哈希中。'''
 
 	def digest(self) -> bytes:
 		'''
-		Return hash for all data passed through hash, as a bytes object.
+		返回通过哈希传递的所有数据的哈希值，作为字节对象。
 
-		After this method is called, more data cannot be fed into the hash any
-		longer.
+		调用此方法后，无法再将更多数据馈送到哈希中。
 		'''
 
 	def hexdigest(self):
 		'''
-		This method is NOT implemented.
+		此方法未实现。
 
-		Use binascii.hexlify(hash.digest()) to achieve a similar effect.
+		使用`binascii.hexlify(hash.digest())`达到类似的效果。
 		'''

@@ -1,96 +1,93 @@
 '''
-requests
+requests 库
 
-This module provides a lightweight version of the Python requests library.
+这个模块提供了一个轻量级的 Python requests 库。
 
-It includes support for all HTTP verbs, https, json decoding of responses,
-redirects, basic authentication.
+它包括对所有 HTTP 操作、https、json 响应解码、重定向、基本身份验证的支持。
 
-Limitations:
+局限性：
 
-- Certificate validation is not currently supported.
+- 当前不支持证书验证。
 
-- A dictionary passed as post data will not do automatic JSON or multipart-form
-encoding of post data (this can be done manually).
+- 作为 POST 数据传递的字典不会自动进行 JSON 或 multipart-form 格式的编码
+（可以手动完成）。
 
-- Compressed requests/responses are not currently supported.
+- 目前不支持压缩请求/响应。
 
-- File upload is not supported.
+- 不支持文件上传。
 
-- Chunked encoding in responses is not supported.
+- 不支持响应中的分块编码。
 
-[View Doc requests](https://github.com/micropython/micropython-lib/blob/master/python-ecosys/requests/README.md)
-[View Doc api](https://requests.readthedocs.io/en/latest/api/)
+[查看 requests 源码](https://github.com/micropython/micropython-lib/blob/master/python-ecosys/requests/requests/__init__.py)
+[查看 API 文档](https://requests.readthedocs.io/en/latest/api/)
 '''
 class Response:
-	'''
-	The Response object, which contains a server’s response to an HTTP request.
-	'''
+	'''Response 对象，其中包含服务器对 HTTP 请求的响应。'''
 	def __init__(self, f): ...
 
 	def close(self):
 		'''
-		Releases the connection back to the pool.
+		释放连接回资源池。
 
-		Once this method has been called the underlying raw object must not be
-		accessed again.
+		一旦调用了这个方法，底层的原始对象就不应再被访问。
 		'''
 
 	@property
-	def content(self):
-		'''Content of the response, in bytes.'''
+	def content(self) -> bytes:
+		'''响应的内容（字节）。'''
 
 	@property
-	def text(self):
-		'''Content of the response, in unicode.'''
+	def text(self) -> str:
+		'''响应的内容（Unicode）。'''
 
-	def json(self):
-		'''Returns the json-encoded content of a response, if any.'''
+	def json(self) -> dict:
+		'''返回响应的 json 编码内容（如果有）。'''
 
 
-def request(method: str, url: str, data=None, json=None, headers=None,
-		stream=None, auth=None, timeout=None, parse_headers: bool = True):
+def request(method: str, url: str, data=None, json: dict = None, headers: dict = None,
+		stream: bool = None, auth: tuple = None, timeout: float=None,
+		parse_headers: bool = True) -> Response:
 	'''
-	Constructs and sends a Request.
+	构造并发送请求。
 
-	Parameters:
+	参数：
 
-	- `method` – method for the new Request object: `GET`, `HEAD`, `POST`, `PUT`,
-	`PATCH`, or `DELETE`.
+	- `method` – 新请求对象的方法：`GET`、`HEAD`、`POST`、`PUT`、`PATCH`或`DELETE`。
 
-	- `url` – URL for the new Request object.
+	- `url` – 新请求对象的 URL 地址。
 
-	- `data` – (optional) Dictionary, list of tuples, bytes, or file-like object to send in the body of the Request.
+	- `data` –（可选）要发送到请求体中的字典、元组列表、字节或类似文件的对象。
 
-	- `json` – (optional) A JSON serializable Python object to send in the body of the Request.
+	- `json` – （可选）要发送到请求体中的可序列化的 Python 对象。
 
-	- `headers` – (optional) Dictionary of HTTP Headers to send with the Request.
+	- `headers` –（可选）要与请求一起发送的 HTTP 头的字典。
 
-	- `stream` – (optional) if False, the response content will be immediately downloaded.
+	- `stream` –（可选）如果为 `False`，则立即下载响应内容。
 
-	- `auth` – (optional) Auth tuple to enable Basic/Digest/Custom HTTP Auth.
+	- `auth` –（可选）启用基本/摘要/自定义 HTTP 身份验证的 Auth 元组。
 
-	- `timeout` – (optional) How many seconds to wait for the server to send data before giving up, as a float.
+	- `timeout` –（可选）等待服务器发送数据的秒数，以浮点数表示。
 
-	- `parse_headers` – (optional) If True, will parse headers and add them to the response.
+	- `parse_headers` –（可选）如果为 `True`，将解析头并将其添加到响应中。
 
-	Returns a Response object.
+	返回一个`Response`对象。
 	'''
 
-def head(url: str, **kw):
-	'''Sends a HEAD request.'''
+def head(url: str, **kw) -> Response:
 
-def get(url: str, **kw):
-	'''Sends a GET request.'''
+	'''发送`HEAD`请求。'''
 
-def post(url: str, **kw):
-	'''Sends a POST request.'''
+def get(url: str, **kw) -> Response:
+	'''发送`GET`请求。'''
 
-def put(url, **kw):
-	'''Sends a PUT request.'''
+def post(url: str, **kw) -> Response:
+	'''发送`POST`请求。'''
 
-def patch(url, **kw):
-	'''Sends a PATCH request.'''
+def put(url, **kw) -> Response:
+	'''发送`PUT`请求。'''
 
-def delete(url, **kw):
-	'''Sends a DELETE request.'''
+def patch(url, **kw) -> Response:
+	'''发送`PATCH`请求。'''
+
+def delete(url, **kw) -> Response:
+	'''发送`DELETE`请求。'''

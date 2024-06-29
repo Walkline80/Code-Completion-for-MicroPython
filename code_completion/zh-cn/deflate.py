@@ -1,21 +1,20 @@
 '''
-deflate compression & decompression
+Deflate 压缩和解压缩
 
-This module allows compression and decompression of binary data with the DEFLATE
-algorithm (commonly used in the zlib library and gzip archiver).
+该模块允许使用`DEFLATE算法`对二进制数据进行压缩和解压缩（通常在 zlib 库和 gzip
+压缩工具中使用）。
 
-Availability:
+可用性：
 
-- Added in MicroPython v1.21.
+- 在 MicroPython v1.21 中添加。
 
-- Decompression: Enabled via the `MICROPY_PY_DEFLATE` build option, on by default
-on ports with the "extra features" level or higher (which is most boards).
+- 解压缩：通过`MICROPY_PY_DEFLATE`编译选项启用，默认情况下在具有`额外功能`级别
+或更高级别的端口上启用（这适用于大多数开发板）。
 
-- Compression: Enabled via the `MICROPY_PY_DEFLATE_COMPRESS` build option, on by
-default on ports with the "full features" level or higher (generally this means
-you need to build your own firmware to enable this).
+- 压缩：通过`MICROPY_PY_DEFLATE_COMPRESS`编译选项启用，默认情况下在具有`完整功能`
+级别或更高级别的端口上启用（通常需要自行编译固件以启用此功能）。
 
-[View Doc](https://docs.micropython.org/en/latest/library/deflate.html)
+[查看文档](https://docs.micropython.org/en/latest/library/deflate.html)
 '''
 # Constants
 # Supported values for the format parameter.
@@ -28,52 +27,38 @@ GZIP: int = ...
 class DeflateIO(object):
 	def __init__(self, stream, format: int = AUTO, wbits: int = 0, close: bool = False, /):
 		'''
-		This class can be used to wrap a stream which is any `stream-like` object
-		such as a file, socket, or stream (including `io.BytesIO`).
+		此类可用于包装任何`类似流`对象的流，例如文件、套接字或流（包括`io.BytesIO`）。
 
-		It is itself a stream and implements the standard read/readinto/write/
-		close methods.
+		它本身是一个流，实现了标准的 read/readinto/write/close 方法。
 
-		- The `stream` must be a blocking stream.
+		- `stream`必须是阻塞流。目前不支持非阻塞流。
 
-			Non-blocking streams are currently not supported.
+		- `format`可以设置为任何定义的常量，默认为`AUTO`，解压缩时会自动检测 gzip 或
+		zlib 流，压缩时会生成原始流。
 
-		- The `format` can be set to any of the defined constants, and defaults
-		to `AUTO` which for decompressing will auto-detect gzip or zlib streams,
-		and for compressing it will generate a raw stream.
+		- `wbits`参数设置 DEFLATE 字典窗口大小的 2 进制对数。
 
-		- The `wbits` parameter sets the base-2 logarithm of the DEFLATE
-		dictionary window size.
+			例如，将`wbits`设置为`10`会将窗口大小设置为 1024 字节。
 
-			So for example, setting wbits to `10` sets the window size to 1024
-			bytes.
+			有效值为`5`到`15`（对应 32 到 32k 字节的窗口大小）。
 
-			Valid values are `5` to `15` inclusive (corresponding to window sizes
-			of 32 to 32k bytes).
+		如果`wbits`设置为`0`（默认值），则将使用 256 字节的窗口大小进行压缩（就像`wbits`
+		设置为 8 一样）。
 
-		If `wbits` is set to `0` (the default), then for compression a window
-		size of 256 bytes will be used (as if wbits was set to 8).
+		对于解压缩，这取决于`format`格式：
 
-		For decompression, it depends on the format:
+		- `RAW`将使用 256 个字节（对应于`wbits`设置为 8）。
 
-		- `RAW` will use 256 bytes (corresponding to `wbits` set to 8).
+		- `ZLIB`（或检测到 zlib 的`AUTO`）将使用 zlib 标头中的值。
 
-		- `ZLIB` (or `AUTO` with zlib detected) will use the value from the zlib
-		header.
+		- `GZIP`（或检测到 gzip 的`AUTO`）将使用 32k（对应于设置为 15 的`wbits`）。
 
-		- `GZIP` (or `AUTO` with gzip detected) will use 32 kilobytes (corresponding
-		to `wbits` set to 15).
+		如果`close`设置为`True`，则在关闭`deflate.DeflateIO`流时，底层流将自动关闭。
 
-		If `close` is set to True then the underlying stream will be closed
-		automatically when the `deflate.DeflateIO` stream is closed.
+		如果您想要返回一个包装另一个流的`deflateDeflateIO`流，而不需要调用者知道如何管理底
+		层流，这将非常有用。
 
-		This is useful if you want to return a `deflate.DeflateIO` stream that
-		wraps another stream and not have the caller need to know about managing
-		the underlying stream.
+		如果启用了压缩，给定的`deflateDeflateIO`实例支持读取和写入。
 
-		If compression is enabled, a given `deflate.DeflateIO` instance supports
-		both reading and writing.
-
-		For example, a bidirectional stream like a socket can be wrapped, which
-		allows for compression/decompression in both directions.
+		例如，可以包装双向流（如套接字），从而允许在两个方向上进行压缩/解压缩。
 		'''
