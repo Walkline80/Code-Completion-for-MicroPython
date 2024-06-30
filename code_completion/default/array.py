@@ -1,18 +1,21 @@
 '''
 arrays of numeric data
 
-This module implements a subset of the corresponding CPython module, as described
+This module implements a subset of the corresponding `CPython` module, as described
 below.
 
-For more information, refer to the original CPython documentation: array.
+For more information, refer to the original `CPython` documentation: [array](https://docs.python.org/3.5/library/array.html#module-array).
 
 Supported format codes: `b`, `B`, `h`, `H`, `i`, `I`, `l`, `L`, `q`, `Q`, `f`, `d`
 (the latter 2 depending on the floating-point support).
 
 [View Doc](https://docs.micropython.org/en/latest/library/array.html)
 '''
+import typing
+
+
 class array(object):
-	def __init__(self, typecode, iterable=None):
+	def __init__(self, typecode: str, iterable=None):
 		'''
 		Create array with elements of given type.
 
@@ -30,7 +33,7 @@ class array(object):
 		growing it.
 		'''
 
-	def __getitem__(self, index):
+	def __getitem__(self, index) -> typing.Any:
 		'''
 		Indexed read of the array, called as `a[index]` (where `a` is an `array`).
 
@@ -74,7 +77,7 @@ class array(object):
 			method is not present in `__dict__`, however `len(a)` does work.
 		'''
 
-	def __add__(self, other):
+	def __add__(self, other) -> typing.Any:
 		'''
 		Return a new `array` that is the concatenation of the array with `other`,
 		called as `a + other` (where `a` and `other` are both `arrays`).

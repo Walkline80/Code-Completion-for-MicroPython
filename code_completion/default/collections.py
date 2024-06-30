@@ -1,18 +1,21 @@
 '''
 collection and container types
 
-This module implements a subset of the corresponding CPython module, as described
+This module implements a subset of the corresponding `CPython` module, as described
 below.
 
-For more information, refer to the original CPython documentation: collections.
+For more information, refer to the original `CPython` documentation: [collections](https://docs.python.org/3.5/library/collections.html#module-collections).
 
 This module implements advanced collection and container types to hold/accumulate
 various objects.
 
 [View Doc](https://docs.micropython.org/en/latest/library/collections.html)
 '''
+import typing
+
+
 class deque(object):
-	def __init__(self, iterable, maxlen: int, flags=None):
+	def __init__(self, iterable, maxlen: int, flags: int = None):
 		'''
 		Deques (double-ended queues) are a list-like container that support O(1)
 		appends and pops from either side of the deque.
@@ -52,14 +55,14 @@ class deque(object):
 		room in the queue.
 		'''
 
-	def pop(self):
+	def pop(self) -> typing.Any:
 		'''
 		Remove and return an item from the right side of the deque.
 
 		Raises `IndexError` if no items are present.
 		'''
 
-	def popleft(self):
+	def popleft(self) -> typing.Any:
 		'''
 		Remove and return an item from the left side of the deque.
 

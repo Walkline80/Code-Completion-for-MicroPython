@@ -76,7 +76,7 @@ to the ABI of the system on which MicroPython runs.
 
 
 class struct(object):
-	def __init__(self, addr, descriptor, layout_type: int = NATIVE, /):
+	def __init__(self, addr: int, descriptor: dict, layout_type: int = NATIVE, /):
 		'''
 		Instantiate a "foreign data structure" object based on structure address
 		in memory, descriptor (encoded as a dictionary), and layout type.
@@ -91,7 +91,7 @@ def sizeof(struct, layout_type: int = NATIVE, /) -> int:
 	instantiated structure object (or its aggregate field).
 	'''
 
-def addressof(obj):
+def addressof(obj) -> int:
 	'''
 	Return address of an object.
 
@@ -99,7 +99,7 @@ def addressof(obj):
 	(and address of this buffer is what actually returned).
 	'''
 
-def bytes_at(addr, size):
+def bytes_at(addr: int, size: int) -> bytes:
 	'''
 	Capture memory at the given address and size as bytes object.
 
@@ -108,7 +108,7 @@ def bytes_at(addr, size):
 	original value.
 	'''
 
-def bytearray_at(addr, size):
+def bytearray_at(addr: int, size: int) -> bytearray:
 	'''
 	Capture memory at the given address and size as bytearray object.
 

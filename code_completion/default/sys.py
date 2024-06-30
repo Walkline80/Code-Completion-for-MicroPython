@@ -1,10 +1,10 @@
 '''
 system specific functions
 
-This module implements a subset of the corresponding CPython module, as described
+This module implements a subset of the corresponding `CPython` module, as described
 below.
 
-For more information, refer to the original CPython documentation: sys.
+For more information, refer to the original `CPython` documentation: [sys](https://docs.python.org/3.5/library/sys.html#module-sys).
 
 [View Doc](https://docs.micropython.org/en/latest/library/sys.html)
 '''
@@ -58,7 +58,7 @@ This attribute is useful for detecting "bitness" of a platform (32-bit vs 64-bit
 , etc.).
 
 It’s recommended to not compare this attribute to some value directly, but instead
-count number of bits in it:
+count number of bits in it.
 '''
 
 modules: dict = ...
