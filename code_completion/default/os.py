@@ -1,13 +1,13 @@
 '''
 basic "operating system" services
 
-This module implements a subset of the corresponding CPython module, as
+This module implements a subset of the corresponding `CPython` module, as
 described below.
 
-For more information, refer to the original CPython documentation: os.
+For more information, refer to the original `CPython` documentation: [os](https://docs.python.org/3.5/library/os.html#module-os).
 
-The os module contains functions for filesystem access and mounting, terminal
-redirection and duplication, and the uname and urandom functions.
+The `os` module contains functions for filesystem access and mounting, terminal
+redirection and duplication, and the `uname` and `urandom` functions.
 
 [View Doc](https://docs.micropython.org/en/latest/library/os.html)
 '''

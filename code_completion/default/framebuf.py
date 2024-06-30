@@ -6,6 +6,9 @@ images, which can then be sent to a display.
 
 [View Doc](https://docs.micropython.org/en/latest/library/framebuf.html)
 '''
+import typing
+
+
 class FrameBuffer(object):
 	'''
 	The FrameBuffer class provides a pixel buffer which can be drawn upon with
@@ -44,7 +47,7 @@ class FrameBuffer(object):
 
 		- `height` is the height of the FrameBuffer in pixels
 
-		- `format` specifies the type of pixel used in the FrameBuffer;
+		- `format` specifies the type of pixel used in the FrameBuffer
 
 			permissible values are listed in Constants.
 
@@ -72,21 +75,20 @@ class FrameBuffer(object):
 	def fill(self, c):
 		'''Fill the entire FrameBuffer with the specified color.'''
 
-	def pixel(self, x: int, y: int, c=None):
-		'''
-		If `c` is not given, get the color value of the specified pixel.
-
-		If `c` is given, set the specified pixel to the given color.
-		'''
+	@typing.overload
+	def pixel(self, x: int, y: int):
+		'''Get the color value of the specified pixel.'''
+	@typing.overload
+	def pixel(self, x: int, y: int, c):
+		'''Set the specified pixel to the given color.'''
 
 	def hline(self, x: int, y: int, w: int, c):
 		'''
 		Draw a line from a set of coordinates using the given color and a
 		thickness of 1 pixel.
 
-		The line method draws the line up to a second set of coordinates whereas
-		the hline and vline methods draw horizontal and vertical lines respectively
-		up to a given length.
+		The `hline()` method draw horizontal line respectively up to a given
+		length.
 		'''
 
 	def vline(self, x: int, y: int, h: int, c):
@@ -94,9 +96,8 @@ class FrameBuffer(object):
 		Draw a line from a set of coordinates using the given color and a thickness
 		of 1 pixel.
 
-		The line method draws the line up to a second set of coordinates whereas
-		the hline and vline methods draw horizontal and vertical lines respectively
-		up to a given length.
+		The `vline()` method draw vertical line respectively up to a given
+		length.
 		'''
 
 	def line(self, x1: int, y1: int, x2: int, y2: int, c):
@@ -104,16 +105,14 @@ class FrameBuffer(object):
 		Draw a line from a set of coordinates using the given color and a thickness
 		of 1 pixel.
 
-		The line method draws the line up to a second set of coordinates whereas
-		the hline and vline methods draw horizontal and vertical lines respectively
-		up to a given length.
+		The `line()` method draws the line up to a second set of coordinates.
 		'''
 
 	def rect(self, x: int, y: int, w: int, h: int, c, f: bool = False):
 		'''
 		Draw a rectangle at the given location, size and color.
 
-		The optional `f` parameter can be set to True to fill the rectangle.
+		The optional `f` parameter can be set to `True` to fill the rectangle.
 
 		Otherwise just a one pixel outline is drawn.
 		'''
@@ -127,7 +126,7 @@ class FrameBuffer(object):
 
 		The `c` parameter defines the color.
 
-		The optional `f` parameter can be set to True to fill the ellipse.
+		The optional `f` parameter can be set to `True` to fill the ellipse.
 
 		Otherwise just a one pixel outline is drawn.
 
@@ -145,10 +144,10 @@ class FrameBuffer(object):
 		Given a list of coordinates, draw an arbitrary (convex or concave) closed
 		polygon at the given x, y location using the given color.
 
-		The `coords` must be specified as a array of integers, e.g. array('h',
-		[x0, y0, x1, y1, ... xn, yn]).
+		The `coords` must be specified as a `array` of integers, e.g. `array('h',
+		[x0, y0, x1, y1, ... xn, yn])`.
 
-		The optional `f` parameter can be set to True to fill the polygon.
+		The optional `f` parameter can be set to `True` to fill the polygon.
 
 		Otherwise just a one pixel outline is drawn.
 		'''
@@ -201,8 +200,8 @@ class FrameBuffer(object):
 		monochrome source would have 2 pixels representing background and
 		foreground colors.
 
-		The application assigns a color to each pixel in the palette.
+		The application assigns a color to each pixel in the `palette`.
 
-		The color of the current pixel will be that of that palette pixel whose
+		The color of the current pixel will be that of that `palette` pixel whose
 		`x` position is the color of the corresponding source pixel.
 		'''

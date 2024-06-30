@@ -1,18 +1,18 @@
 '''
 time related functions
 
-This module implements a subset of the corresponding CPython module, as described
+This module implements a subset of the corresponding `CPython` module, as described
 below.
 
-For more information, refer to the original CPython documentation: time.
+For more information, refer to the original `CPython` documentation: [time](https://docs.python.org/3.5/library/time.html#module-time).
 
-The time module provides functions for getting the current time and date,
+The `time` module provides functions for getting the current time and date,
 measuring time intervals, and for delays.
 
 [View Doc](https://docs.micropython.org/en/latest/library/time.html)
 '''
 # Functions
-def gmtime(secs: tuple = None):
+def gmtime(secs: int = None) -> tuple:
 	'''
 	Convert the time `secs` expressed in seconds since the Epoch into an 8-tuple
 	which contains:
@@ -35,7 +35,7 @@ def gmtime(secs: tuple = None):
 	- yearday is 1-366
 	'''
 
-def localtime(secs: tuple = None):
+def localtime(secs: int = None) -> tuple:
 	'''
 	Convert the time `secs` expressed in seconds since the Epoch into an 8-tuple
 	which contains:
@@ -48,17 +48,17 @@ def localtime(secs: tuple = None):
 
 	The format of the entries in the 8-tuple are:
 
-	- year includes the century (for example 2014).
-	- month is 1-12
-	- mday is 1-31
-	- hour is 0-23
-	- minute is 0-59
-	- second is 0-59
-	- weekday is 0-6 for Mon-Sun
-	- yearday is 1-366
+	- `year` includes the century (for example 2014).
+	- `month` is 1-12
+	- `mday` is 1-31
+	- `hour` is 0-23
+	- `minute` is 0-59
+	- `second` is 0-59
+	- `weekday` is 0-6 for Mon-Sun
+	- `yearday` is 1-366
 	'''
 
-def mktime():
+def mktime(datetime: tuple) -> int:
 	'''
 	This is inverse function of localtime.
 
@@ -67,7 +67,7 @@ def mktime():
 	It returns an integer which is the number of seconds since Jan 1, 2000.
 	'''
 
-def sleep(seconds):
+def sleep(seconds: int | float):
 	'''
 	Sleep for the given number of `seconds`.
 
@@ -78,7 +78,7 @@ def sleep(seconds):
 	compatibility with them use `sleep_ms()` and `sleep_us()` functions.
 	'''
 
-def sleep_ms(ms):
+def sleep_ms(ms: int):
 	'''
 	Delay for given number of milliseconds, should be positive or 0.
 
@@ -91,7 +91,7 @@ def sleep_ms(ms):
 	Use `sleep_us()` for more precise delays.
 	'''
 
-def sleep_us(us):
+def sleep_us(us: int):
 	'''
 	Delay for given number of microseconds, should be positive or 0.
 
@@ -135,10 +135,10 @@ def ticks_ms():
 		results from the latter functions.
 	'''
 
-def ticks_us():
+def ticks_us() -> int:
 	'''Just like `ticks_ms()`, but in microseconds.'''
 
-def ticks_cpu():
+def ticks_cpu() -> int:
 	'''
 	Similar to `ticks_ms()` and `ticks_us()`, but with the highest possible
 	resolution in the system.
@@ -160,7 +160,7 @@ def ticks_cpu():
 	Availability: Not every port implements this function.
 	'''
 
-def ticks_add(ticks, delta):
+def ticks_add(ticks: int, delta: int) -> int:
 	'''
 	Offset `ticks` value by a given number, which can be either positive or
 	negative.
@@ -178,7 +178,7 @@ def ticks_add(ticks, delta):
 	you must use `ticks_diff()` function to work with deadlines.)
 	'''
 
-def ticks_diff(ticks1, ticks2):
+def ticks_diff(ticks1: int, ticks2: int) -> int:
 	'''
 	Measure ticks difference between values returned from `ticks_ms()`, `ticks_us()`
 	, or `ticks_cpu()` functions, as a signed value which may wrap around.
@@ -208,7 +208,7 @@ def time() -> int:
 	is a better choice.
 	'''
 
-def time_ns():
+def time_ns() -> int:
 	'''
 	Similar to `time()` but returns nanoseconds since the Epoch, as an integer
 	(usually a big integer, so will allocate on the heap).
