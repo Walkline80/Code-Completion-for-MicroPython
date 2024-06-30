@@ -1,16 +1,13 @@
 '''
-access binary data in a structured way
+以结构化方式访问二进制数据
 
-This module implements "foreign data interface" for MicroPython.
+该模块实现了 MicroPython 的`外部数据接口`。
 
-The idea behind it is similar to CPython’s ctypes modules, but the actual API
-is different, streamlined and optimized for small size.
+它背后的想法类似于 CPython 的`ctypes`模块，但实际的 API 是不同的，针对小尺寸进行了简化和优化。
 
-The basic idea of the module is to define data structure layout with about the
-same power as the C language allows, and then access it using familiar dot-syntax
-to reference sub-fields.
+该模块的基本思想是定义与 C 语言所允许的大致相同的功能的数据结构布局，然后使用熟悉的点语法访问它以引用子字段。
 
-[View Doc](https://docs.micropython.org/en/latest/library/uctypes.html)
+[查看文档](https://docs.micropython.org/en/latest/library/uctypes.html)
 '''
 # Constants
 # Integer types for structure descriptors.
@@ -47,8 +44,7 @@ ULONGLONG: int = ...
 
 VOID: int = ...
 '''
-VOID is an alias for `UINT8`, and is provided to conveniently define C’s void
-pointers: (`uctypes.PTR`, `uctypes.VOID`).
+`VOID`是`UINT8`的别名，用于方便地定义 C 的 void 指针：`(uctypes.PTR, uctypes.VOID)`。
 '''
 
 # Type constants for pointers and arrays.
@@ -59,59 +55,55 @@ ARRAY: int = ...
 
 LITTLE_ENDIAN: int = ...
 '''
-Layout type for a little-endian packed structure.
+小端填充结构的布局类型。
 
-Packed means that every field occupies exactly as many bytes as defined in the
-descriptor, i.e. the alignment is 1.
+填充意味着每个字段占用的字节数与描述符中定义的字节数完全相同，即对齐方式为 1。
 '''
 
 BIG_ENDIAN: int = ...
-'''Layout type for a big-endian packed structure.'''
+'''大端填充结构的布局类型。'''
 
 NATIVE: int = ...
 '''
-Layout type for a native structure - with data endianness and alignment conforming
-to the ABI of the system on which MicroPython runs.
+原生结构的布局类型
+
+数据字节序和对齐方式符合运行 MicroPython 的系统的 ABI。
 '''
 
 
 class struct(object):
-	def __init__(self, addr, descriptor, layout_type: int = NATIVE, /):
+	def __init__(self, addr: int, descriptor: dict, layout_type: int = NATIVE, /):
 		'''
-		Instantiate a "foreign data structure" object based on structure address
-		in memory, descriptor (encoded as a dictionary), and layout type.
+		根据内存中的结构地址、描述符（编码为字典）和布局类型实例化`外部数据结构`对象。
 		'''
 
 
 def sizeof(struct, layout_type: int = NATIVE, /) -> int:
 	'''
-	Return size of data structure in bytes.
+	返回数据结构的大小（以字节为单位）。
 
-	The `struct` argument can be either a structure class or a specific
-	instantiated structure object (or its aggregate field).
+	`struct`参数可以是结构类，也可以是特定的实例化结构对象（或其聚合字段）。
 	'''
 
-def addressof(obj):
+def addressof(obj) -> int:
 	'''
-	Return address of an object.
+	返回对象的地址。
 
-	Argument should be bytes, bytearray or other object supporting buffer protocol
-	(and address of this buffer is what actually returned).
-	'''
-
-def bytes_at(addr, size):
-	'''
-	Capture memory at the given address and size as bytes object.
-
-	As bytes object is immutable, memory is actually duplicated and copied into
-	bytes object, so if memory contents change later, created object retains
-	original value.
+	参数应该是字节、字节数组或其他支持缓冲区协议的对象（此缓冲区的地址是实际返回的地址）。
 	'''
 
-def bytearray_at(addr, size):
+def bytes_at(addr: int, size: int) -> bytes:
 	'''
-	Capture memory at the given address and size as bytearray object.
+	将给定地址和大小的内存捕获为字节对象。
 
-	Unlike `bytes_at()` function, memory is captured by reference, so it can be
-	both written too, and you will access current value at the given memory address.
+	由于 bytes 对象是不可变的，因此内存实际上是复制到 bytes 对象中的，因此如果以后内存
+	内容发生变化，创建的对象将保留原始值。
+	'''
+
+def bytearray_at(addr: int, size: int) -> bytearray:
+	'''
+	将给定地址和大小的内存捕获为 bytearray 对象。
+
+	与`bytes_at()`函数不同，内存是通过引用捕获的，因此它也可以写入，并且你还可以访问给定
+	内存地址的当前值。
 	'''

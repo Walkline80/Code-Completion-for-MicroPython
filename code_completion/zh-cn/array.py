@@ -1,114 +1,102 @@
 '''
-arrays of numeric data
+数值数据数组
 
-This module implements a subset of the corresponding CPython module, as described
-below.
+此模块实现相应`CPython`模块的子集，如下所述。
 
-For more information, refer to the original CPython documentation: array.
+有关更多信息，请参阅原始`CPython`文档：[array](https://docs.python.org/3.5/library/array.html#module-array)。
 
-Supported format codes: `b`, `B`, `h`, `H`, `i`, `I`, `l`, `L`, `q`, `Q`, `f`, `d`
-(the latter 2 depending on the floating-point support).
+支持的格式代码：'b'、'B'、'h'、'H'、'i'、'I'、'l'、'L'、'q'、'Q'、'f'、'd'（后 2 种取决于浮点支持）。
 
-[View Doc](https://docs.micropython.org/en/latest/library/array.html)
+[查看文档](https://docs.micropython.org/en/latest/library/array.html)
 '''
+import typing
+
+
 class array(object):
-	def __init__(self, typecode, iterable=None):
+	def __init__(self, typecode: str, iterable=None):
 		'''
-		Create array with elements of given type.
+		使用给定类型的元素创建数组。
 
-		Initial contents of the array are given by `iterable`.
-
-		If it is not provided, an empty array is created.
+		数组的初始内容由`iterable`给出，如未提供，则创建一个空数组。
 		'''
 
 	def append(self, val):
-		'''Append new element `val` to the end of array, growing it.'''
+		'''将新元素`val`附加到数组的末尾，使其增长。'''
 
 	def extend(self, iterable):
 		'''
-		Append new elements as contained in `iterable` to the end of array,
-		growing it.
+		将`iterable`中包含的新元素附加到数组的末尾，使其增长。
 		'''
 
-	def __getitem__(self, index):
+	def __getitem__(self, index) -> typing.Any:
 		'''
-		Indexed read of the array, called as `a[index]` (where `a` is an `array`).
+		数组的索引读取，调用方法为`a[index]`（其中`a`是`array`）。
 
-		Returns a value if index is an `int` and an `array` if `index` is a slice.
+		如果`index`是`int`，则返回一个值，如果`index`是切片，则返回一个`array`。
 
-		Negative indices count from the end and `IndexError` is thrown if the
-		index is out of range.
+		负索引从末尾开始计数，如果索引超出范围，则抛出`IndexError`。
 
-		Note:
+		注意：
 
-			`__getitem__` cannot be called directly (`a.__getitem__(index)` fails)
-			and is not present in `__dict__`, however `a[index]` does work.
+			`__getitem__`不能直接调用（`a.__getitem__(index)`会失败）并且不在
+			`__dict__`中出现，但`a[index]`有效。
 		'''
 
 	def __setitem__(self, index, value):
 		'''
-		Indexed write into the array, called as `a[index] = value` (where `a`
-		is an `array`).
+		索引写入数组，调用方法为`a[index] = value`（其中`a`是`array`）。
 
-		`value` is a single value if `index` is an `int` and an `array` if index
-		is a slice.
+		如果`index`是`int`，则`value`是单个值，如果`index`是切片，则为`array`。
 
-		Negative indices count from the end and `IndexError` is thrown if the
-		index is out of range.
+		负索引从末尾开始计数，如果索引超出范围，则抛出`IndexError`。
 
-		Note:
+		注意：
 
-			`__setitem__` cannot be called directly (`a.__setitem__(index, value)`
-			fails) and is not present in `__dict__`, however `a[index] = value`
-			does work.
+			`__setitem__`不能直接调用（`a.__setitem__(index, value)`会失败）并且不在
+			`__dict__`中出现，但`a[index] = value`有效。
 		'''
 
 	def __len__(self) -> int:
 		'''
-		Returns the number of items in the array, called as `len(a)` (where `a`
-		is an `array`).
+		返回数组中的项目数，调用方法为`len(a)`（其中`a`是`array`）。
 
-		Note:
+		注意：
 
-			`__len__` cannot be called directly (`a.__len__()` fails) and the
-			method is not present in `__dict__`, however `len(a)` does work.
+			`__len__`不能直接调用（`a.__len__()`会失败）并且不在`__dict__`中出现，但
+			`len(a)`有效。
 		'''
 
-	def __add__(self, other):
+	def __add__(self, other) -> typing.Any:
 		'''
-		Return a new `array` that is the concatenation of the array with `other`,
-		called as `a + other` (where `a` and `other` are both `arrays`).
+		返回一个新的`array`，它是数组与`other`的串联，调用方法为`a + other`（其中`a`和`other`都是`arrays`）。
 
-		Note:
+		注意：
 
-			`__add__` cannot be called directly (`a.__add__(other)` fails) and
-			is not present in `__dict__`, however `a + other` does work.
+			`__add__`不能直接调用（`a.__add__(other)`会失败）并且不在`__dict__`中出现，但
+			`a + other`有效。
 		'''
 
 	def __iadd__(self, other):
 		'''
-		Concatenates the array with `other` in-place, called as `a += other`
-		(where `a` and `other` are both `arrays`).
+		将数组与`other`就地连接起来，调用方法为`a += other`（其中`a`和`other`都是`arrays`）。
 
-		Equivalent to `extend(other)`.
+		相当于`extend(other)`。
 
-		Note:
+		注意：
 
-			`__iadd__` cannot be called directly (`a.__iadd__(other)` fails) and
-			is not present in `__dict__`, however `a += other` does work.
+			`__iadd__`不能直接调用（`a.__iadd__(other)`会失败）并且不在`__dict__`中出现，但
+			`a += other`有效。
 		'''
 
 	def __repr__(self) -> str:
 		'''
-		Returns the string representation of the array, called as `str(a)` or
-		`repr(a)` (where `a` is an `array`).
+		返回数组的字符串表示形式，调用方法为`str(a)`或`repr(a)`（其中`a`是`array`）。
 
-		Returns the string `"array(<type>, [<elements>])"`, where `<type>` is
-		the type code letter for the array and `<elements>` is a comma separated
-		list of the elements of the array.
+		返回字符串`"array(<type>, [<elements>])"`，其中`<type>`是数组的类型代码格式字母，
+		`<elements>`是数组元素的逗号分隔列表。
 
-		Note:
+		注意：
 
-			`__repr__` cannot be called directly (`a.__repr__()` fails) and is
-			not present in `__dict__`, however `str(a)` and `repr(a)` both work.
+			`__repr__`不能直接调用（`a.__repr__()`会失败）并且不在`__dict__`中出现，但
+			`str(a)`和`repr(a)`有效。
 		'''
