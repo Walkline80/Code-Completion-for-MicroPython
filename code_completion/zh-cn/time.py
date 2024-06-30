@@ -1,215 +1,179 @@
 '''
-time related functions
+时间相关功能
 
-This module implements a subset of the corresponding CPython module, as described
-below.
+此模块实现相应`CPython`模块的子集，如下所述。
 
-For more information, refer to the original CPython documentation: time.
+有关更多信息，请参阅原始`CPython`文档：[time](https://docs.python.org/3.5/library/time.html#module-time)。
 
-The time module provides functions for getting the current time and date,
-measuring time intervals, and for delays.
+`time`模块提供用于获取当前时间和日期、测量时间间隔和延迟的功能。
 
-[View Doc](https://docs.micropython.org/en/latest/library/time.html)
+[查看文档](https://docs.micropython.org/en/latest/library/time.html)
 '''
 # Functions
-def gmtime(secs: tuple = None):
+def gmtime(secs: int = None) -> tuple:
 	'''
-	Convert the time `secs` expressed in seconds since the Epoch into an 8-tuple
-	which contains:
+	将自从新纪元以来以秒为单位表示的时间`secs`转换为包含以下内容的 8 元组：
 
 		`(year, month, mday, hour, minute, second, weekday, yearday)`
 
-	If `secs` is not provided or None, then the current time from the RTC is used.
+	如果未提供`secs`或者为`None`，则使用 RTC 的当前时间。
 
-	This function returns a date-time tuple in UTC.
+	此函数以 UTC 格式返回日期时间元组。
 
-	The format of the entries in the 8-tuple are:
+	8 元组中条目的格式为：
 
-	- year includes the century (for example 2014).
-	- month is 1-12
-	- mday is 1-31
-	- hour is 0-23
-	- minute is 0-59
-	- second is 0-59
-	- weekday is 0-6 for Mon-Sun
-	- yearday is 1-366
+	- `year`包括世纪（例如 2014 年）。
+	- `month`是 1-12
+	- `mday`是 1-31
+	- `hour`是 0-23
+	- `minute`是 0-59
+	- `second`是 0-59
+	- `weekday`是 0-6（周一至周日）
+	- `yearday`是 1-366
 	'''
 
-def localtime(secs: tuple = None):
+def localtime(secs: int = None) -> tuple:
 	'''
-	Convert the time `secs` expressed in seconds since the Epoch into an 8-tuple
-	which contains:
+	将自从新纪元以来以秒为单位表示的时间`secs`转换为包含以下内容的 8 元组：
 
 		`(year, month, mday, hour, minute, second, weekday, yearday)`
 
-	If `secs` is not provided or None, then the current time from the RTC is used.
+	如果未提供`secs`或者为`None`，则使用 RTC 的当前时间。
 
-	This function returns a date-time tuple in local time.
+	此函数返回本地时间的日期时间元组。
 
-	The format of the entries in the 8-tuple are:
+	8 元组中条目的格式为：
 
-	- year includes the century (for example 2014).
-	- month is 1-12
-	- mday is 1-31
-	- hour is 0-23
-	- minute is 0-59
-	- second is 0-59
-	- weekday is 0-6 for Mon-Sun
-	- yearday is 1-366
+	- `year`包括世纪（例如 2014 年）。
+	- `month`是 1-12
+	- `mday`是 1-31
+	- `hour`是 0-23
+	- `minute`是 0-59
+	- `second`是 0-59
+	- `weekday`是 0-6（周一至周日）
+	- `yearday`是 1-366
 	'''
 
-def mktime():
+def mktime(datetime: tuple) -> int:
+
 	'''
-	This is inverse function of localtime.
+	这是`localtime()`的反函数。
 
-	It’s argument is a full 8-tuple which expresses a time as per localtime.
+	它的参数是一个完整的 8 元组，它表示每个本地时间的时间。
 
-	It returns an integer which is the number of seconds since Jan 1, 2000.
-	'''
-
-def sleep(seconds):
-	'''
-	Sleep for the given number of `seconds`.
-
-	Some boards may accept `seconds` as a floating-point number to sleep for a
-	fractional number of `seconds`.
-
-	Note that other boards may not accept a floating-point argument, for
-	compatibility with them use `sleep_ms()` and `sleep_us()` functions.
+	它返回一个整数，即自 2000 年 1 月 1 日以来的秒数。
 	'''
 
-def sleep_ms(ms):
+def sleep(seconds: int | float):
 	'''
-	Delay for given number of milliseconds, should be positive or 0.
+	睡眠给定的`秒数`。
 
-	This function will delay for at least the given number of milliseconds, but
-	may take longer than that if other processing must take place, for example
-	interrupt handlers or other threads.
+	某些开发板可能接受`秒`作为浮点数，以休眠`秒`的小数。
 
-	Passing in 0 for `ms` will still allow this other processing to occur.
-
-	Use `sleep_us()` for more precise delays.
+	请注意，其他开发板可能不接受浮点参数，为了与它们兼容，请使用`sleep_ms()`和`sleep_us()`函数。
 	'''
 
-def sleep_us(us):
+def sleep_ms(ms: int):
 	'''
-	Delay for given number of microseconds, should be positive or 0.
+	延迟给定的毫秒数，`ms`应为正数或 0。
 
-	This function attempts to provide an accurate delay of at least `us`
-	microseconds, but it may take longer if the system has other higher priority
-	processing to perform.
-	'''
+	此函数将至少延迟给定的毫秒数，但如果必须进行其他处理，例如中断处理程序或其他线程，则可能需要更长的时间。
 
-def ticks_ms():
-	'''
-	Returns an increasing millisecond counter with an arbitrary reference point,
-	that wraps around after some value.
+	将 0 传递给`ms`仍将允许进行其他处理。
 
-	The wrap-around value is not explicitly exposed, but we will refer to it as
-	`TICKS_MAX` to simplify discussion.
-
-	Period of the values is `TICKS_PERIOD = TICKS_MAX + 1`.
-
-	`TICKS_PERIOD` is guaranteed to be a power of two, but otherwise may differ
-	from port to port.
-
-	The same period value is used for all of `ticks_ms()`, `ticks_us()`,
-	`ticks_cpu()` functions (for simplicity).
-
-	Thus, these functions will return a value in range `[0 .. TICKS_MAX]`,
-	inclusive, total `TICKS_PERIOD` values.
-
-	Note that only non-negative values are used. For the most part, you should
-	treat values returned by these functions as opaque.
-
-	The only operations available for them are `ticks_diff()` and `ticks_add()`
-	functions described below.
-
-	Note:
-
-		Performing standard mathematical operations (+, -) or relational operators
-		(<, <=, >, >=) directly on these value will lead to invalid result.
-
-		Performing mathematical operations and then passing their results as
-		arguments to `ticks_diff()` or `ticks_add()` will also lead to invalid
-		results from the latter functions.
+	使用`sleep_us()`以获得更精确的延迟。
 	'''
 
-def ticks_us():
-	'''Just like `ticks_ms()`, but in microseconds.'''
-
-def ticks_cpu():
+def sleep_us(us: int):
 	'''
-	Similar to `ticks_ms()` and `ticks_us()`, but with the highest possible
-	resolution in the system.
+	延迟给定微秒数，`us`应为正数或 0。
 
-	This is usually CPU clocks, and that’s why the function is named that way.
-
-	But it doesn’t have to be a CPU clock, some other timing source available
-	in a system (e.g. high-resolution timer) can be used instead.
-
-	The exact timing unit (resolution) of this function is not specified on
-	time module level, but documentation for a specific port may provide more
-	specific information.
-
-	This function is intended for very fine benchmarking or very tight real-time
-	loops.
-
-	Avoid using it in portable code.
-
-	Availability: Not every port implements this function.
+	此函数尝试提供至少`us`微秒的准确延迟，但如果系统要执行其他更高优先级的处理，则可能需要更长的时间。
 	'''
 
-def ticks_add(ticks, delta):
+def ticks_ms() -> int:
 	'''
-	Offset `ticks` value by a given number, which can be either positive or
-	negative.
+	返回具有任意引用点的递增毫秒计数器，该计数器在某个值之后进行归零反转。
 
-	Given a `ticks` value, this function allows to calculate ticks value `delta`
-	ticks before or after it, following modular-arithmetic definition of tick
-	values.
+	反转值没有显式公开，但是为了简化讨论，我们将其称为`TICKS_MAX`。
 
-	`ticks` parameter must be a direct result of call to `ticks_ms()`, `ticks_us()`
-	, or `ticks_cpu()` functions (or from previous call to `ticks_add()`).
+	反转周期值为`TICKS_PERIOD = TICKS_MAX + 1`。
 
-	However, `delta` can be an arbitrary integer number or numeric expression.
+	`TICKS_PERIOD`保证是 2 的幂，但是在其他情况下可能因端口不同而有所不同。
 
-	`ticks_add()` is useful for calculating deadlines for events/tasks. (Note:
-	you must use `ticks_diff()` function to work with deadlines.)
+	所有的`ticks_ms()`、`ticks_us()`、`ticks_cpu()`函数都使用相同的周期值(为了简单起见)。
+
+	因此，这些函数将返回一个范围为`[0 .. TICKS_MAX]`的值，包括总的`TICKS_PERIOD`值。
+
+	请注意，只使用非负值。在大多数情况下，应该将这些函数返回的值视为不透明的。
+
+	它们唯一可用的操作是`ticks_diff()`和`ticks_add()`函数。
+
+	注意:
+
+		直接对这些值执行标准的数学运算(+, -)或关系运算符(<, <=, >, >=)将导致无效的结果。
+
+		执行数学运算，然后将它们的结果作为参数传递给`ticks_diff()`或`ticks_add()`，也会导致后者函数的结果无效。
 	'''
 
-def ticks_diff(ticks1, ticks2):
-	'''
-	Measure ticks difference between values returned from `ticks_ms()`, `ticks_us()`
-	, or `ticks_cpu()` functions, as a signed value which may wrap around.
+def ticks_us() -> int:
+	'''就像`ticks_ms()`一样，但以微秒为单位。'''
 
-	The argument order is the same as for subtraction operator, `ticks_diff(ticks1,
-	ticks2)` has the same meaning as `ticks1 - ticks2`.
+def ticks_cpu() -> int:
+	'''
+	类似于`ticks_ms()`和`ticks_us()`，但在系统中具有尽可能高的分辨率。
+
+	这通常是 CPU 时钟，这就是为什么函数被这样命名。
+
+	但是它不一定是一个 CPU 时钟，可以使用系统中其他可用的计时源（例如高分辨率计时器）来代替。
+
+	这个函数的精确计时单元（分辨率）没有在时间模块级别上指定，但是针对特定端口的文档可以提供更具体的信息。
+
+	此功能用于非常精细的基准测试或非常紧凑的实时循环。
+
+	避免在可移植代码中使用它。
+
+	可用性：
+
+		并非每个端口都实现此功能。
+	'''
+
+def ticks_add(ticks: int, delta: int) -> int:
+	'''
+	偏移给定的`ticks`值，可以是正数也可以是负数。
+
+	给定一个`ticks`值，此函数允许在其之前或之后计算`delta`个`ticks`值，遵循模运算定义的`ticks`值。
+
+	`ticks`参数必须是对`ticks_ms()`、`ticks_us()`或`ticks_cpu()`函数的直接调用的结果（或来自先前对`ticks_add()`的调用）。
+
+	然而，`delta`可以是任意整数或数值表达式。
+
+	`ticks_add()`用于计算事件/任务的截止日期。（注意：您必须使用`ticks_diff()`函数来处理截止日期。）
+	'''
+
+def ticks_diff(ticks1: int, ticks2: int) -> int:
+	'''
+	度量从`ticks_ms()`、`ticks_us()`或`ticks_cpu()`函数返回的值之间的差值，作为可以归零反转的有符号值。
+
+	参数顺序与减法运算符相同，`ticks_diff(ticks1, ticks2)`与`ticks1 - ticks2`具有相同的含义。
 	'''
 
 def time() -> int:
 	'''
-	Returns the number of seconds, as an integer, since the Epoch, assuming that
-	underlying RTC is set and maintained as described above.
+	以整数形式返回自新纪元以来的秒数，假设基础 RTC 已按上述方式设置和维护。
 
-	If an RTC is not set, this function returns number of seconds since a
-	port-specific reference point in time (for embedded boards without a
-	battery-backed RTC, usually since power up or reset).
+	如果未设置 RTC，此函数将返回自端口特定参考点以来的秒数（对于没有电池备份 RTC 的开发版来说，通常是自上电或复位以来）。
 
-	If you want to develop portable MicroPython application, you should not rely
-	on this function to provide higher than second precision.
+	如果要开发可移植的 MicroPython 应用程序，则不应依赖此函数来提供高于秒级的精度。
 
-	If you need higher precision, absolute timestamps, use `time_ns()`.
+	如果需要更高精度的绝对时间戳，请使用`time_ns()`。
 
-	If relative times are acceptable then use the `ticks_ms()` and `ticks_us()`
-	functions.
+	如果相对时间是可以接受的，则使用`ticks_ms()`和`ticks_us()`函数。
 
-	If you need calendar time, `gmtime()` or `localtime()` without an argument
-	is a better choice.
+	如果您需要日历时间，不带参数的`gmtime()`或`localtime()`是更好的选择。
 	'''
 
-def time_ns():
+def time_ns() -> int:
 	'''
-	Similar to `time()` but returns nanoseconds since the Epoch, as an integer
-	(usually a big integer, so will allocate on the heap).
+	类似于`time()`，但返回自新纪元以来的纳秒数，作为整数（通常是一个大整数，因此将在堆上分配）。
 	'''

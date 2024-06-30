@@ -1,18 +1,19 @@
 '''
-frame buffer manipulation
+帧缓冲区操作
 
-This module provides a general frame buffer which can be used to create bitmap
-images, which can then be sent to a display.
+该模块提供了一个通用帧缓冲区，可用于创建位图图像，然后可以将其发送到显示设备。
 
-[View Doc](https://docs.micropython.org/en/latest/library/framebuf.html)
+[查看文档](https://docs.micropython.org/en/latest/library/framebuf.html)
 '''
+import typing
+
+
 class FrameBuffer(object):
 	'''
-	The FrameBuffer class provides a pixel buffer which can be drawn upon with
-	pixels, lines, rectangles, ellipses, polygons, text and even other
-	FrameBuffers.
+	FrameBuffer 类提供了一个像素缓冲区，可以使用像素、线条、矩形、椭圆、多边形、文本甚至其他
+	FrameBuffer 进行绘制。
 
-	It is useful when generating output for displays.
+	在生成显示设备输出时，它很有用。
 	'''
 	# Constants
 	# Monochrome (1-bit) color format. 
@@ -21,188 +22,155 @@ class FrameBuffer(object):
 	MONO_HMSB: int = ...
 
 	RGB565: int = ...
-	'''Red Green Blue (16-bit, 5+6+5) color format'''
+	'''红绿蓝（16 位，5+6+5）颜色格式'''
 
 	GS2_HMSB: int = ...
-	'''Grayscale (2-bit) color format'''
+	'''灰度（2 位）颜色格式'''
 
 	GS4_HMSB: int = ...
-	'''Grayscale (4-bit) color format'''
+	'''灰度（4 位）颜色格式'''
 
 	GS8: int = ...
-	'''Grayscale (8-bit) color format'''
+	'''灰度（8 位）颜色格式'''
 
 	def __init__(self, buffer, width: int, height: int, format: int, stride: int, /):
 		'''
-		Construct a FrameBuffer object. The parameters are:
+		构造 FrameBuffer 对象。参数包括：
 
-		- `buffer` is an object with a buffer protocol which must be large enough
-		to contain every pixel defined by the width, height and format of the
-		FrameBuffer.
+		- `buffer`是具有缓冲区协议的对象，该缓冲区必须足够大，以包含由 FrameBuffer 的宽度、高度和格式定义的每个像素。
 
-		- `width` is the width of the FrameBuffer in pixels
+		- `width`是 FrameBuffer 的宽度，以像素为单位
 
-		- `height` is the height of the FrameBuffer in pixels
+		- `height`是 FrameBuffer 的高度，以像素为单位
 
-		- `format` specifies the type of pixel used in the FrameBuffer;
+		- `format`指定 FrameBuffer 中使用的像素类型
 
-			permissible values are listed in Constants.
+			允许的值列在常量中。
 
-			These set the number of bits used to encode a color value and the
-			layout of these bits in buffer.
+			它们设置用于对颜色值进行编码的位数以及这些位在缓冲区中的布局。
 
-			Where a color value c is passed to a method, c is a small integer
-			with an encoding that is dependent on the format of the FrameBuffer.
+			如果将颜色值 c 传递给方法，则 c 是一个小整数，其编码依赖于 FrameBuffer 的格式。
 
-		- `stride` is the number of pixels between each horizontal line of pixels
-		in the FrameBuffer.
+		- `stride`是 FrameBuffer 中每条水平像素线之间的像素数。
 
-			This defaults to width but may need adjustments when implementing a
-			FrameBuffer within another larger FrameBuffer or screen.
+			默认值为`width`，但在另一个较大的 FrameBuffer 或屏幕中实现 FrameBuffer 时可能需要调整。
 
-			The buffer size must accommodate an increased step size.
+			缓冲区大小必须适应增加的步长。
 
-		One must specify valid `buffer`, `width`, `height`, `format` and
-		optionally `stride`.
+		必须指定有效的`buffer`、`width`、`height`、`format`和可选的`stride`。
 
-		Invalid buffer size or dimensions may lead to unexpected errors.
+		无效的缓冲区大小或尺寸可能会导致意外错误。
 		'''
 
 	# Drawing primitive shapes
 	def fill(self, c):
-		'''Fill the entire FrameBuffer with the specified color.'''
+		'''用指定的颜色填充整个 FrameBuffer。'''
 
-	def pixel(self, x: int, y: int, c=None):
-		'''
-		If `c` is not given, get the color value of the specified pixel.
+	@typing.overload
+	def pixel(self, x: int, y: int):
+		'''获取指定像素的颜色值。'''
 
-		If `c` is given, set the specified pixel to the given color.
-		'''
+	@typing.overload
+	def pixel(self, x: int, y: int, c):
+		'''将指定的像素设置为给定的颜色。'''
 
 	def hline(self, x: int, y: int, w: int, c):
 		'''
-		Draw a line from a set of coordinates using the given color and a
-		thickness of 1 pixel.
+		使用给定的颜色和 1 像素的厚度从一组坐标中绘制一条线。
 
-		The line method draws the line up to a second set of coordinates whereas
-		the hline and vline methods draw horizontal and vertical lines respectively
-		up to a given length.
+		`hline()`方法绘制给定长度的水平线。
 		'''
 
 	def vline(self, x: int, y: int, h: int, c):
 		'''
-		Draw a line from a set of coordinates using the given color and a thickness
-		of 1 pixel.
+		使用给定的颜色和 1 像素的厚度从一组坐标中绘制一条线。
 
-		The line method draws the line up to a second set of coordinates whereas
-		the hline and vline methods draw horizontal and vertical lines respectively
-		up to a given length.
+		`vline()`方法绘制给定长度的垂直线。
 		'''
 
 	def line(self, x1: int, y1: int, x2: int, y2: int, c):
 		'''
-		Draw a line from a set of coordinates using the given color and a thickness
-		of 1 pixel.
+		使用给定的颜色和 1 像素的厚度从一组坐标中绘制一条线。
 
-		The line method draws the line up to a second set of coordinates whereas
-		the hline and vline methods draw horizontal and vertical lines respectively
-		up to a given length.
+		`line()`方法将线绘制到第二组坐标。
 		'''
 
 	def rect(self, x: int, y: int, w: int, h: int, c, f: bool = False):
 		'''
-		Draw a rectangle at the given location, size and color.
+		以给定的位置、大小和颜色绘制一个矩形。
 
-		The optional `f` parameter can be set to True to fill the rectangle.
+		可选参数`f`可以设置为`True`以填充矩形。
 
-		Otherwise just a one pixel outline is drawn.
+		否则，只会绘制一个像素轮廓。
 		'''
 
 	def ellipse(self, x: int, y: int, xr: int, yr: int, c, f: bool = False, m=None):
 		'''
-		Draw an ellipse at the given location.
+		在给定位置绘制一个椭圆。
 
-		Radii `xr` and `yr` define the geometry; equal values cause a circle to
-		be drawn.
+		半径`xr`和`yr`定义几何图形，如果值相等则绘制一个圆形。
 
-		The `c` parameter defines the color.
+		`c`参数定义颜色。
 
-		The optional `f` parameter can be set to True to fill the ellipse.
+		可选参数`f`可以设置为`True`以填充椭圆。
 
-		Otherwise just a one pixel outline is drawn.
+		否则，只会绘制一个像素轮廓。
 
-		The optional `m` parameter enables drawing to be restricted to certain
-		quadrants of the ellipse.
+		可选参数`m`允许将绘图限制在椭圆的某些象限内。
 
-		The LS four bits determine which quadrants are to be drawn, with bit 0
-		specifying Q1, b1 Q2, b2 Q3 and b3 Q4.
+		LS 四位确定要绘制的象限，位 0 指定 Q1、位 1 指定 Q2、位 2 指定 Q3 以及位 3 指定 Q4。
 
-		Quadrants are numbered counterclockwise with Q1 being top right.
+		象限按逆时针方向编号，Q1 位于右上方。
 		'''
 
 	def poly(self, x: int, y: int, coords, c, f: bool = False):
 		'''
-		Given a list of coordinates, draw an arbitrary (convex or concave) closed
-		polygon at the given x, y location using the given color.
+		给定坐标列表，使用给定颜色在给定的 x、y 位置绘制任意（凸或凹）闭合多边形。
 
-		The `coords` must be specified as a array of integers, e.g. array('h',
-		[x0, y0, x1, y1, ... xn, yn]).
+		`coords`必须指定为整数`array`，例如`array('h', [x0, y0, x1, y1, ...xn, yn])`。
 
-		The optional `f` parameter can be set to True to fill the polygon.
+		可选参数`f`可以设置为`True`以填充多边形。
 
-		Otherwise just a one pixel outline is drawn.
+		否则，只会绘制一个像素轮廓。
 		'''
 
 	# Drawing text
 	def text(self, s: str, x: int, y: int, c=None):
 		'''
-		Write text to the FrameBuffer using the the coordinates as the upper-left
-		corner of the text.
+		使用坐标作为文本的左上角将文本写入 FrameBuffer。
 
-		The color of the text can be defined by the optional argument but is
-		otherwise a default value of 1.
+		文本的颜色可以由可选参数定义，但否则为默认值 1。
 
-		All characters have dimensions of 8x8 pixels and there is currently no
-		way to change the font.
+		所有字符的尺寸均为 8x8 像素，目前无法更改字体。
 		'''
 
 	# Other methods
 	def scroll(self, xstep: int, ystep: int):
 		'''
-		Shift the contents of the FrameBuffer by the given vector.
+		按给定向量移动 FrameBuffer 的内容。
 
-		This may leave a footprint of the previous colors in the FrameBuffer.
+		这可能会在 FrameBuffer 中留下以前颜色的占用空间。
 		'''
 
 	def blit(self, fbuf, x: int, y: int, key: int = -1, palette=None):
 		'''
-		Draw another FrameBuffer on top of the current one at the given coordinates.
+		在给定坐标处的当前 FrameBuffer 之上绘制另一个 FrameBuffer。
 
-		If `key` is specified then it should be a color integer and the
-		corresponding color will be considered transparent: all pixels with that
-		color value will not be drawn.
+		如果指定了`key`，则它应该是一个颜色整数，相应的颜色将被视为透明的：不会绘制具有该颜色值的所有像素。
 
-		If the `palette` is specified then the `key` is compared to the value from
-		`palette`, not to the value directly from `fbuf`.
+		如果指定了`palette`，则将`key`与`palette`中的值进行比较，而不是直接与`fbuf`中的值进行比较。
 
-		The `palette` argument enables blitting between FrameBuffers with differing
-		formats.
+		`palette`参数允许在具有不同格式的 FrameBuffer 之间进行位图复制。
 
-		Typical usage is to render a monochrome or grayscale glyph/icon to a color
-		display.
+		典型用法是将单色或灰度字形/图标渲染到彩色显示设备上。
 
-		The `palette` is a FrameBuffer instance whose format is that of the current
-		FrameBuffer.
+		`palette`是一个 FrameBuffer 实例，其格式是当前 FrameBuffer 的格式。
 
-		The `palette` height is one pixel and its pixel width is the number of
-		colors in the source FrameBuffer.
+		`palette`高度为一个像素，其像素宽度为源 FrameBuffer 中的颜色数。
 
-		The `palette` for an N-bit source needs 2**N pixels; the `palette` for a
-		monochrome source would have 2 pixels representing background and
-		foreground colors.
+		N 位源的`palette`需要 2**N 像素； 单色源的`palette`将有 2 个像素，分别代表背景色和前景色。
 
-		The application assigns a color to each pixel in the palette.
+		应用程序为`palette`中的每个像素分配一种颜色。
 
-		The color of the current pixel will be that of that palette pixel whose
-		`x` position is the color of the corresponding source pixel.
+		当前像素的颜色将是`palette`像素的颜色，其`x`位置是相应源像素的颜色。
 		'''
