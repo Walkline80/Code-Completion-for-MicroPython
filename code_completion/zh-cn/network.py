@@ -1,12 +1,15 @@
 '''
-Specific network class implementations
+网络配置
 
-The following concrete classes implement the AbstractNIC interface and provide a way to control networking interfaces of various kinds.
+该模块提供网络驱动程序和路由配置。
 
-- class WLAN – control built-in WiFi interfaces
+要使用该模块，必须安装具有网络功能的 MicroPython 变体/构建。
 
-[View Doc network](https://docs.micropython.org/en/latest/library/network.html)
-[View Doc network.WLAN](https://docs.micropython.org/en/latest/library/network.WLAN.html)
+本模块提供特定硬件的网络驱动程序，用于配置硬件网络接口。
+
+配置好的接口所提供的网络服务可通过 `socket` 模块使用。
+
+[查看文档](https://docs.micropython.org/en/latest/library/network.html)
 '''
 import typing
 
@@ -64,112 +67,106 @@ STAT_HANDSHAKE_TIMEOUT: int = ...
 @typing.overload
 def country() -> str:
 	'''
-	Get the two-letter ISO 3166-1 Alpha-2 country code to be used for radio
-	compliance.
+	获取用于无线电合规性的双字母 ISO 3166-1 Alpha-2 国家代码。
 
-	This function returns the current country.
+	此函数返回当前国家/地区。
 
-	The default code "XX" represents the "worldwide" region.
+	默认代码“XX”代表“全球”地区。
 	'''
 
 @typing.overload
 def country(code: str):
 	'''
-	Set the two-letter ISO 3166-1 Alpha-2 country code to be used for radio
-	compliance.
+	设置用于无线电合规的双字母 ISO 3166-1 Alpha-2 国家代码。
 
-	The country will be set to this `code`.
+	国家将被设置为该`code`。
 
-	The default code "XX" represents the "worldwide" region.
+	默认代码“XX”代表“全球”地区。
 	'''
 
 @typing.overload
-def hostname():
+def hostname() -> str:
 	'''
-	Get the hostname that will identify this device on the network.
+	获取在网络上标识此设备的主机名，所有接口都将使用该主机名。
 
-	It will be used by all interfaces.
+	该主机名用于：
 
-	This hostname is used for:
+	- 在客户端请求中发送给 DHCP 服务器。(如果使用 DHCP）
 
-	- Sending to the DHCP server in the client request. (If using DHCP)
-	- Broadcasting via mDNS. (If enabled)
+	- 通过 mDNS 广播。(如果启用）
 
-	This function returns the current hostname.
+	此函数返回当前主机名。
 
-	The default hostname is typically the name of the board.
+	默认主机名通常是开发版名称。
 	'''
 
 @typing.overload
 def hostname(name: str):
 	'''
-	Set the hostname that will identify this device on the network.
+	设置在网络上标识此设备的主机名。
 
-	It will be used by all interfaces.
+	所有接口都将使用该主机名。
 
-	This hostname is used for:
+	该主机名用于：
 
-	- Sending to the DHCP server in the client request. (If using DHCP)
-	- Broadcasting via mDNS. (If enabled)
+	- 在客户端请求中发送给 DHCP 服务器。(如果使用 DHCP）
 
-	The hostname will be set to this `name`.
+	- 通过 mDNS 广播。(如果启用）
 
-	A change in hostname is typically only applied during connection.
+	主机名将设置为该`name`。
 
-	For DHCP this is because the hostname is part of the DHCP client request,
-	and the implementation of mDNS in most ports only initialises the hostname
-	once during connection.
+	主机名的更改通常只在连接过程中进行。
 
-	For this reason, you must set the hostname before activating/connecting your
-	network interfaces.
+	对于 DHCP 而言，这是因为主机名是 DHCP 客户端请求的一部分，而大多数端口的
+	mDNS 只在连接时初始化一次主机名。
 
-	The length of the hostname is limited to 32 characters.
+	因此，必须在激活/连接网络接口前设置主机名。
 
-	MicroPython ports may choose to set a lower limit for memory reasons.
+	主机名的长度限制为 32 个字符。
 
-	If the given name does not fit, a `ValueError` is raised.
+	`MicroPython 端口`可能会出于内存原因设置更低的限制。
 
-	The default hostname is typically the name of the board.
+	如果给定的主机名不合适，系统将提示`ValueError`。
+
+	默认主机名通常是开发板的名称。
 	'''
 
 @typing.overload
-def phy_mode():
+def phy_mode() -> int:
 	'''
-	Get the PHY mode.
+	获取 PHY 模式，该函数返回当前的 PHY 模式。
 
-	This function returns the current PHY mode.
+	可能的模式被定义为常量：
 
-	The possible modes are defined as constants:
+	- `MODE_11B` - IEEE 802.11b
+	- `MODE_11G` - IEEE 802.11g
+	- `MODE_11N` - IEEE 802.11n
 
-	- `MODE_11B` – IEEE 802.11b,
-	- `MODE_11G` – IEEE 802.11g,
-	- `MODE_11N` – IEEE 802.11n.
-
-	Availability: ESP8266.
+	可用性： ESP8266。
 	'''
 
 @typing.overload
 def phy_mode(mode: int):
 	'''
-	Set the PHY mode.
+	设置 PHY 模式，PHY 模式将设置为`mode`。
 
-	The PHY mode will be set to this `mode`.
+	可能的模式被定义为常量：
 
-	The possible modes are defined as constants:
+	- `MODE_11B` - IEEE 802.11b
+	- `MODE_11G` - IEEE 802.11g
+	- `MODE_11N` - IEEE 802.11n
 
-	- `MODE_11B` – IEEE 802.11b,
-	- `MODE_11G` – IEEE 802.11g,
-	- `MODE_11N` – IEEE 802.11n.
-
-	Availability: ESP8266.
+	可用性： ESP8266。
 	'''
 
 
 class WLAN(object):
 	'''
-	control built-in WiFi interfaces
+	控制内置 WiFi 接口
 
-	This class provides a driver for WiFi network processors.
+	该类为 WiFi 网络处理器提供驱动程序。
+
+	[查看文档](https://docs.micropython.org/en/latest/library/network.WLAN.html)
 	'''
 	# Constants
 	IF_STA: int = ...
@@ -186,243 +183,217 @@ class WLAN(object):
 	SEC_OWE: int = ...
 
 	PM_PERFORMANCE: int = ...
-	'''
-	enable WiFi power management to balance power savings and WiFi performance
-	'''
+	'''启用 WiFi 电源管理，在省电和 WiFi 性能之间取得平衡'''
 
 	PM_POWERSAVE: int = ...
-	'''
-	enable WiFi power management with additional power savings and reduced WiFi
-	performance
-	'''
+	'''启用 WiFi 电源管理，可节省更多电力并降低 WiFi 性能'''
 
 	PM_NONE: int = ...
-	'''disable wifi power management'''
+	'''禁用 WIFI 电源管理'''
 
 	def __init__(self, interface_id: int):
 		'''
-		Create a WLAN network interface object.
+		创建 WLAN 网络接口对象。
 
-		Supported interfaces are:
+		支持的接口有：
 
-		- `network.STA_IF` (station aka client, connects to upstream WiFi access
-		points)
-		- `network.AP_IF` (access point, allows other WiFi clients to connect).
+		- `network.STA_IF`（站点，又称客户端，连接上游 WiFi 接入点 点）。
+		- `network.AP_IF`（接入点，允许其它 WiFi 客户端连接）。
 
-		Availability of the methods below depends on interface type.
+		以下方法的可用性取决于接口类型。
 
-		For example, only STA interface may `WLAN.connect()` to an access point.
+		例如，只有 STA 接口可以`WLAN.connect()`连接到接入点。
 		'''
 
 	# Methods
 	@typing.overload
-	def active(self):
-		'''Query current state if no argument is provided.'''
+	def active(self) -> bool:
+		'''查询当前状态。'''
 
 	@typing.overload
 	def active(self, is_active: bool):
 		'''
-		Activate ("up") or deactivate ("down") network interface, if boolean
-		argument is passed.
+		激活（"up"）或停用（"down"）网络接口。
 
-		Most other methods require active interface.
+		大多数其他方法需要激活接口。
 		'''
 
 	def connect(self, ssid: str = None, key: str = None, *, bssid: bytes = None):
 		'''
-		Connect to the specified wireless network, using the specified key.
+		使用指定的密钥连接到指定的无线网络。
 
-		If `bssid` is given then the connection will be restricted to the
-		access-point with that MAC address
-
-		the `ssid` must also be specified in this case.
+		如果给出了`bssid`，则连接将仅限于具有该 MAC 地址的接入点
+		（在这种情况下必须指定`ssid`）。
 		'''
 
 	def disconnect(self):
-		'''Disconnect from the currently connected wireless network.'''
+		'''断开当前连接的无线网络。'''
 
 	def scan(self):
 		'''
-		Scan for the available wireless networks.
+		扫描可用的无线网络。
 
-		Hidden networks – where the SSID is not broadcast – will also be scanned
-		if the WLAN interface allows it.
+		如果 WLAN 接口允许，还将扫描隐藏的网络（SSID 没有广播）。
 
-		Scanning is only possible on STA interface.
+		扫描只能在 STA 接口上进行。
 
-		Returns list of tuples with the information about WiFi access points:
+		返回包含 WiFi 接入点信息的元组列表：
 
-			(ssid, bssid, channel, RSSI, security, hidden)
+			`(ssid, bssid, channel, RSSI, security, hidden)`
 
-		`bssid` is hardware address of an access point, in binary form, returned
-		as bytes object.
+		`bssid`是接入点的二进制硬件地址，以字节对象形式返回。
 
-		You can use `binascii.hexlify()` to convert it to ASCII form.
+		可以使用`binascii.hexlify()`将其转换为 ASCII 格式。
 
-		There are five values for `security`:
+		`security`有五个值：
 
-		- 0 – open
-		- 1 – WEP
-		- 2 – WPA-PSK
-		- 3 – WPA2-PSK
-		- 4 – WPA/WPA2-PSK
+		- 0 - 开放
+		- 1 - WEP
+		- 2 - WPA-PSK
+		- 3 - WPA2-PSK
+		- 4 - WPA/WPA2-PSP
 
-		and two for `hidden`:
+		和两个`hidden`选项：
 
-		- 0 – visible
-		- 1 – hidden
+		- 0 - 可见
+		- 1 - 隐藏
 		'''
 
 	@typing.overload
 	def status(self) -> int:
 		'''
-		Returns value describes the network link status.
+		返回值描述网络链接状态。
 
-		The possible statuses are defined as constants:
+		可能的状态被定义为常量：
 
-		- STAT_IDLE – no connection and no activity,
-		- STAT_CONNECTING – connecting in progress,
-		- STAT_WRONG_PASSWORD – failed due to incorrect password,
-		- STAT_NO_AP_FOUND – failed because no access point replied,
-		- STAT_CONNECT_FAIL – failed due to other problems,
-		- STAT_GOT_IP – connection successful.
+		- `STAT_IDLE` - 无连接、无活动
+		- `STAT_CONNECTING` - 正在连接
+		- `STAT_WRONG_PASSWORD` - 因密码错误而连接失败
+		- `STAT_NO_AP_FOUND` - 因没有接入点回复而失败
+		- `STAT_CONNECT_FAIL` - 因其他问题而失败
+		- `STAT_GOT_IP` - 连接成功
 		'''
 
 	@typing.overload
 	def status(self, param: str) -> int:
 		'''
-		Return the current status of the wireless connection.
+		返回无线连接的当前状态。
 
-		The possible statuses are defined as constants:
+		可能的状态定义为常量：
 
-		- STAT_IDLE – no connection and no activity,
-		- STAT_CONNECTING – connecting in progress,
-		- STAT_WRONG_PASSWORD – failed due to incorrect password,
-		- STAT_NO_AP_FOUND – failed because no access point replied,
-		- STAT_CONNECT_FAIL – failed due to other problems,
-		- STAT_GOT_IP – connection successful.
+		- `STAT_IDLE` - 无连接、无活动、
+		- `STAT_CONNECTING` - 正在连接、
+		- `STAT_WRONG_PASSWORD` - 因密码错误而连接失败、
+		- `STAT_NO_AP_FOUND` - 因没有接入点回复而失败、
+		- `STAT_CONNECT_FAIL` - 因其他问题而失败、
+		- `STAT_GOT_IP` - 连接成功。
 
-		Should be a string naming the status parameter to retrieve.
+		应使用字符串命名要检索的状态参数。
 
-		Supported parameters in WiFI STA mode are: `'rssi'`.
+		WiFI STA 模式下支持的参数有`rssi`。
 		'''
 
-	def isconnected(self):
+	def isconnected(self) -> bool:
 		'''
-		In case of STA mode, returns True if connected to a WiFi access point
-		and has a valid IP address.
+		在 STA 模式下，如果连接到 WiFi 接入点并具有有效 IP 地址，则返回`True`。
 
-		In AP mode returns True when a station is connected.
+		在 AP 模式下，如果连接了一个站点，则返回`True`。
 
-		Returns False otherwise.
+		其它情况下返回`False`。
 		'''
 
 	@typing.overload
-	def ifconfig(self):
+	def ifconfig(self) -> tuple:
 		'''
-		Get IP-level network interface parameters: IP address, subnet mask,
-		gateway and DNS server.
+		获取 IP 级网络接口参数：IP 地址、子网掩码、网关和 DNS 服务器。
 
-		This method returns a 4-tuple with the above information.
+		该方法返回包含上述信息的 4 元组。
 		'''
 
 	@typing.overload
 	def ifconfig(self, if_info: tuple):
 		'''
-		Set IP-level network interface parameters: IP address, subnet mask,
-		gateway and DNS server.
+		设置 IP 级网络接口参数：IP 地址、子网掩码、网关和 DNS 服务器。
 
-		To set the above values, pass a 4-tuple with the required information.
+		要设置上述值，请传递包含所需信息的 4 元组。
 
-		For example:
+		例如::
 
-			`nic.ifconfig(('192.168.0.4', '255.255.255.0', '192.168.0.1', '8.8.8.8'))`
+		    nic.ifconfig(('192.168.0.4', '255.255.255.0', '192.168.0.1', '8.8.8.8'))
 		'''
 
 	@typing.overload
-	def ipconfig(self):
+	def ipconfig(self) -> tuple:
 		'''
-		Get IP-level network interface parameters: IP address, subnet mask,
-		gateway and DNS server.
+		获取 IP 级网络接口参数：IP 地址、子网掩码、网关和 DNS 服务器。
 
-		This method returns a 4-tuple with the above information.
+		该方法返回包含上述信息的 4 元组。
 		'''
 
 	@typing.overload
 	def ipconfig(self, ip_info: tuple):
 		'''
-		Set IP-level network interface parameters: IP address, subnet mask,
-		gateway and DNS server.
+		设置 IP 级网络接口参数：IP 地址、子网掩码、网关和 DNS 服务器。
 
-		To set the above values, pass a 4-tuple with the required information.
+		要设置上述值，请传递包含所需信息的 4 元组。
 
-		For example:
+		例如::
 
-			`nic.ifconfig(('192.168.0.4', '255.255.255.0', '192.168.0.1', '8.8.8.8'))`
+		    nic.ifconfig(('192.168.0.4', '255.255.255.0', '192.168.0.1', '8.8.8.8'))
 		'''
 
 	@typing.overload
-	def config(self, param: str):
+	def config(self, param: str) -> typing.Any:
 		'''
-		Get general network interface parameters.
+		获取一般网络接口参数。
 
-		These methods allow to work with additional parameters beyond standard IP
-		configuration (as dealt with by `WLAN.ifconfig()`).
+		这些方法允许处理标准 IP 配置（由`WLAN.ifconfig()`处理）之外的其他参数。
 
-		These include network-specific and hardware-specific parameters.
+		这些参数包括网络特定参数和硬件特定参数。
 
-		Parameters name should be quoted as a string, and only one parameter can
-		be queries at time.
+		参数名应以字符串形式加引号，每次只能查询一个参数。
 
-		Following are commonly supported parameters (availability of a specific
-		parameter depends on network technology type, driver, and MicroPython port).
+		以下是通常支持的参数（特定参数的可用性取决于网络技术类型、驱动程序和`MicroPython 端口`）。
 
-		- mac - MAC address (bytes)
-		- ssid - WiFi access point name (string)
-		- channel - WiFi channel (integer)
-		- hidden - Whether SSID is hidden (boolean)
-		- security - Security protocol supported (see module constants)
-		- key - Access key (string)
-		- hostname - The hostname that will be sent to DHCP (STA interfaces) and
-		mDNS (if supported, both STA and AP).
+		- `mac` - MAC 地址（字节）
+		- `ssid` - WiFi 接入点名称（字符串）
+		- `channel` - WiFi 频道（整数）
+		- `hidden` - SSID 是否隐藏（布尔值）
+		- `security` - 支持的安全协议（参见模块常量）
+		- `key` - 访问密钥（字符串）
+		- `hostname` - 发送给 DHCP（STA 接口）和 mDNS（如果支持，STA 和 AP）的主机名。
 
-			(Deprecated, use `network.hostname()` instead)
+			(已过时，请使用`network.hostname()`代替）。
 
-		- reconnects - Number of reconnect attempts to make (integer, 0=none,
-		-1=unlimited)
-		- txpower - Maximum transmit power in dBm (integer or float)
-		- pm - WiFi Power Management setting (see module constants)
+		- `reconnects` - 尝试重新连接的次数（整数，0=无，-1=无限制）
+		- `txpower` - 以 dBm 为单位的最大发射功率（整数或浮点数）
+		- `pm` - WiFi 电源管理设置（参见模块常量）
 		'''
 
 	@typing.overload
 	def config(self, **params):
 		'''
-		Set general network interface parameters.
+		设置一般网络接口参数。
 
-		These methods allow to work with additional parameters beyond standard IP
-		configuration (as dealt with by `WLAN.ifconfig()`).
+		这些方法允许处理标准 IP 配置（由`WLAN.ifconfig()`处理）之外的其他参数。
 
-		These include network-specific and hardware-specific parameters.
+		这些参数包括网络特定参数和硬件特定参数。
 
-		Keyword argument syntax should be used, multiple parameters can be set
-		at once.
+		应使用关键字参数语法，可同时设置多个参数。
 
-		Following are commonly supported parameters (availability of a specific
-		parameter depends on network technology type, driver, and MicroPython port).
+		以下是通常支持的参数（特定参数的可用性取决于网络技术类型、驱动程序和`MicroPython 端口`）。
 
-		- mac - MAC address (bytes)
-		- ssid - WiFi access point name (string)
-		- channel - WiFi channel (integer)
-		- hidden - Whether SSID is hidden (boolean)
-		- security - Security protocol supported (see module constants)
-		- key - Access key (string)
-		- hostname - The hostname that will be sent to DHCP (STA interfaces) and
-		mDNS (if supported, both STA and AP).
+		- `mac` - MAC 地址（字节）
+		- `ssid` - WiFi 接入点名称（字符串）
+		- `channel` - WiFi 频道（整数）
+		- `hidden` - SSID 是否隐藏（布尔值）
+		- `security` - 支持的安全协议（参见模块常量）
+		- `key` - 访问密钥（字符串）
+		- `hostname` - 发送给 DHCP（STA 接口）和 mDNS（如果支持，STA 和 AP）的主机名。
 
-			(Deprecated, use `network.hostname()` instead)
+			(已过时，请使用`network.hostname()`代替）。
 
-		- reconnects - Number of reconnect attempts to make (integer, 0=none,
-		-1=unlimited)
-		- txpower - Maximum transmit power in dBm (integer or float)
-		- pm - WiFi Power Management setting (see module constants)
+		- `reconnects` - 尝试重新连接的次数（整数，0=无，-1=无限制）
+		- `txpower` - 以 dBm 为单位的最大发射功率（整数或浮点数）
+		- `pm` - WiFi 电源管理设置（参见模块常量）
 		'''
