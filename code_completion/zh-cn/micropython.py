@@ -1,7 +1,7 @@
 '''
-Access and control MicroPython internals
+访问和控制 MicroPython 内部
 
-[View Doc](https://docs.micropython.org/en/latest/library/micropython.html)
+[查看文档](https://docs.micropython.org/en/latest/library/micropython.html)
 '''
 import typing
 
@@ -9,222 +9,159 @@ import typing
 # Functions
 def const(expr: int):
 	'''
-	Used to declare that the expression is a constant so that the compiler can
-	optimise it.
+	用于声明表达式是一个常量，以便编译器可以对其进行优化。
 
-	The use of this function should be as follows::
+	此函数的使用方法应如下::
 
 	    from micropython import const
 
 	    CONST_X = const(123)
 	    CONST_Y = const(2 * CONST_X + 1)
 
-	Constants declared this way are still accessible as global variables from
-	outside the module they are declared in.
+	以这种方式声明的常量仍然可以作为全局变量从声明它们的模块外部访问。
 
-	On the other hand, if a constant begins with an underscore then it is hidden,
-	it is not available as a global variable, and does not take up any memory
-	during execution.
+	另一方面，如果一个常量以下划线开头，那么它是隐藏的，它不能作为全局变量使用，并且在执行
+	过程中不会占用任何内存。
 
-	This const function is recognised directly by the MicroPython parser and is
-	provided as part of the micropython module mainly so that scripts can be
-	written which run under both CPython and MicroPython, by following the above
-	pattern.
+	这个`const`函数由 MicroPython 解析器直接识别，并作为`micropython`模块的一部分
+	提供，主要是为了可以按照上述模式编写在 CPython 和 MicroPython 下运行的脚本。
 	'''
 
 @typing.overload
 def opt_level() -> int:
-	'''
-	It returns the current optimisation level.
-
-	The optimisation level controls the following compilation features:
-	'''
+	'''返回当前优化级别。'''
 
 @typing.overload
 def opt_level(level: int = 0) -> None:
 	'''
-	This function sets the optimisation level for subsequent compilation of
-	scripts, and returns None.
+	此函数设置后续脚本编译的优化级别，并返回`None`。
 
-	The optimisation level controls the following compilation features:
+	优化级别控制以下编译功能：
 
-	- Assertions: at level 0 assertion statements are enabled and compiled into
-	the bytecode; at levels 1 and higher assertions are not compiled.
-	- Built-in __debug__ variable: at level 0 this variable expands to True; at
-	levels 1 and higher it expands to False.
-	- Source-code line numbers: at levels 0, 1 and 2 source-code line number are
-	stored along with the bytecode so that exceptions can report the line number
-	they occurred at; at levels 3 and higher line numbers are not stored.
+	- 断言：在级别 0 上，断言语句被启用并编译为字节码；在级别 1 及更高级别，不会编译断言。
+	- 内置`__debug__`变量：在级别 0 时，此变量扩展为`True`；在级别 1 及更高时，它会扩展为`False`。
+	- 源代码行号：在级别 0、1 和 2 中，源代码行号与字节码一起存储，以便异常可以报告它们出现的行号；在级别 3 及更高级别，不存储行号。
 
-	The default optimisation level is usually level 0.
+	默认优化级别通常为 0 级。
 	'''
 
 def alloc_emergency_exception_buf(size: int):
 	'''
-	Allocate size bytes of RAM for the emergency exception buffer (a good size
-	is around 100 bytes).
+	为紧急异常缓冲区分配 RAM 的字节大小（100 字节最为合适）。
 
-	The buffer is used to create exceptions in cases when normal RAM allocation
-	would fail (eg within an interrupt handler) and therefore give useful
-	traceback information in these situations.
+	缓冲区用于在正常 RAM 分配失败的情况下（例如在中断处理程序中）创建异常，因此在这些情况下提供有用的回溯信息。
 
-	A good way to use this function is to put it at the start of your main script
-	(eg boot.py or main.py) and then the emergency exception buffer will be active
-	for all the code following it.
+	使用此函数的一个好方法是将其放在主脚本的开头（例如`boot.py`或`main.py`），然后紧急异常缓冲区将对它后面的所有代码处于活动状态。
 	'''
 
 @typing.overload
 def mem_info():
 	'''
-	Print information about currently used memory.
+	打印有关当前使用的内存的信息。
 
-	The information that is printed is implementation dependent, but currently
-	includes the amount of stack and heap used.
-
-	In verbose mode it prints out the entire heap indicating which blocks are
-	used and which are free.
+	打印的信息与端口实现相关，但当前包括使用的堆栈数量。
 	'''
 
 @typing.overload
-def mem_info(verbose):
+def mem_info(verbose: typing.Any):
 	'''
-	The given then extra information is printed.
+	打印有关当前使用的内存的信息。
 
-	The information that is printed is implementation dependent, but currently
-	includes the amount of stack and heap used.
-
-	In verbose mode it prints out the entire heap indicating which blocks are
-	used and which are free.
+	打印的信息与端口实现相关，它会打印出整个堆，指示哪些块被使用，哪些块是空闲的。
 	'''
 
 @typing.overload
 def qstr_info():
 	'''
-	Print information about currently interned strings.
+	打印有关当前被截留的字符串的信息。
 
-	The information that is printed is implementation dependent, but currently
-	includes the number of interned strings and the amount of RAM they use.
-
-	In verbose mode it prints out the names of all RAM-interned strings.
+	打印的信息与端口实现相关，但目前包括中介字符串的数量和它们 RAM 的使用量。
 	'''
 
 @typing.overload
 def qstr_info(verbose):
 	'''
-	The extra information is printed.
+	打印有关当前被截留的字符串的额外信息。
 
-	The information that is printed is implementation dependent, but currently
-	includes the number of interned strings and the amount of RAM they use.
-
-	In verbose mode it prints out the names of all RAM-interned strings.
+	打印的信息与端口实现相关，它会打印出所有 RAM 中嵌的字符串的名称。
 	'''
 
 def stack_use() -> int:
 	'''
-	Return an integer representing the current amount of stack that is being used.
+	返回一个整数，表示当前已使用的栈的数量。
 
-	The absolute value of this is not particularly useful, rather it should be
-	used to compute differences in stack usage at different points.
+	它的绝对值不是特别有用，而是应该用于计算不同的点对栈使用的差异。
 	'''
 
 def heap_lock():
 	'''
-	Lock the heap.
+	锁定堆。
 
-	When locked no memory allocation can occur and a `MemoryError` will be raised
-	if any heap allocation is attempted.
+	锁定时，不会发生内存分配，如果尝试分配堆，将引发`MemoryError`。
 
-	This functions can be nested, ie `heap_lock()` can be called multiple times
-	in a row and the lock-depth will increase, and then `heap_unlock()` must be
-	called the same number of times to make the heap available again.
+	这个函数可以嵌套，即`heap_lock()`可以连续调用多次，锁定深度会增加，然后`heap_unlock()`必须调用相同的次数才能使堆再次可用。
 	'''
 
 def heap_unlock() -> int:
 	'''
-	Unlock the heap.
+	解锁堆。
 
-	When locked no memory allocation can occur and a `MemoryError` will be raised
-	if any heap allocation is attempted.
+	`heap_unlock()`以非负整数的形式返回当前锁定深度（前者解锁后），0 表示堆未锁定。
 
-	This functions can be nested, ie `heap_lock()` can be called multiple times
-	in a row and the lock-depth will increase, and then `heap_unlock()` must be
-	called the same number of times to make the heap available again.
-
-	`heap_unlock()` return the current lock depth (after unlocking for the former)
-	as a non-negative integer, with 0 meaning the heap is not locked.
-
-	If the REPL becomes active with the heap locked then it will be forcefully
-	unlocked.
+	如果 REPL 在堆锁定的情况下处于活动状态，则它将被强制解锁。
 	'''
 
 def heap_locked() -> bool:
 	'''
-	Returns a true value if the heap is currently locked.
+	如果堆当前处于锁定状态，则返回`True`值。
 
-	If the REPL becomes active with the heap locked then it will be forcefully
-	unlocked.
+	如果 REPL 在堆锁定的情况下处于活动状态，则它将被强制解锁。
 
-	Note:
+	注意：
 
-		`heap_locked()` is not enabled on most ports by default, requires
-		`MICROPY_PY_MICROPYTHON_HEAP_LOCKED`.
+		默认情况下，`heap_locked()`在大多数端口上不可用，需要开启`MICROPY_PY_MICROPYTHON_HEAP_LOCKED`编译选项。
 	'''
 
 def kbd_intr(chr: int = 3):
 	'''
-	Set the character that will raise a KeyboardInterrupt exception.
+	设置将引发`KeyboardInterrupt`异常的特性。
 
-	By default this is set to 3 during script execution, corresponding to Ctrl-C.
+	默认情况下，在脚本执行期间将其设置为 3，对应于 Ctrl-C。
 
-	Passing -1 to this function will disable capture of Ctrl-C, and passing 3
-	will restore it.
+	将 -1 传递给此函数将禁用 Ctrl-C 捕获，传递 3 将恢复它。
 
-	This function can be used to prevent the capturing of Ctrl-C on the incoming
-	stream of characters that is usually used for the REPL, in case that stream
-	is used for other purposes.
+	此函数可用于防止在通常用于 REPL 的传入字符流上捕获 Ctrl-C，以防该流用于其他目的。
 	'''
 
 def schedule(func: function, arg):
 	'''
-	Schedule the function `func` to be executed "very soon".
+	将函数`func`安排为“很快”执行。
 
-	The function is passed the value `arg` as its single argument. "Very soon"
-	means that the MicroPython runtime will do its best to execute the function
-	at the earliest possible time, given that it is also trying to be efficient
-	, and that the following conditions hold:
+	该函数将`arg`作为其单个参数传递。
 
-	- A scheduled function will never preempt another scheduled function.
+	“很快”意味着 MicroPython 运行时将尽最大努力尽早执行该函数，因为它也在努力提高效率，并且满足以下条件：
 
-	- Scheduled functions are always executed "between opcodes" which means that
-	all fundamental Python operations (such as appending to a list) are guaranteed
-	to be atomic.
+	- 一个调度函数永远不会抢占另一个调度函数。
 
-	- A given port may define "critical regions" within which scheduled functions
-	will never be executed. Functions may be scheduled within a critical region
-	but they will not be executed until that region is exited. An example of a
-	critical region is a preempting interrupt handler (an IRQ).
+	- 调度函数始终在“操作码之间”执行，这意味着所有基本的 Python 操作（例如附加到列表）都保证是原子级别的。
 
-	A use for this function is to schedule a callback from a preempting IRQ.
+	- 给定的端口可以定义“关键区域”，在这些区域内永远不会执行计划功能。
 
-	Such an IRQ puts restrictions on the code that runs in the IRQ (for example
-	the heap may be locked) and scheduling a function to call later will lift
-	those restrictions.
+		函数可以在关键区域内调度，但在退出该区域之前不会执行。
 
-	Note:
+		关键区域的一个示例是抢占中断处理程序（IRQ）。
 
-		If `schedule()` is called from a preempting IRQ, when memory allocation
-		is not allowed and the callback to be passed to `schedule()` is a bound
-		method, passing this directly will fail.
+	此函数的用途是调度来自抢占式 IRQ 的回调。
 
-		This is because creating a reference to a bound method causes memory
-		allocation.
+	这样的 IRQ 对在 IRQ 中运行的代码施加了限制（例如，堆可能被锁定），并且安排稍后调用的函数将解除这些限制。
 
-		A solution is to create a reference to the method in the class constructor
-		and to pass that reference to `schedule()`.
+	注意：
 
-		This is discussed in detail here reference documentation under "Creation
-		of Python objects".
+		如果从抢占式 IRQ 调用`schedule()`，则当不允许分配内存并且要传递给`schedule()`的回调是绑定方法时，直接传递此方法将失败。
 
-	There is a finite queue to hold the scheduled functions and `schedule()`
-	will raise a `RuntimeError` if the queue is full.
+		这是因为创建对绑定方法的引用会导致内存分配。
+
+		解决方法是在类构造函数中创建对方法的引用，并将该引用传递给`schedule()`。
+
+	有一个有限的队列来保存调度函数，如果队列已满，`schedule()`将引发`RuntimeError`。
 	'''
