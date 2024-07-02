@@ -29,7 +29,7 @@ implementation: tuple = ...
 
 对于 MicroPython，它具有以下属性：
 
-- `name` - 字符串 "micropython"
+- `name` - 字符串“micropython”
 - `version` - 元组（主要版本号、次要版本号、微型版本号、发布级别），例如 （1, 22, 0, ''）
 - `_machine` - 描述底层计算机的字符串
 - `_mpy` - 支持的 MPY 文件格式版本（可选属性）
@@ -71,14 +71,14 @@ ps1: str = ...
 '''
 保存字符串的可变属性，用于 REPL 提示符。
 
-默认值给出的标准 Python 提示符为 ">>>"
+默认值给出的标准 Python 提示符为“>>>”
 '''
 
 ps2: str = ...
 '''
 保存字符串的可变属性，用于 REPL 提示符。
 
-默认值给出的标准 Python 提示符为 "...."
+默认值给出的标准 Python 提示符为“....”
 '''
 
 tracebacklimit: int = ...

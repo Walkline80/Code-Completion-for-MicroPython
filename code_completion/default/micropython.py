@@ -34,24 +34,20 @@ def const(expr: int):
 
 @typing.overload
 def opt_level() -> int:
-	'''
-	It returns the current optimisation level.
-
-	The optimisation level controls the following compilation features:
-	'''
+	'''It returns the current optimisation level.'''
 
 @typing.overload
 def opt_level(level: int = 0) -> None:
 	'''
 	This function sets the optimisation level for subsequent compilation of
-	scripts, and returns None.
+	scripts, and returns `None`.
 
 	The optimisation level controls the following compilation features:
 
 	- Assertions: at level 0 assertion statements are enabled and compiled into
 	the bytecode; at levels 1 and higher assertions are not compiled.
-	- Built-in __debug__ variable: at level 0 this variable expands to True; at
-	levels 1 and higher it expands to False.
+	- Built-in `__debug__` variable: at level 0 this variable expands to `True`; at
+	levels 1 and higher it expands to `False`.
 	- Source-code line numbers: at levels 0, 1 and 2 source-code line number are
 	stored along with the bytecode so that exceptions can report the line number
 	they occurred at; at levels 3 and higher line numbers are not stored.
@@ -69,7 +65,7 @@ def alloc_emergency_exception_buf(size: int):
 	traceback information in these situations.
 
 	A good way to use this function is to put it at the start of your main script
-	(eg boot.py or main.py) and then the emergency exception buffer will be active
+	(eg `boot.py` or `main.py`) and then the emergency exception buffer will be active
 	for all the code following it.
 	'''
 
@@ -80,21 +76,15 @@ def mem_info():
 
 	The information that is printed is implementation dependent, but currently
 	includes the amount of stack and heap used.
-
-	In verbose mode it prints out the entire heap indicating which blocks are
-	used and which are free.
 	'''
 
 @typing.overload
-def mem_info(verbose):
+def mem_info(verbose: typing.Any):
 	'''
 	The given then extra information is printed.
 
-	The information that is printed is implementation dependent, but currently
-	includes the amount of stack and heap used.
-
-	In verbose mode it prints out the entire heap indicating which blocks are
-	used and which are free.
+	The information that is printed is implementation dependent, it prints out
+	the entire heap indicating which blocks are used and which are free.
 	'''
 
 @typing.overload
@@ -104,19 +94,15 @@ def qstr_info():
 
 	The information that is printed is implementation dependent, but currently
 	includes the number of interned strings and the amount of RAM they use.
-
-	In verbose mode it prints out the names of all RAM-interned strings.
 	'''
 
 @typing.overload
-def qstr_info(verbose):
+def qstr_info(verbose: typing.Any):
 	'''
-	The extra information is printed.
+	Print extra information about currently interned strings.
 
-	The information that is printed is implementation dependent, but currently
-	includes the number of interned strings and the amount of RAM they use.
-
-	In verbose mode it prints out the names of all RAM-interned strings.
+	The information that is printed is implementation dependent, it prints out
+	the names of all RAM-interned strings.
 	'''
 
 def stack_use() -> int:
@@ -143,13 +129,6 @@ def heap_unlock() -> int:
 	'''
 	Unlock the heap.
 
-	When locked no memory allocation can occur and a `MemoryError` will be raised
-	if any heap allocation is attempted.
-
-	This functions can be nested, ie `heap_lock()` can be called multiple times
-	in a row and the lock-depth will increase, and then `heap_unlock()` must be
-	called the same number of times to make the heap available again.
-
 	`heap_unlock()` return the current lock depth (after unlocking for the former)
 	as a non-negative integer, with 0 meaning the heap is not locked.
 
@@ -172,7 +151,7 @@ def heap_locked() -> bool:
 
 def kbd_intr(chr: int = 3):
 	'''
-	Set the character that will raise a KeyboardInterrupt exception.
+	Set the character that will raise a `KeyboardInterrupt` exception.
 
 	By default this is set to 3 during script execution, corresponding to Ctrl-C.
 
@@ -188,10 +167,11 @@ def schedule(func: function, arg):
 	'''
 	Schedule the function `func` to be executed "very soon".
 
-	The function is passed the value `arg` as its single argument. "Very soon"
-	means that the MicroPython runtime will do its best to execute the function
-	at the earliest possible time, given that it is also trying to be efficient
-	, and that the following conditions hold:
+	The function is passed the value `arg` as its single argument.
+
+	"Very soon" means that the MicroPython runtime will do its best to execute
+	the function at the earliest possible time, given that it is also trying to
+	be efficient, and that the following conditions hold:
 
 	- A scheduled function will never preempt another scheduled function.
 
@@ -200,9 +180,12 @@ def schedule(func: function, arg):
 	to be atomic.
 
 	- A given port may define "critical regions" within which scheduled functions
-	will never be executed. Functions may be scheduled within a critical region
-	but they will not be executed until that region is exited. An example of a
-	critical region is a preempting interrupt handler (an IRQ).
+	will never be executed.
+
+		Functions may be scheduled within a critical region but they will not be
+		executed until that region is exited.
+
+		An example of a critical region is a preempting interrupt handler (an IRQ).
 
 	A use for this function is to schedule a callback from a preempting IRQ.
 
