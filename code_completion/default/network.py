@@ -1,12 +1,18 @@
 '''
-Specific network class implementations
+network configuration
 
-The following concrete classes implement the AbstractNIC interface and provide a way to control networking interfaces of various kinds.
+This module provides network drivers and routing configuration.
 
-- class WLAN – control built-in WiFi interfaces
+To use this module, a MicroPython variant/build with network capabilities must
+be installed.
 
-[View Doc network](https://docs.micropython.org/en/latest/library/network.html)
-[View Doc network.WLAN](https://docs.micropython.org/en/latest/library/network.WLAN.html)
+Network drivers for specific hardware are available within this module and are
+used to configure hardware network interface(s).
+
+Network services provided by configured interfaces are then available for use
+via the `socket` module.
+
+[View Doc](https://docs.micropython.org/en/latest/library/network.html)
 '''
 import typing
 
@@ -84,7 +90,7 @@ def country(code: str):
 	'''
 
 @typing.overload
-def hostname():
+def hostname() -> str:
 	'''
 	Get the hostname that will identify this device on the network.
 
@@ -125,7 +131,7 @@ def hostname(name: str):
 
 	The length of the hostname is limited to 32 characters.
 
-	MicroPython ports may choose to set a lower limit for memory reasons.
+	`MicroPython ports` may choose to set a lower limit for memory reasons.
 
 	If the given name does not fit, a `ValueError` is raised.
 
@@ -133,7 +139,7 @@ def hostname(name: str):
 	'''
 
 @typing.overload
-def phy_mode():
+def phy_mode() -> int:
 	'''
 	Get the PHY mode.
 
@@ -141,9 +147,9 @@ def phy_mode():
 
 	The possible modes are defined as constants:
 
-	- `MODE_11B` – IEEE 802.11b,
-	- `MODE_11G` – IEEE 802.11g,
-	- `MODE_11N` – IEEE 802.11n.
+	- `MODE_11B` – IEEE 802.11b
+	- `MODE_11G` – IEEE 802.11g
+	- `MODE_11N` – IEEE 802.11n
 
 	Availability: ESP8266.
 	'''
@@ -157,9 +163,9 @@ def phy_mode(mode: int):
 
 	The possible modes are defined as constants:
 
-	- `MODE_11B` – IEEE 802.11b,
-	- `MODE_11G` – IEEE 802.11g,
-	- `MODE_11N` – IEEE 802.11n.
+	- `MODE_11B` – IEEE 802.11b
+	- `MODE_11G` – IEEE 802.11g
+	- `MODE_11N` – IEEE 802.11n
 
 	Availability: ESP8266.
 	'''
@@ -170,6 +176,8 @@ class WLAN(object):
 	control built-in WiFi interfaces
 
 	This class provides a driver for WiFi network processors.
+
+	[View Doc](https://docs.micropython.org/en/latest/library/network.WLAN.html)
 	'''
 	# Constants
 	IF_STA: int = ...
@@ -216,14 +224,13 @@ class WLAN(object):
 
 	# Methods
 	@typing.overload
-	def active(self):
-		'''Query current state if no argument is provided.'''
+	def active(self) -> bool:
+		'''Query current state.'''
 
 	@typing.overload
 	def active(self, is_active: bool):
 		'''
-		Activate ("up") or deactivate ("down") network interface, if boolean
-		argument is passed.
+		Activate ("up") or deactivate ("down") network interface.
 
 		Most other methods require active interface.
 		'''
@@ -233,9 +240,8 @@ class WLAN(object):
 		Connect to the specified wireless network, using the specified key.
 
 		If `bssid` is given then the connection will be restricted to the
-		access-point with that MAC address
-
-		the `ssid` must also be specified in this case.
+		access-point with that MAC address (the `ssid` must also be specified
+		in this case).
 		'''
 
 	def disconnect(self):
@@ -280,12 +286,12 @@ class WLAN(object):
 
 		The possible statuses are defined as constants:
 
-		- STAT_IDLE – no connection and no activity,
-		- STAT_CONNECTING – connecting in progress,
-		- STAT_WRONG_PASSWORD – failed due to incorrect password,
-		- STAT_NO_AP_FOUND – failed because no access point replied,
-		- STAT_CONNECT_FAIL – failed due to other problems,
-		- STAT_GOT_IP – connection successful.
+		- `STAT_IDLE` – no connection and no activity
+		- `STAT_CONNECTING` – connecting in progress
+		- `STAT_WRONG_PASSWORD` – failed due to incorrect password
+		- `STAT_NO_AP_FOUND` – failed because no access point replied
+		- `STAT_CONNECT_FAIL` – failed due to other problems
+		- `STAT_GOT_IP` – connection successful
 		'''
 
 	@typing.overload
@@ -295,30 +301,30 @@ class WLAN(object):
 
 		The possible statuses are defined as constants:
 
-		- STAT_IDLE – no connection and no activity,
-		- STAT_CONNECTING – connecting in progress,
-		- STAT_WRONG_PASSWORD – failed due to incorrect password,
-		- STAT_NO_AP_FOUND – failed because no access point replied,
-		- STAT_CONNECT_FAIL – failed due to other problems,
-		- STAT_GOT_IP – connection successful.
+		- `STAT_IDLE` – no connection and no activity,
+		- `STAT_CONNECTING` – connecting in progress,
+		- `STAT_WRONG_PASSWORD` – failed due to incorrect password,
+		- `STAT_NO_AP_FOUND` – failed because no access point replied,
+		- `STAT_CONNECT_FAIL` – failed due to other problems,
+		- `STAT_GOT_IP` – connection successful.
 
 		Should be a string naming the status parameter to retrieve.
 
-		Supported parameters in WiFI STA mode are: `'rssi'`.
+		Supported parameters in WiFI STA mode are: `rssi`.
 		'''
 
-	def isconnected(self):
+	def isconnected(self) -> bool:
 		'''
-		In case of STA mode, returns True if connected to a WiFi access point
+		In case of STA mode, returns `True` if connected to a WiFi access point
 		and has a valid IP address.
 
-		In AP mode returns True when a station is connected.
+		In AP mode returns `True` when a station is connected.
 
-		Returns False otherwise.
+		Returns `False` otherwise.
 		'''
 
 	@typing.overload
-	def ifconfig(self):
+	def ifconfig(self) -> tuple:
 		'''
 		Get IP-level network interface parameters: IP address, subnet mask,
 		gateway and DNS server.
@@ -334,13 +340,13 @@ class WLAN(object):
 
 		To set the above values, pass a 4-tuple with the required information.
 
-		For example:
+		For example::
 
-			`nic.ifconfig(('192.168.0.4', '255.255.255.0', '192.168.0.1', '8.8.8.8'))`
+		    nic.ifconfig(('192.168.0.4', '255.255.255.0', '192.168.0.1', '8.8.8.8'))
 		'''
 
 	@typing.overload
-	def ipconfig(self):
+	def ipconfig(self) -> tuple:
 		'''
 		Get IP-level network interface parameters: IP address, subnet mask,
 		gateway and DNS server.
@@ -362,7 +368,7 @@ class WLAN(object):
 		'''
 
 	@typing.overload
-	def config(self, param: str):
+	def config(self, param: str) -> typing.Any:
 		'''
 		Get general network interface parameters.
 
@@ -377,21 +383,21 @@ class WLAN(object):
 		Following are commonly supported parameters (availability of a specific
 		parameter depends on network technology type, driver, and MicroPython port).
 
-		- mac - MAC address (bytes)
-		- ssid - WiFi access point name (string)
-		- channel - WiFi channel (integer)
-		- hidden - Whether SSID is hidden (boolean)
-		- security - Security protocol supported (see module constants)
-		- key - Access key (string)
-		- hostname - The hostname that will be sent to DHCP (STA interfaces) and
+		- `mac` - MAC address (bytes)
+		- `ssid` - WiFi access point name (string)
+		- `channel` - WiFi channel (integer)
+		- `hidden` - Whether SSID is hidden (boolean)
+		- `security` - Security protocol supported (see module constants)
+		- `key` - Access key (string)
+		- `hostname` - The hostname that will be sent to DHCP (STA interfaces) and
 		mDNS (if supported, both STA and AP).
 
 			(Deprecated, use `network.hostname()` instead)
 
-		- reconnects - Number of reconnect attempts to make (integer, 0=none,
+		- `reconnects` - Number of reconnect attempts to make (integer, 0=none,
 		-1=unlimited)
-		- txpower - Maximum transmit power in dBm (integer or float)
-		- pm - WiFi Power Management setting (see module constants)
+		- `txpower` - Maximum transmit power in dBm (integer or float)
+		- `pm` - WiFi Power Management setting (see module constants)
 		'''
 
 	@typing.overload
@@ -410,19 +416,19 @@ class WLAN(object):
 		Following are commonly supported parameters (availability of a specific
 		parameter depends on network technology type, driver, and MicroPython port).
 
-		- mac - MAC address (bytes)
-		- ssid - WiFi access point name (string)
-		- channel - WiFi channel (integer)
-		- hidden - Whether SSID is hidden (boolean)
-		- security - Security protocol supported (see module constants)
-		- key - Access key (string)
-		- hostname - The hostname that will be sent to DHCP (STA interfaces) and
+		- `mac` - MAC address (bytes)
+		- `ssid` - WiFi access point name (string)
+		- `channel` - WiFi channel (integer)
+		- `hidden` - Whether SSID is hidden (boolean)
+		- `security` - Security protocol supported (see module constants)
+		- `key` - Access key (string)
+		- `hostname` - The hostname that will be sent to DHCP (STA interfaces) and
 		mDNS (if supported, both STA and AP).
 
 			(Deprecated, use `network.hostname()` instead)
 
-		- reconnects - Number of reconnect attempts to make (integer, 0=none,
+		- `reconnects` - Number of reconnect attempts to make (integer, 0=none,
 		-1=unlimited)
-		- txpower - Maximum transmit power in dBm (integer or float)
-		- pm - WiFi Power Management setting (see module constants)
+		- `txpower` - Maximum transmit power in dBm (integer or float)
+		- `pm` - WiFi Power Management setting (see module constants)
 		'''
