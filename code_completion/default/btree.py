@@ -20,7 +20,15 @@ The module is based on the well-known BerkelyDB library, version 1.xx.
 '''
 # Constants
 INCL: int = ...
+'''
+A flag for `keys()`, `values()`, `items()` methods to specify that scanning should
+be inclusive of the end key.
+'''
 DESC: int = ...
+'''
+A flag for `keys()`, `values()`, `items()` methods to specify that scanning should
+be in descending direction of keys.
+'''
 
 # Functions
 def open(stream, *, flags: int = 0, pagesize: int = 0, cachesize: int = 0, minkeypage: int = 0):
@@ -48,7 +56,7 @@ def open(stream, *, flags: int = 0, pagesize: int = 0, cachesize: int = 0, minke
 		instead, accessing a new page in database will allocate a memory buffer
 		for it, until value specified by cachesize is reached.
 
-		Then, these buffers will be managed using LRU (least recently used) policy.
+		Then, This buffer isl be managed using LRU (least recently used) policy.
 
 		More buffers may still be allocated if needed (e.g., if a database contains
 		big keys and/or values).
@@ -59,7 +67,7 @@ def open(stream, *, flags: int = 0, pagesize: int = 0, cachesize: int = 0, minke
 	0 equivalent to 2.
 
 	Returns a BTree object, which implements a dictionary protocol (set of
-	methods), and some additional methods described below.
+	methods), and some additional methods.
 	'''
 
 # Methods
@@ -101,12 +109,11 @@ def __iter__():
 
 def keys(start_key=None, end_key=None, flags=None):
 	'''
-	These methods are similar to standard dictionary methods, but also can take
+	This method is similar to standard dictionary methods, but also can take
 	optional parameters to iterate over a key sub-range, instead of the entire
 	database.
 
-	Note that for all 3 methods, `start_key` and `end_key` arguments represent
-	key values.
+	Note that this method, `start_key` and `end_key` arguments represent key values.
 
 	For example, `values()` method will iterate over values corresponding to they
 	key range given.
@@ -124,12 +131,11 @@ def keys(start_key=None, end_key=None, flags=None):
 
 def values(start_key=None, end_key=None, flags=None):
 	'''
-	These methods are similar to standard dictionary methods, but also can take
+	This method is similar to standard dictionary methods, but also can take
 	optional parameters to iterate over a key sub-range, instead of the entire
 	database.
 
-	Note that for all 3 methods, `start_key` and `end_key` arguments represent
-	key values.
+	Note that this method, `start_key` and `end_key` arguments represent key values.
 
 	For example, `values()` method will iterate over values corresponding to they
 	key range given.
@@ -147,12 +153,11 @@ def values(start_key=None, end_key=None, flags=None):
 
 def items(start_key=None, end_key=None, flags=None):
 	'''
-	These methods are similar to standard dictionary methods, but also can take
+	This method is similar to standard dictionary methods, but also can take
 	optional parameters to iterate over a key sub-range, instead of the entire
 	database.
 
-	Note that for all 3 methods, `start_key` and `end_key` arguments represent
-	key values.
+	Note that this method, `start_key` and `end_key` arguments represent key values.
 
 	For example, `values()` method will iterate over values corresponding to they
 	key range given.
