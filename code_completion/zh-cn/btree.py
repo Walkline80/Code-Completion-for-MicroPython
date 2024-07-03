@@ -1,169 +1,136 @@
 '''
-simple BTree database
+简单 BTree 数据库
 
-The btree module implements a simple key-value database using external storage
-(disk files, or in general case, a random-access stream).
+`btree`模块使用外部存储（磁盘文件或一般情况下的随机访问流）实现了一个简单的键值数据库。
 
-Keys are stored sorted in the database, and besides efficient retrieval by a key
-value, a database also supports efficient ordered range scans (retrieval of
-values with the keys in a given range).
+键在数据库中排序存储，除了按键的值高效检索外，数据库还支持高效的有序范围扫描（检索指定范围内的键和值）。
 
-On the application interface side, BTree database work as close a possible to a
-way standard dict type works, one notable difference is that both keys and
-values must be bytes-like objects (so, if you want to store objects of other
-types, you need to first serialize them to str or bytes or another type
-that supports the buffer protocol).
+在应用程序接口方面，BTree 数据库的工作方式与标准`dict`类型的工作方式尽可能接近，一个显著的区别是键和值都必须是类字节对象
+（因此，如果要存储其他类型的对象，需要先将其序列化为`str`或`bytes`或其他支持缓冲协议的类型）。
 
-The module is based on the well-known BerkelyDB library, version 1.xx.
+该模块基于著名的 BerkelyDB 库 1.xx 版本。
 
-[View Doc](https://docs.micropython.org/en/latest/library/btree.html)
+[查看文档](https://docs.micropython.org/en/latest/library/btree.html)
 '''
 # Constants
 INCL: int = ...
+'''`keys()`、`values()`、`items()`方法的标志，用于指定扫描应包括末端键。'''
 DESC: int = ...
+'''`keys()`、`values()`、`items()`方法的标志，用于指定扫描应按键的递减方向进行。'''
 
 # Functions
 def open(stream, *, flags: int = 0, pagesize: int = 0, cachesize: int = 0, minkeypage: int = 0):
 	'''
-	Open a database from a random-access `stream` (like an open file).
+	从随机访问的`stream`（类似于打开的文件）中打开数据库。
 
-	All other parameters are optional and keyword-only, and allow to tweak
-	advanced parameters of the database operation (most users will not need them):
+	所有其他参数都是可选的关键字参数，允许调整数据库操作的高级参数（大多数用户不需要它们）：
 
-	- `flags` - Currently unused.
+	- `flags` - 当前未使用。
 
-	- `pagesize` - Page size used for the nodes in BTree.
+	- `pagesize` - BTree 中节点使用的页面大小。
 
-		Acceptable range is 512-65536.
+		可接受的范围是 512-65536。
 
-		If 0, a port-specific default will be used, optimized for port’s memory
-		usage and/or performance.
+		如果为 0，将使用特定于端口的默认值，并根据端口的内存使用情况和/或性能进行优化。
 
-	- `cachesize` - Suggested memory cache size in bytes.
+	- `cachesize` - 推荐的内存缓存大小（以字节为单位）。
 
-		For a board with enough memory using larger values may improve performance.
+		对于有足够内存的开发板，使用较大的值可能会提高性能。
 
-		Cache policy is as follows: entire cache is not allocated at once;
+		缓存策略如下：整个缓存不会一次性分配；相反，访问数据库中的新页面将为其分配一个内存缓冲区，直到达到`cachesize`指定的值。
 
-		instead, accessing a new page in database will allocate a memory buffer
-		for it, until value specified by cachesize is reached.
+		然后，这些缓冲区将使用 LRU（最近最少使用）策略进行管理。
 
-		Then, these buffers will be managed using LRU (least recently used) policy.
+		如果需要，还可以分配更多缓冲区（例如，如果数据库包含较大的键和/或值）。
 
-		More buffers may still be allocated if needed (e.g., if a database contains
-		big keys and/or values).
+		分配的缓冲区不会被回收。
 
-		Allocated cache buffers aren’t reclaimed.
+	- `minkeypage` - 每页存储的最小键数。默认值 0 相当于 2。
 
-	- `minkeypage` - Minimum number of keys to store per page. Default value of
-	0 equivalent to 2.
-
-	Returns a BTree object, which implements a dictionary protocol (set of
-	methods), and some additional methods described below.
+	返回一个 BTree 对象，该对象实现了字典协议（一组方法）和一些附加方法。
 	'''
 
 # Methods
 def close():
 	'''
-	Close the database.
+	关闭数据库。
 
-	It’s mandatory to close the database at the end of processing, as some
-	unwritten data may be still in the cache.
+	处理结束时必须关闭数据库，因为缓存中可能仍有一些未写入的数据。
 
-	Note that this does not close underlying stream with which the database was
-	opened, it should be closed separately (which is also mandatory to make sure
-	that data flushed from buffer to the underlying storage).
+	请注意，这并不会关闭数据库打开时使用的底层数据流，它应该单独关闭（这也是确保数据从缓冲区刷新到底层存储的必要条件）。
 	'''
 
 def flush():
-	'''Flush any data in cache to the underlying stream.'''
+	'''将缓存中的任何数据刷新到底层数据流中。'''
 
 def __getitem__(key):
-	'''Standard dictionary methods.'''
+	'''标准字典方法。'''
 
 def get(key, default=None, /):
-	'''Standard dictionary methods.'''
+	'''标准字典方法。'''
 
 def __setitem__(key, val):
-	'''Standard dictionary methods.'''
+	'''标准字典方法。'''
 
 def __delitem__(key):
-	'''Standard dictionary methods.'''
+	'''标准字典方法。'''
 
 def __contains__(key):
-	'''Standard dictionary methods.'''
+	'''标准字典方法。'''
 
 def __iter__():
-	'''
-	A BTree object can be iterated over directly (similar to a dictionary) to get
-	access to all keys in order.
-	'''
+	'''BTree 对象可以直接遍历（类似于字典），以便按顺序访问所有键。'''
 
 def keys(start_key=None, end_key=None, flags=None):
 	'''
-	These methods are similar to standard dictionary methods, but also can take
-	optional parameters to iterate over a key sub-range, instead of the entire
-	database.
+	该方法与标准字典方法类似，但也可以使用可选参数遍历键的子范围，而不是整个数据库。
 
-	Note that for all 3 methods, `start_key` and `end_key` arguments represent
-	key values.
+	请注意，`start_key`和`end_key`参数代表键。
 
-	For example, `values()` method will iterate over values corresponding to they
-	key range given.
+	例如，`values()`方法将遍历所给键范围对应的值。
 
-	None values for `start_key` means "from the first key", no `end_key` or its
-	value of None means "until the end of database".
+	`start_key`的值为`None`表示“从第一个键开始”，没有`end_key`或其值为`None`表示
+	“直到数据库结束”。
 
-	By default, range is inclusive of `start_key` and exclusive of `end_key`,
-	you can include `end_key` in iteration by passing `flags` of `btree.INCL`.
+	默认情况下，范围包含`start_key`但不包含`end_key`，可以通过给`flags`传递`btree.INCL`常量以便在迭代中包含`end_key`。
 
-	You can iterate in descending key direction by passing `flags` of `btree.DESC`.
+	通过给`flags`传入`btree.DESC`常量，可以按键的递减方向迭代。
 
-	The flags values can be ORed together.
+	这些标志值可以被`or`连接在一起使用。
 	'''
 
 def values(start_key=None, end_key=None, flags=None):
 	'''
-	These methods are similar to standard dictionary methods, but also can take
-	optional parameters to iterate over a key sub-range, instead of the entire
-	database.
+	该方法与标准字典方法类似，但也可以使用可选参数遍历键的子范围，而不是整个数据库。
 
-	Note that for all 3 methods, `start_key` and `end_key` arguments represent
-	key values.
+	请注意，`start_key`和`end_key`参数代表键。
 
-	For example, `values()` method will iterate over values corresponding to they
-	key range given.
+	例如，`values()`方法将遍历所给键范围对应的值。
 
-	None values for `start_key` means "from the first key", no `end_key` or its
-	value of None means "until the end of database".
+	`start_key`的值为`None`表示“从第一个键开始”，没有`end_key`或其值为`None`表示
+	“直到数据库结束”。
 
-	By default, range is inclusive of `start_key` and exclusive of `end_key`,
-	you can include `end_key` in iteration by passing `flags` of `btree.INCL`.
+	默认情况下，范围包含`start_key`但不包含`end_key`，可以通过给`flags`传递`btree.INCL`常量以便在迭代中包含`end_key`。
 
-	You can iterate in descending key direction by passing `flags` of `btree.DESC`.
+	通过给`flags`传入`btree.DESC`常量，可以按键的递减方向迭代。
 
-	The flags values can be ORed together.
+	这些标志值可以被`or`连接在一起使用。
 	'''
 
 def items(start_key=None, end_key=None, flags=None):
 	'''
-	These methods are similar to standard dictionary methods, but also can take
-	optional parameters to iterate over a key sub-range, instead of the entire
-	database.
+	该方法与标准字典方法类似，但也可以使用可选参数遍历键的子范围，而不是整个数据库。
 
-	Note that for all 3 methods, `start_key` and `end_key` arguments represent
-	key values.
+	请注意，`start_key`和`end_key`参数代表键。
 
-	For example, `values()` method will iterate over values corresponding to they
-	key range given.
+	例如，`values()`方法将遍历所给键范围对应的值。
 
-	None values for `start_key` means "from the first key", no `end_key` or its
-	value of None means "until the end of database".
+	`start_key`的值为`None`表示“从第一个键开始”，没有`end_key`或其值为`None`表示
+	“直到数据库结束”。
 
-	By default, range is inclusive of `start_key` and exclusive of `end_key`,
-	you can include `end_key` in iteration by passing `flags` of `btree.INCL`.
+	默认情况下，范围包含`start_key`但不包含`end_key`，可以通过给`flags`传递`btree.INCL`常量以便在迭代中包含`end_key`。
 
-	You can iterate in descending key direction by passing `flags` of `btree.DESC`.
+	通过给`flags`传入`btree.DESC`常量，可以按键的递减方向迭代。
 
-	The flags values can be ORed together.
+	这些标志值可以被`or`连接在一起使用。
 	'''
