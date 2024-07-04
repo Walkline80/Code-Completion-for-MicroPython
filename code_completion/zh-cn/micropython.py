@@ -32,7 +32,7 @@ def opt_level() -> int:
 	'''返回当前优化级别。'''
 
 @typing.overload
-def opt_level(level: int = 0) -> None:
+def opt_level(level: int = 0):
 	'''
 	此函数设置后续脚本编译的优化级别，并返回`None`。
 

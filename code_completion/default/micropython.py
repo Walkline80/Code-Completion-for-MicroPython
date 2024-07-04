@@ -37,7 +37,7 @@ def opt_level() -> int:
 	'''It returns the current optimisation level.'''
 
 @typing.overload
-def opt_level(level: int = 0) -> None:
+def opt_level(level: int = 0):
 	'''
 	This function sets the optimisation level for subsequent compilation of
 	scripts, and returns `None`.
@@ -138,7 +138,7 @@ def heap_unlock() -> int:
 
 def heap_locked() -> bool:
 	'''
-	Returns a true value if the heap is currently locked.
+	Returns a `True` value if the heap is currently locked.
 
 	If the REPL becomes active with the heap locked then it will be forcefully
 	unlocked.

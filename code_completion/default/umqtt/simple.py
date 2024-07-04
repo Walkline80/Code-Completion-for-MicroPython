@@ -54,7 +54,7 @@ class MQTTClient:
 
 	def check_msg(self):
 		'''
-		Check if there's pending message from server.
+		Check if there’s pending message from server.
 
 		If yes, process the same way as `wait_msg()`, if not, return immediately.
 		'''

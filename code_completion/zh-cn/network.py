@@ -142,7 +142,7 @@ def phy_mode() -> int:
 	- `MODE_11G` - IEEE 802.11g
 	- `MODE_11N` - IEEE 802.11n
 
-	可用性： ESP8266。
+	可用性：ESP8266。
 	'''
 
 @typing.overload
@@ -156,7 +156,7 @@ def phy_mode(mode: int):
 	- `MODE_11G` - IEEE 802.11g
 	- `MODE_11N` - IEEE 802.11n
 
-	可用性： ESP8266。
+	可用性：ESP8266。
 	'''
 
 
@@ -366,7 +366,7 @@ class WLAN(object):
 			(已过时，请使用`network.hostname()`代替）。
 
 		- `reconnects` - 尝试重新连接的次数（整数，0=无，-1=无限制）
-		- `txpower` - 以 dBm 为单位的最大发射功率（整数或浮点数）
+		- `txpower` - 最大发射功率（整数或浮点数，以 dBm 为单位）
 		- `pm` - WiFi 电源管理设置（参见模块常量）
 		'''
 
@@ -394,6 +394,6 @@ class WLAN(object):
 			(已过时，请使用`network.hostname()`代替）。
 
 		- `reconnects` - 尝试重新连接的次数（整数，0=无，-1=无限制）
-		- `txpower` - 以 dBm 为单位的最大发射功率（整数或浮点数）
+		- `txpower` - 最大发射功率（整数或浮点数，以 dBm 为单位）
 		- `pm` - WiFi 电源管理设置（参见模块常量）
 		'''

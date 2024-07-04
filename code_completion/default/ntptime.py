@@ -21,6 +21,6 @@ def time(): ...
 
 def settime():
 	'''
-	There's currently no timezone support in MicroPython, and the RTC is set in
+	There’s currently no timezone support in MicroPython, and the RTC is set in
 	UTC time.
 	'''

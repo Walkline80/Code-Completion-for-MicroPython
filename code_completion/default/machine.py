@@ -62,11 +62,7 @@ def soft_reset():
 	'''
 
 def reset_cause():
-	'''
-	Get the reset cause.
-
-	See `constants` for the possible return values.
-	'''
+	'''Get the reset cause.'''
 
 def bootloader(value=None):
 	'''
@@ -75,22 +71,22 @@ def bootloader(value=None):
 	This is typically used to put the device into a state where it can be
 	programmed with new firmware.
 
-	Some ports support passing in an optional value argument which can control
+	Some ports support passing in an optional `value` argument which can control
 	which bootloader to enter, what to pass to it, or other things.
 	'''
 
 # Interrupt related functions
-def disable_irq():
+def disable_irq() -> int:
 	'''
 	Disable interrupt requests.
 
 	Returns the previous IRQ state which should be considered an opaque value.
 
 	This return value should be passed to the `enable_irq()` function to restore
-	interrupts to their original state, before `disable_irq()` was called.
+	interrupts to their original state.
 	'''
 
-def enable_irq(state):
+def enable_irq(state: int):
 	'''
 	Re-enable interrupt requests.
 
@@ -99,11 +95,14 @@ def enable_irq(state):
 	'''
 
 # Power related functions
-def freq(hz=None):
-	'''
-	Returns the CPU frequency in hertz.
+@typing.overload
+def freq() -> int:
+	'''Returns the CPU frequency in hertz.'''
 
-	On some ports this can also be used to set the CPU frequency by passing in hz.
+@typing.overload
+def freq(hz: int):
+	'''
+	On some ports this can used to set the CPU frequency by passing in `hz`.
 	'''
 
 def idle():
@@ -120,7 +119,9 @@ def idle():
 
 def sleep():
 	'''
-	Note: This function is deprecated, use `lightsleep()` instead with no arguments.
+	Note:
+
+		This function is deprecated, use `lightsleep()` instead with no arguments.
 	'''
 
 def lightsleep(time_ms: int | None):
@@ -138,8 +139,8 @@ def lightsleep(time_ms: int | None):
 	Such events, or wake sources, should be configured before sleeping, like Pin
 	change or RTC timeout.
 
-	The precise behaviour and power-saving capabilities of lightsleep and deepsleep
-	is highly dependent on the underlying hardware, but the general properties are:
+	The precise behaviour and power-saving capabilities of lightsleep is highly
+	dependent on the underlying hardware, but the general properties are:
 
 	- A lightsleep has full RAM and state retention.
 
@@ -162,8 +163,8 @@ def deepsleep(time_ms: int | None):
 	Such events, or wake sources, should be configured before sleeping, like Pin
 	change or RTC timeout.
 
-	The precise behaviour and power-saving capabilities of lightsleep and deepsleep
-	is highly dependent on the underlying hardware, but the general properties are:
+	The precise behaviour and power-saving capabilities of deepsleep is highly
+	dependent on the underlying hardware, but the general properties are:
 
 	- A deepsleep may not retain RAM or any other state of the system (for example
 	peripherals or network interfaces).
@@ -178,8 +179,6 @@ def deepsleep(time_ms: int | None):
 def wake_reason():
 	'''
 	Get the wake reason.
-
-	See constants for the possible return values.
 
 	Availability: ESP32, WiPy.	
 	'''
@@ -198,7 +197,7 @@ def unique_id() -> bytes:
 	In some MicroPython ports, ID corresponds to the network MAC address.
 	'''
 
-def time_pulse_us(pin, pulse_level: int, timeout_us: int = 1000000, /):
+def time_pulse_us(pin, pulse_level: int, timeout_us: int = 1000000, /) -> int:
 	'''
 	Time a pulse on the given `pin`, and return the duration of the pulse in
 	microseconds.
@@ -302,20 +301,26 @@ class Pin(object):
 		The rest of the pin peripheral state will remain unchanged.
 		'''
 
-	def value(self, x=None):
-		'''
-		This method allows to set and get the value of the pin, depending on
-		whether the argument `x` is supplied or not.
-		'''
+	@typing.overload
+	def value(self) -> int:
+		'''Get the value of the pin.'''
+
+	@typing.overload
+	def value(self, x):
+		'''Set the value of the pin.'''
 
 	def __call__(self, x=None):
 		'''
 		Pin objects are callable.
 
 		The call method provides a (fast) shortcut to set and get the value of
-		the pin.
+		the pin::
 
-		It is equivalent to `Pin.value([x])`.
+		    pin = Pin(2, Pin.OUT)
+		    pin(1)
+			pin()
+
+		It is equivalent to `Pin.value(x)`.
 		'''
 
 	def on(self):
@@ -355,7 +360,7 @@ class Pin(object):
 		'''
 
 	@typing.overload
-	def mode(self):
+	def mode(self) -> int:
 		'''
 		Get the pin mode.
 
@@ -363,7 +368,7 @@ class Pin(object):
 		'''
 
 	@typing.overload
-	def mode(self, mode):
+	def mode(self, mode: int):
 		'''
 		Set the pin mode.
 
@@ -371,7 +376,7 @@ class Pin(object):
 		'''
 
 	@typing.overload
-	def pull(self):
+	def pull(self) -> int:
 		'''
 		Get the pin pull state.
 
@@ -379,7 +384,7 @@ class Pin(object):
 		'''
 
 	@typing.overload
-	def pull(self, pull):
+	def pull(self, pull: int):
 		'''
 		Set the pin pull state.
 
@@ -387,7 +392,7 @@ class Pin(object):
 		'''
 
 	@typing.overload
-	def drive(self):
+	def drive(self) -> int:
 		'''
 		Get the pin drive strength.
 
@@ -395,7 +400,7 @@ class Pin(object):
 		'''
 
 	@typing.overload
-	def drive(self, drive):
+	def drive(self, drive: int):
 		'''
 		Set the pin drive strength.
 
@@ -417,7 +422,7 @@ class Signal(object):
 
 	[View Doc](https://docs.micropython.org/en/latest/library/machine.Signal.html)
 	'''
-	def __init__(self, obj_or_pin_arguments, *, invert: bool = False):
+	def __init__(self, pin_obj_or_pin_arguments, *, invert: bool = False):
 		'''
 		Create a Signal object. There’re two ways to create it:
 
@@ -438,78 +443,19 @@ class Signal(object):
 		'''
 
 	# Methods
-	def value(self, x=None):
-		'''
-		This method allows to set and get the value of the signal, depending on
-		whether the argument `x` is supplied or not.
-		'''
+	@typing.overload
+	def value(self) -> int:
+		'''Get the value of the signal.'''
+
+	@typing.overload
+	def value(self, x):
+		'''Set the value of the signal.'''
 
 	def on(self):
 		'''Activate signal.'''
 
 	def off(self):
 		'''Deactivate signal.'''
-
-
-class ADC(object):
-	'''
-	analog to digital conversion
-
-	The ADC class provides an interface to analog-to-digital converters, and
-	represents a single endpoint that can sample a continuous voltage and convert
-	it to a discretised value.
-
-	[View Doc](https://docs.micropython.org/en/latest/library/machine.ADC.html)
-	'''
-	def __init__(self, id, *, sample_ns, atten):
-		'''
-		Access the ADC associated with a source identified by `id`.
-
-		This `id` may be an integer (usually specifying a channel number), a Pin
-		object, or other value supported by the underlying machine.
-
-		If additional keyword-arguments are given then they will configure various
-		aspects of the ADC.
-
-		If not given, these settings will take previous or default values.
-
-		The settings are:
-
-		- `sample_ns` is the sampling time in nanoseconds.
-
-		- `atten` specifies the input attenuation.
-		'''
-
-	# Methods
-	def init(self, *, sample_ns, atten):
-		'''
-		Apply the given settings to the ADC.
-
-		Only those arguments that are specified will be changed.
-		'''
-
-	def block(self):
-		'''
-		Return the ADCBlock instance associated with this ADC object.
-
-		This method only exists if the port supports the ADCBlock class.
-		'''
-
-	def read_u16(self) -> int:
-		'''
-		Take an analog reading and return an integer in the range 0-65535.
-
-		The return value represents the raw reading taken by the ADC, scaled such
-		that the minimum value is 0 and the maximum value is 65535.
-		'''
-
-	def read_uv(self) -> int:
-		'''
-		Take an analog reading and return an integer value with units of microvolts.
-
-		It is up to the particular port whether or not this value is calibrated,
-		and how calibration is done.
-		'''
 
 
 class ADCBlock(object):
@@ -526,7 +472,7 @@ class ADCBlock(object):
 
 	[View Doc](https://docs.micropython.org/en/latest/library/machine.ADCBlock.html)
 	'''
-	def __init(self, id, *, bits):
+	def __init__(self, id, *, bits: int | str = None):
 		'''
 		Access the ADC peripheral identified by `id`, which may be an integer
 		or string.
@@ -538,14 +484,14 @@ class ADCBlock(object):
 		'''
 
 	# Methods
-	def init(self, *, bits):
+	def init(self, *, bits: int | str):
 		'''
 		Configure the ADC peripheral.
 
 		`bits` will set the resolution of the conversion process.
 		'''
 
-	def connect(self, channel: int = None, source=None, *, args):
+	def connect(self, channel: int = None, source=None, *, kwargs):
 		'''
 		Connect up a channel on the ADC peripheral so it is ready for sampling,
 		and return an ADC object that represents that connection.
@@ -563,6 +509,67 @@ class ADCBlock(object):
 
 		Any additional keyword arguments are used to configure the returned ADC
 		object, via its init method.
+		'''
+
+
+class ADC(object):
+	'''
+	analog to digital conversion
+
+	The ADC class provides an interface to analog-to-digital converters, and
+	represents a single endpoint that can sample a continuous voltage and convert
+	it to a discretised value.
+
+	[View Doc](https://docs.micropython.org/en/latest/library/machine.ADC.html)
+	'''
+	def __init__(self, id, *, sample_ns: int = None, atten: int = None):
+		'''
+		Access the ADC associated with a source identified by `id`.
+
+		This `id` may be an integer (usually specifying a channel number), a `Pin`
+		object, or other value supported by the underlying machine.
+
+		If additional keyword-arguments are given then they will configure various
+		aspects of the ADC.
+
+		If not given, these settings will take previous or default values.
+
+		The settings are:
+
+		- `sample_ns` is the sampling time in nanoseconds.
+
+		- `atten` specifies the input attenuation.
+		'''
+
+	# Methods
+	def init(self, *, sample_ns: int = None, atten: int = None):
+		'''
+		Apply the given settings to the ADC.
+
+		Only those arguments that are specified will be changed.
+		'''
+
+	def block(self) -> ADCBlock:
+		'''
+		Return the `ADCBlock` instance associated with this ADC object.
+
+		This method only exists if the port supports the `ADCBlock` class.
+		'''
+
+	def read_u16(self) -> int:
+		'''
+		Take an analog reading and return an integer in the range `0-65535`.
+
+		The return value represents the raw reading taken by the ADC, scaled such
+		that the minimum value is 0 and the maximum value is 65535.
+		'''
+
+	def read_uv(self) -> int:
+		'''
+		Take an analog reading and return an integer value with units of microvolts.
+
+		It is up to the particular port whether or not this value is calibrated,
+		and how calibration is done.
 		'''
 
 
@@ -584,11 +591,11 @@ class PWM(object):
 		- `freq` should be an integer which sets the frequency in Hz for the
 		PWM cycle.
 
-		- `duty_u16` sets the duty cycle as a ratio duty_u16 / 65535.
+		- `duty_u16` sets the duty cycle as a ratio `duty_u16 / 65535`.
 
 		- `duty_ns` sets the pulse width in nanoseconds.
 
-		- `invert` inverts the respective output if the value is True
+		- `invert` inverts the respective output if the value is `True`
 
 		Setting `freq` may affect other PWM objects if the objects share the same
 		underlying PWM generator (this is hardware specific).
@@ -618,7 +625,7 @@ class PWM(object):
 		'''
 		Set the current frequency of the PWM output.
 
-		With a single `value` argument the frequency is set to that value in Hz.
+		The frequency is set to that value in Hz.
 
 		The method may raise a `ValueError` if the frequency is outside the valid
 		range.
@@ -630,7 +637,7 @@ class PWM(object):
 		Get the current duty cycle of the PWM output, as an unsigned 16-bit value
 		in the range 0 to 65535 inclusive.
 
-		he duty cycle is returned.
+		The duty cycle is returned.
 		'''
 
 	@typing.overload
@@ -639,8 +646,7 @@ class PWM(object):
 		Set the current duty cycle of the PWM output, as an unsigned 16-bit value
 		in the range 0 to 65535 inclusive.
 
-		With a single `value` argument the duty cycle is set to that value, measured
-		as the ratio value / 65535.
+		The duty cycle is set to that `value`, measured as the ratio `value / 65535`.
 		'''
 
 	@typing.overload
@@ -656,7 +662,7 @@ class PWM(object):
 		'''
 		Set the current pulse width of the PWM output, as a value in nanoseconds.
 
-		With a single `value` argument the pulse width is set to that value.
+		The pulse width is set to that `value`.
 		'''
 
 
@@ -664,9 +670,9 @@ class UART(object):
 	'''
 	duplex serial communication bus
 
-	UART implements the standard `UART/USART` duplex serial communications protocol.
+	UART implements the standard UART/USART duplex serial communications protocol.
 
-	At the physical level it consists of 2 lines: `RX` and `TX`.
+	At the physical level it consists of 2 lines: RX and TX.
 
 	The unit of communication is a character (not to be confused with a string
 	character) which can be 8 or 9 bits wide.
@@ -684,43 +690,46 @@ class UART(object):
 	RX_ANY: int = ...
 	'''IRQ trigger sources. Availability: WiPy.'''
 
-	def __init__(self, id):
-		'''Construct a UART object of the given id.'''
+	def __init__(self, id: int):
+		'''Construct a UART object of the given `id`.'''
 
 	# Methods
 	def init(self, baudrate: int = 9600, bits: int = 8, parity: int = None,
-		stop: int = 1, *, args):
+		stop: int = 1, *, kwargs):
 		'''
 		Initialise the UART bus with the given parameters:
 
-		- `baudrate` is the clock rate.
-		- `bits` is the number of bits per character, 7, 8 or 9.
-		- `parity` is the parity, None, 0 (even) or 1 (odd).
-		- `stop` is the number of stop bits, 1 or 2.
+		- `baudrate` is the clock rate
+		- `bits` is the number of bits per character, 7, 8 or 9
+		- `parity` is the parity, `None`, 0 (even) or 1 (odd)
+		- `stop` is the number of stop bits, 1 or 2
 
 		Additional keyword-only parameters that may be supported by a port are:
 
-		- `tx` specifies the TX pin to use.
-		- `rx` specifies the RX pin to use.
-		- `rts` specifies the RTS (output) pin to use for hardware receive flow control.
-		- `cts` specifies the CTS (input) pin to use for hardware transmit flow control.
-		- `txbuf` specifies the length in characters of the TX buffer.
-		- `rxbuf` specifies the length in characters of the RX buffer.
-		- `timeout` specifies the time to wait for the first character (in ms).
-		- `timeout_char` specifies the time to wait between characters (in ms).
+		- `tx` specifies the TX pin to use
+		- `rx` specifies the RX pin to use
+		- `rts` specifies the RTS (output) pin to use for hardware receive flow
+		control
+		- `cts` specifies the CTS (input) pin to use for hardware transmit flow
+		control
+		- `txbuf` specifies the length in characters of the TX buffer
+		- `rxbuf` specifies the length in characters of the RX buffer
+		- `timeout` specifies the time to wait for the first character (in ms)
+		- `timeout_char` specifies the time to wait between characters (in ms)
 		- `invert` specifies which lines to invert.
 
-			- 0 will not invert lines (idle state of both lines is logic high).
-			- `UART.INV_TX` will invert TX line (idle state of TX line now logic low).
-			- `UART.INV_RX` will invert RX line (idle state of RX line now logic low).
-			- `UART.INV_TX | UART.INV_RX` will invert both lines (idle state at logic low).
+			- `0` will not invert lines (idle state of both lines is logic high)
+			- `UART.INV_TX` will invert TX line (idle state of TX line now logic low)
+			- `UART.INV_RX` will invert RX line (idle state of RX line now logic low)
+			- `UART.INV_TX | UART.INV_RX` will invert both lines (idle state at logic low)
 
-		- `flow` specifies which hardware flow control signals to use. The value is a bitmask.
+		- `flow` specifies which hardware flow control signals to use. The value
+		is a bitmask.
 
-			- 0 will ignore hardware flow control signals.
-			- `UART.RTS` will enable receive flow control by using the RTS output pin to signal if the receive FIFO has sufficient space to accept more data.
-			- `UART.CTS` will enable transmit flow control by pausing transmission when the CTS input pin signals that the receiver is running low on buffer space.
-			- `UART.RTS | UART.CTS` will enable both, for full hardware flow control.
+			- `0` will ignore hardware flow control signals
+			- `UART.RTS` will enable receive flow control by using the RTS output pin to signal if the receive FIFO has sufficient space to accept more data
+			- `UART.CTS` will enable transmit flow control by pausing transmission when the CTS input pin signals that the receiver is running low on buffer space
+			- `UART.RTS | UART.CTS` will enable both, for full hardware flow control
 		'''
 
 	def deinit(self):
@@ -743,13 +752,15 @@ class UART(object):
 		'''
 		Read characters.
 
+		Read as much data as possible.
+
 		It may return sooner if a timeout is reached.
 
 		The timeout is configurable in the constructor.
 
 		Return value: a bytes object containing the bytes read in.
 
-		Returns None on timeout.
+		Returns `None` on timeout.
 		'''
 
 	@typing.overload
@@ -757,8 +768,7 @@ class UART(object):
 		'''
 		Read characters.
 
-		Read `nbytes` at most that many bytes, otherwise read as much data as
-		possible.
+		Read `nbytes` at most that many bytes.
 
 		It may return sooner if a timeout is reached.
 
@@ -766,7 +776,7 @@ class UART(object):
 
 		Return value: a bytes object containing the bytes read in.
 
-		Returns None on timeout.
+		Returns `None` on timeout.
 		'''
 
 	@typing.overload
@@ -780,7 +790,7 @@ class UART(object):
 
 		The timeout is configurable in the constructor.
 
-		Return value: number of bytes read and stored into buf or None on timeout.
+		Return value: number of bytes read and stored into `buf` or `None` on timeout.
 		'''
 
 	@typing.overload
@@ -794,10 +804,10 @@ class UART(object):
 
 		The timeout is configurable in the constructor.
 
-		Return value: number of bytes read and stored into buf or None on timeout.
+		Return value: number of bytes read and stored into `buf` or `None` on timeout.
 		'''
 
-	def readline(self):
+	def readline(self) -> bytes | None:
 		'''
 		Read a line, ending in a newline character.
 
@@ -805,14 +815,14 @@ class UART(object):
 
 		The timeout is configurable in the constructor.
 
-		Return value: the line read or None on timeout.
+		Return value: the line read or `None` on timeout.
 		'''
 
 	def write(self, buf) -> int | None:
 		'''
 		Write the buffer of bytes to the bus.
 
-		Return value: number of bytes written or None on timeout.
+		Return value: number of bytes written or `None` on timeout.
 		'''
 
 	def sendbreak(self):
@@ -823,7 +833,7 @@ class UART(object):
 		transmission of a character.
 		'''
 
-	def irq(self, trigger, priority=1, handler=None, wake=IDLE):
+	def irq(self, trigger: int = RX_ANY, priority=1, handler=None, wake: int = IDLE):
 		'''
 		Create a callback to be triggered when data is received on the UART.
 
@@ -861,8 +871,9 @@ class UART(object):
 		'''
 		Tells whether all data has been sent or no data transfer is happening.
 
-		In this case, it returns True. If a data transmission is ongoing it
-		returns False.
+		In this case, it returns `True`.
+
+		If a data transmission is ongoing it returns `False`.
 
 		Availability: rp2, esp32, esp8266, mimxrt, cc3200, stm32, nrf ports, renesas-ra
 		'''
@@ -872,14 +883,29 @@ class SPI(object):
 	'''
 	a Serial Peripheral Interface bus protocol (controller side)
 
+	SPI is a synchronous serial protocol that is driven by a controller.
+
+	At the physical level, a bus consists of 3 lines: SCK, MOSI, MISO.
+
+	Multiple devices can share the same bus.
+
+	Each device should have a separate, 4th signal, CS (Chip Select), to
+	select a particular device on a bus with which communication takes place.
+
+	Management of a CS signal should happen in user code (via machine.Pin class).
+
+	Hardware SPI implementations exist via the `machine.SPI` class.
+
+	Hardware SPI uses underlying hardware support of the system to perform the
+	reads/writes and is usually efficient and fast but may have restrictions on
+	which pins can be used.
+
 	[View Doc](https://docs.micropython.org/en/latest/library/machine.SPI.html)
 	'''
 	# Constants
 	CONTROLLER = ...
 	'''
-	for initialising the SPI bus to controller
-
-	this is only used for the WiPy
+	for initialising the SPI bus to controller, this is only used for the WiPy
 	'''
 
 	MSB: int = ...
@@ -888,7 +914,7 @@ class SPI(object):
 	LSB: int = ...
 	'''set the first bit to be the least significant bit'''
 
-	def __init__(self, id):
+	def __init__(self, id: int):
 		'''
 		Construct an SPI object on the given bus, `id`. Values of `id` depend on
 		a particular port and its hardware.
@@ -900,35 +926,37 @@ class SPI(object):
 		(it has the settings from the last initialisation of the bus, if any).
 
 		If extra arguments are given, the bus is initialised.
+
+		See `SPI.init` for parameters of initialisation.
 		'''
 
 	# Methods
 	def init(self, baudrate: int = 1000000, *, polarity: int = 0, phase: int = 0,
-		bits: int = 8, firstbit: int = MSB, sck=None, mosi=None, miso=None, pins=None):
+		bits: int = 8, firstbit: int = MSB, sck=None, mosi=None, miso=None, pins: tuple = None):
 		'''
 		Initialise the SPI bus with the given parameters:
 
-		- `baudrate` is the SCK clock rate.
-		- `polarity` can be 0 or 1, and is the level the idle clock line sits at.
+		- `baudrate` is the SCK clock rate
+		- `polarity` can be 0 or 1, and is the level the idle clock line sits at
 		- `phase` can be 0 or 1 to sample data on the first or second clock edge
-		respectively.
+		respectively
 		- `bits` is the width in bits of each transfer. Only 8 is guaranteed to
-		be supported by all hardware.
-		- `firstbit` can be SPI.MSB or SPI.LSB.
+		be supported by all hardware
+		- `firstbit` can be `SPI.MSB` or `SPI.LSB`
 		- `sck`, `mosi`, `miso` are pins (machine.Pin) objects to use for bus
-		signals.
+		signals
 
-			For most hardware SPI blocks (as selected by id parameter to the
+			For most hardware SPI blocks (as selected by `id` parameter to the
 			constructor), pins are fixed and cannot be changed.
 
 			In some cases, hardware blocks allow 2-3 alternative pin sets for a
 			hardware SPI block.
 
 			Arbitrary pin assignments are possible only for a bitbanging SPI
-			driver (id = -1).
+			driver (`id` = -1).
 
-		- `pins` - WiPy port doesn’t use sck, mosi, miso arguments, and instead
-		allows to specify them as a tuple of pins parameter.
+		- `pins` - WiPy port doesn’t use `sck`, `mosi`, `miso` arguments, and instead
+		allows to specify them as a tuple of `pins` parameter.
 
 		In the case of hardware SPI the actual clock frequency may be lower than
 		the requested baudrate.
@@ -946,15 +974,15 @@ class SPI(object):
 		Read a number of bytes specified by `nbytes` while continuously writing
 		the single byte given by `write`.
 
-		Returns a bytes object with the data that was read.
+		Returns a `bytes` object with the data that was read.
 		'''
 
-	def readinto(self, buf, write=0x00) -> None:
+	def readinto(self, buf, write=0x00):
 		'''
 		Read into the buffer specified by `buf` while continuously writing the
 		single byte given by `write`.
 
-		Returns None.
+		Returns `None`.
 
 		Note: on WiPy this function returns the number of bytes read.
 		'''
@@ -963,19 +991,19 @@ class SPI(object):
 		'''
 		Write the bytes contained in `buf`.
 
-		Returns None.
+		Returns `None`.
 
 		Note: on WiPy this function returns the number of bytes written.
 		'''
 
-	def write_readinto(self, write_buf, read_buf) -> None:
+	def write_readinto(self, write_buf, read_buf):
 		'''
 		Write the bytes from `write_buf` while reading into `read_buf`.
 
 		The buffers can be the same or different, but both buffers must have the
 		same length.
 
-		Returns None.
+		Returns `None`.
 
 		Note: on WiPy this function returns the number of bytes written.
 		'''
@@ -984,6 +1012,20 @@ class SPI(object):
 class SoftSPI(object):
 	'''
 	a Serial Peripheral Interface bus protocol (controller side)
+
+	SPI is a synchronous serial protocol that is driven by a controller.
+
+	At the physical level, a bus consists of 3 lines: SCK, MOSI, MISO.
+
+	Multiple devices can share the same bus.
+
+	Each device should have a separate, 4th signal, CS (Chip Select), to
+	select a particular device on a bus with which communication takes place.
+
+	Management of a CS signal should happen in user code (via machine.Pin class).
+
+	Software SPI is implemented by bit-banging and can be used on any pin but is
+	not as efficient.
 
 	[View Doc](https://docs.micropython.org/en/latest/library/machine.SPI.html)
 	'''
@@ -1008,6 +1050,8 @@ class SoftSPI(object):
 
 		Additional parameters must be given, usually at least `sck`, `mosi` and
 		`miso`, and these are used to initialise the bus.
+
+		See `SPI.init` for a description of the parameters.
 		'''
 
 	# Methods
@@ -1025,23 +1069,8 @@ class SoftSPI(object):
 		- `firstbit` can be SPI.MSB or SPI.LSB.
 		- `sck`, `mosi`, `miso` are pins (machine.Pin) objects to use for bus
 		signals.
-
-			For most hardware SPI blocks (as selected by id parameter to the
-			constructor), pins are fixed and cannot be changed.
-
-			In some cases, hardware blocks allow 2-3 alternative pin sets for a
-			hardware SPI block.
-
-			Arbitrary pin assignments are possible only for a bitbanging SPI
-			driver (id = -1).
-
 		- `pins` - WiPy port doesn’t use sck, mosi, miso arguments, and instead
 		allows to specify them as a tuple of pins parameter.
-
-		In the case of hardware SPI the actual clock frequency may be lower than
-		the requested baudrate.
-
-		This is dependent on the platform hardware.
 
 		The actual rate may be determined by printing the SPI object.
 		'''
@@ -1054,36 +1083,36 @@ class SoftSPI(object):
 		Read a number of bytes specified by `nbytes` while continuously writing
 		the single byte given by `write`.
 
-		Returns a bytes object with the data that was read.
+		Returns a `bytes` object with the data that was read.
 		'''
 
-	def readinto(self, buf, write=0x00) -> None:
+	def readinto(self, buf, write=0x00):
 		'''
 		Read into the buffer specified by `buf` while continuously writing the
 		single byte given by `write`.
 
-		Returns None.
+		Returns `None`.
 
 		Note: on WiPy this function returns the number of bytes read.
 		'''
 
-	def write(self, buf) -> None:
+	def write(self, buf):
 		'''
 		Write the bytes contained in `buf`.
 
-		Returns None.
+		Returns `None`.
 
 		Note: on WiPy this function returns the number of bytes written.
 		'''
 
-	def write_readinto(self, write_buf, read_buf) -> None:
+	def write_readinto(self, write_buf, read_buf):
 		'''
 		Write the bytes from `write_buf` while reading into `read_buf`.
 
 		The buffers can be the same or different, but both buffers must have the
 		same length.
 
-		Returns None.
+		Returns `None`.
 
 		Note: on WiPy this function returns the number of bytes written.
 		'''
@@ -1098,6 +1127,17 @@ class I2C(object):
 	At the physical level it consists of 2 wires: SCL and SDA, the clock and data
 	lines respectively.
 
+	I2C objects are created attached to a specific bus. They can be initialised
+	when created, or initialised later on.
+
+	Printing the I2C object gives you information about its configuration.
+
+	Hardware I2C implementations exist via the `machine.I2C` class.
+
+	Hardware I2C uses underlying hardware support of the system to perform the
+	reads/writes and is usually efficient and fast but may have restrictions on
+	which pins can be used.
+
 	[View Doc](https://docs.micropython.org/en/latest/library/machine.I2C.html)
 	'''
 	def __init__(self, id, *, scl, sda, freq: int = 400000, timeout: int = 50000):
@@ -1106,10 +1146,10 @@ class I2C(object):
 
 		- `id` identifies a particular I2C peripheral. Allowed values for depend
 		on the particular port/board
-		- `scl` should be a pin object specifying the pin to use for SCL.
-		- `sda` should be a pin object specifying the pin to use for SDA.
-		- `freq` should be an integer which sets the maximum frequency for SCL.
-		- `timeout` is the maximum time in microseconds to allow for I2C transactions.
+		- `scl` should be a pin object specifying the pin to use for SCL
+		- `sda` should be a pin object specifying the pin to use for SDA
+		- `freq` should be an integer which sets the maximum frequency for SCL
+		- `timeout` is the maximum time in microseconds to allow for I2C transactions
 
 			This parameter is not allowed on some ports.
 		'''
@@ -1140,7 +1180,7 @@ class I2C(object):
 
 	def scan(self):
 		'''
-		Scan all I2C addresses between 0x08 and 0x77 inclusive and return a list
+		Scan all I2C addresses between `0x08` and `0x77` inclusive and return a list
 		of those that respond.
 
 		A device responds if it pulls the SDA line low after its address (including
@@ -1148,42 +1188,42 @@ class I2C(object):
 		'''
 
 	# Standard bus operations
-	def readfrom(self, addr, nbytes: int, stop: bool = True, /) -> bytes:
+	def readfrom(self, addr: int, nbytes: int, stop: bool = True, /) -> bytes:
 		'''
 		Read `nbytes` from the peripheral specified by `addr`.
 
-		If `stop` is true then a STOP condition is generated at the end of the
+		If `stop` is `True` then a STOP condition is generated at the end of the
 		transfer.
 
 		Returns a bytes object with the data read.
 		'''
 
-	def readfrom_into(self, addr, buf, stop: bool = True, /) -> None:
+	def readfrom_into(self, addr: int, buf, stop: bool = True, /):
 		'''
 		Read into `buf` from the peripheral specified by `addr`.
 
 		The number of bytes read will be the length of `buf`.
 
-		If `stop` is true then a STOP condition is generated at the end of the
+		If `stop` is `True` then a STOP condition is generated at the end of the
 		transfer.
 
 		The method returns None.
 		'''
 
-	def writeto(self, addr, buf, stop: bool = True, /) -> int:
+	def writeto(self, addr: int, buf, stop: bool = True, /) -> int:
 		'''
 		Write the bytes from `buf` to the peripheral specified by `addr`.
 
 		If a NACK is received following the write of a byte from `buf` then the
 		remaining bytes are not sent.
 
-		If `stop` is true then a STOP condition is generated at the end of the
+		If `stop` is `True` then a STOP condition is generated at the end of the
 		transfer, even if a NACK is received.
 
 		The function returns the number of ACKs that were received.
 		'''
 
-	def writevto(self, addr, vector, stop: bool = True, /) -> None:
+	def writevto(self, addr: int, vector: tuple | list, stop: bool = True, /) -> int:
 		'''
 		Write the bytes contained in `vector` to the peripheral specified by `addr`.
 
@@ -1196,16 +1236,16 @@ class I2C(object):
 		contribute to the output.
 
 		If a NACK is received following the write of a byte from one of the objects
-		in vector then the remaining bytes, and any remaining objects, are not sent.
+		in `vector` then the remaining bytes, and any remaining objects, are not sent.
 
-		If `stop` is true then a STOP condition is generated at the end of the
+		If `stop` is `True` then a STOP condition is generated at the end of the
 		transfer, even if a NACK is received.
 
 		The function returns the number of ACKs that were received.
 		'''
 
 	# Memory operations
-	def readfrom_mem(self, addr, memaddr, nbytes: int, *, addrsize: int = 8) -> bytes:
+	def readfrom_mem(self, addr: int, memaddr: int, nbytes: int, *, addrsize: int = 8) -> bytes:
 		'''
 		Read `nbytes` from the peripheral specified by `addr` starting from the
 		memory address specified by `memaddr`.
@@ -1215,7 +1255,7 @@ class I2C(object):
 		Returns a bytes object with the data read.
 		'''
 
-	def readfrom_mem_into(self, addr, memaddr, buf, *, addrsize=8) -> None:
+	def readfrom_mem_into(self, addr: int, memaddr: int, buf, *, addrsize=8):
 		'''
 		Read into `buf` from the peripheral specified by `addr` starting from the
 		memory address specified by `memaddr`.
@@ -1225,10 +1265,10 @@ class I2C(object):
 		The argument `addrsize` specifies the address size in bits (on ESP8266
 		this argument is not recognised and the address size is always 8 bits).
 
-		The method returns None.
+		The method returns `None`.
 		'''
 
-	def writeto_mem(self, addr, memaddr, buf, *, addrsize: int = 8) -> None:
+	def writeto_mem(self, addr: int, memaddr: int, buf, *, addrsize: int = 8):
 		'''
 		Write `buf` to the peripheral specified by `addr` starting from the memory
 		address specified by `memaddr`.
@@ -1236,7 +1276,7 @@ class I2C(object):
 		The argument `addrsize` specifies the address size in bits (on ESP8266 this
 		argument is not recognised and the address size is always 8 bits).
 
-		The method returns None.
+		The method returns `None`.
 		'''
 
 
@@ -1249,17 +1289,28 @@ class SoftI2C(object):
 	At the physical level it consists of 2 wires: SCL and SDA, the clock and data
 	lines respectively.
 
+	I2C objects are created attached to a specific bus. They can be initialised
+	when created, or initialised later on.
+
+	Printing the I2C object gives you information about its configuration.
+
+	Software I2C implementations exist via the `machine.SoftI2C` class.
+
+	Software I2C is implemented by bit-banging and can be used on any pin but is
+	not as efficient.
+
 	[View Doc](https://docs.micropython.org/en/latest/library/machine.I2C.html)
 	'''
 	def __init__(self, scl, sda, *, freq: int = 400000, timeout: int = 50000):
 		'''
 		Construct a new software I2C object. The parameters are:
 
-		- `scl` should be a pin object specifying the pin to use for SCL.
-		- `sda` should be a pin object specifying the pin to use for SDA.
-		- `freq` should be an integer which sets the maximum frequency for SCL.
+		- `scl` should be a pin object specifying the pin to use for SCL
+		- `sda` should be a pin object specifying the pin to use for SDA
+		- `freq` should be an integer which sets the maximum frequency for SCL
 		- `timeout` is the maximum time in microseconds to wait for clock stretching
-		(SCL held low by another device on the bus), after which an OSError(ETIMEDOUT) exception is raised.
+		(SCL held low by another device on the bus), after which an `OSError(ETIMEDOUT)`
+		exception is raised.
 		'''
 
 	# General Methods
@@ -1270,11 +1321,6 @@ class SoftI2C(object):
 		- `scl` is a pin object for the SCL line
 		- `sda` is a pin object for the SDA line
 		- `freq` is the SCL clock rate
-
-		In the case of hardware I2C the actual clock frequency may be lower than
-		the requested frequency.
-
-		This is dependent on the platform hardware.
 
 		The actual rate may be determined by printing the I2C object.
 		'''
@@ -1288,7 +1334,7 @@ class SoftI2C(object):
 
 	def scan(self):
 		'''
-		Scan all I2C addresses between 0x08 and 0x77 inclusive and return a list
+		Scan all I2C addresses between `0x08` and `0x77` inclusive and return a list
 		of those that respond.
 
 		A device responds if it pulls the SDA line low after its address (including
@@ -1298,10 +1344,16 @@ class SoftI2C(object):
 	# Primitive I2C operations.
 	# These methods are only available on the `machine.SoftI2C` class.
 	def start(self):
-		'''Generate a START condition on the bus (SDA transitions to low while SCL is high).'''
+		'''
+		Generate a START condition on the bus (SDA transitions to low while SCL
+		is high).
+		'''
 
 	def stop(self):
-		'''Generate a STOP condition on the bus (SDA transitions to high while SCL is high).'''
+		'''
+		Generate a STOP condition on the bus (SDA transitions to high while SCL
+		is high).
+		'''
 
 	def readinto(self, buf, nack: bool = True, /):
 		'''
@@ -1311,7 +1363,7 @@ class SoftI2C(object):
 
 		An ACK will be sent on the bus after receiving all but the last byte.
 
-		After the last byte is received, if `nack` is true then a NACK will be sent,
+		After the last byte is received, if `nack` is `True` then a NACK will be sent,
 		otherwise an ACK will be sent (and in this case the peripheral assumes more
 		bytes are going to be read in a later call).
 		'''
@@ -1327,42 +1379,42 @@ class SoftI2C(object):
 		'''
 
 	# Standard bus operations
-	def readfrom(self, addr, nbytes: int, stop: bool = True, /) -> bytes:
+	def readfrom(self, addr: int, nbytes: int, stop: bool = True, /) -> bytes:
 		'''
 		Read `nbytes` from the peripheral specified by `addr`.
 
-		If `stop` is true then a STOP condition is generated at the end of the
+		If `stop` is `True` then a STOP condition is generated at the end of the
 		transfer.
 
 		Returns a bytes object with the data read.
 		'''
 
-	def readfrom_into(self, addr, buf, stop: bool = True, /) -> None:
+	def readfrom_into(self, addr: int, buf, stop: bool = True, /):
 		'''
 		Read into `buf` from the peripheral specified by `addr`.
 
 		The number of bytes read will be the length of `buf`.
 
-		If `stop` is true then a STOP condition is generated at the end of the
+		If `stop` is `True` then a STOP condition is generated at the end of the
 		transfer.
 
 		The method returns None.
 		'''
 
-	def writeto(self, addr, buf, stop: bool = True, /) -> int:
+	def writeto(self, addr: int, buf, stop: bool = True, /) -> int:
 		'''
 		Write the bytes from `buf` to the peripheral specified by `addr`.
 
 		If a NACK is received following the write of a byte from `buf` then the
 		remaining bytes are not sent.
 
-		If `stop` is true then a STOP condition is generated at the end of the
+		If `stop` is `True` then a STOP condition is generated at the end of the
 		transfer, even if a NACK is received.
 
 		The function returns the number of ACKs that were received.
 		'''
 
-	def writevto(self, addr, vector, stop: bool = True, /) -> int:
+	def writevto(self, addr: int, vector: tuple | list, stop: bool = True, /) -> int:
 		'''
 		Write the bytes contained in `vector` to the peripheral specified by `addr`.
 
@@ -1371,20 +1423,20 @@ class SoftI2C(object):
 		The `addr` is sent once and then the bytes from each object in vector are
 		written out sequentially.
 
-		The objects in `vector` may be zero bytes in length in which case they
-		don’t contribute to the output.
+		The objects in `vector` may be zero bytes in length in which case they don’t
+		contribute to the output.
 
 		If a NACK is received following the write of a byte from one of the objects
-		in vector then the remaining bytes, and any remaining objects, are not sent.
+		in `vector` then the remaining bytes, and any remaining objects, are not sent.
 
-		If `stop` is true then a STOP condition is generated at the end of the
+		If `stop` is `True` then a STOP condition is generated at the end of the
 		transfer, even if a NACK is received.
 
 		The function returns the number of ACKs that were received.
 		'''
 
 	# Memory operations
-	def readfrom_mem(self, addr, memaddr, nbytes: int, *, addrsize: int = 8) -> bytes:
+	def readfrom_mem(self, addr: int, memaddr: int, nbytes: int, *, addrsize: int = 8) -> bytes:
 		'''
 		Read `nbytes` from the peripheral specified by `addr` starting from the
 		memory address specified by `memaddr`.
@@ -1394,28 +1446,28 @@ class SoftI2C(object):
 		Returns a bytes object with the data read.
 		'''
 
-	def readfrom_mem_into(self, addr, memaddr, buf, *, addrsize=8) -> None:
+	def readfrom_mem_into(self, addr: int, memaddr: int, buf, *, addrsize=8):
 		'''
 		Read into `buf` from the peripheral specified by `addr` starting from the
 		memory address specified by `memaddr`.
 
 		The number of bytes read is the length of `buf`.
 
-		The argument `addrsize` specifies the address size in bits (on ESP8266 this
-		argument is not recognised and the address size is always 8 bits).
+		The argument `addrsize` specifies the address size in bits (on ESP8266
+		this argument is not recognised and the address size is always 8 bits).
 
-		The method returns None.
+		The method returns `None`.
 		'''
 
-	def writeto_mem(self, addr, memaddr, buf, *, addrsize: int = 8) -> None:
+	def writeto_mem(self, addr: int, memaddr: int, buf, *, addrsize: int = 8):
 		'''
 		Write `buf` to the peripheral specified by `addr` starting from the memory
 		address specified by `memaddr`.
 
-		The argument `addrsize` specifies the address size in bits (on ESP8266
-		this argument is not recognised and the address size is always 8 bits).
+		The argument `addrsize` specifies the address size in bits (on ESP8266 this
+		argument is not recognised and the address size is always 8 bits).
 
-		The method returns None.
+		The method returns `None`.
 		'''
 
 
@@ -1435,18 +1487,18 @@ class I2S(object):
 	'''
 	# Constants
 	RX: int = ...
-	'''for initialising the I2S bus mode to receive'''
+	'''for initialising the I2S bus `mode` to receive'''
 
 	TX: int = ...
-	'''for initialising the I2S bus mode to transmit'''
+	'''for initialising the I2S bus `mode` to transmit'''
 
 	STEREO: int = ...
-	'''for initialising the I2S bus format to stereo'''
+	'''for initialising the I2S bus `format` to stereo'''
 
 	MONO: int = ...
-	'''for initialising the I2S bus format to mono'''
+	'''for initialising the I2S bus `format` to mono'''
 
-	def __init__(self, id, *, sck, ws, sd, mck=None, mode, bits, format, rate, ibuf):
+	def __init__(self, id: int, *, sck, ws, sd, mck=None, mode, bits, format, rate, ibuf):
 		'''
 		Construct an I2S object of the given id:
 
@@ -1468,11 +1520,11 @@ class I2S(object):
 		'''
 
 	# Methods
-	def init(self, sck, *, args):
-		'''see Constructor for argument descriptions'''
+	def init(self, sck, *, kwargs):
+		'''see Constructor for argument descriptions.'''
 
 	def deinit(self):
-		'''Deinitialize the I2S bus'''
+		'''Deinitialize the I2S bus.'''
 
 	def readinto(self, buf) -> int:
 		'''
@@ -1486,7 +1538,7 @@ class I2S(object):
 
 		For Mono format, the left channel sample data is used.
 
-		Returns number of bytes read
+		Returns number of bytes read.
 		'''
 
 	def write(self, buf) -> int:
@@ -1502,22 +1554,24 @@ class I2S(object):
 		For Mono format, the sample data is written to both the right and left
 		channels.
 
-		Returns number of bytes written
+		Returns number of bytes written.
 		'''
 
-	def irq(self, handler):
+	def irq(self, handler: function):
 		'''
-		Set a callback. `handler` is called when buf is emptied (write method)
-		or becomes full (readinto method).
+		Set a callback.
 
-		Setting a callback changes the write and readinto methods to non-blocking
+		`handler` is called when `buf` is emptied (`write` method) or becomes full
+		(`readinto` method).
+
+		Setting a callback changes the `write` and `readinto` methods to non-blocking
 		operation.
 
 		`handler` is called in the context of the MicroPython scheduler.
 		'''
 
 	@staticmethod
-	def shift(*, buf, bits, shift):
+	def shift(*, buf, bits: int, shift: int):
 		'''
 		bitwise shift of all samples contained in `buf`.
 
@@ -1525,11 +1579,10 @@ class I2S(object):
 
 		`shift` specifies the number of bits to shift each sample.
 
-		Positive for left shift, negative for right shift.
+		Positive for left shift, negative for right shift, typically used for
+		volume control.
 
-		Typically used for volume control.
-
-		Each bit shift changes sample volume by `6dB`.
+		Each bit shift changes sample volume by 6dB.
 		'''
 
 
@@ -1555,9 +1608,11 @@ class RTC(object):
 
 		This method returns an 8-tuple with the current date and time.
 
-		The 8-tuple has the following format:
+		The 8-tuple has the following format::
 
-		`(year, month, day, weekday, hours, minutes, seconds, subseconds)`
+		    (year, month, day, weekday, hours, minutes, seconds, subseconds)
+
+		The meaning of the `subseconds` field is hardware dependent.
 		'''
 
 	# Methods
@@ -1568,57 +1623,59 @@ class RTC(object):
 
 		With argument (being an 8-tuple) it sets the date and time.
 
-		The 8-tuple has the following format:
+		The 8-tuple has the following format::
 
-		`(year, month, day, weekday, hours, minutes, seconds, subseconds)`
+		    (year, month, day, weekday, hours, minutes, seconds, subseconds)
+
+		The meaning of the `subseconds` field is hardware dependent.
 		'''
 
 	def init(self, datetime: tuple):
 		'''
 		Initialise the RTC.
 
-		`datetime` is a tuple of the form:
+		`datetime` is a tuple of the form::
 
-		`(year, month, day[, hour[, minute[, second[, microsecond[, tzinfo]]]]])`
+			(year, month, day[, hour[, minute[, second[, microsecond[, tzinfo]]]]])
 		'''
 
-	def now(self):
-		'''Get get the current datetime tuple.'''
+	def now(self) -> tuple:
+		'''Get the current datetime tuple.'''
 
 	def deinit(self):
 		'''Resets the RTC to the time of January 1, 2015 and starts running it again.'''
 
-	def alarm(self, id, time, *, repeat: bool = False):
+	def alarm(self, id, time: int | tuple, *, repeat: bool = False):
 		'''
 		Set the RTC alarm.
 
 		`time` might be either a millisecond value to program the alarm to current
-		`time + time_in_ms` in the future, or a datetimetuple.
+		time + time_in_ms in the future, or a datetimetuple.
 
-		If the `time` passed is in milliseconds, `repeat` can be set to True to
+		If the time passed is in milliseconds, `repeat` can be set to `True` to
 		make the alarm periodic.
 		'''
 
-	def alarm_left(self, alarm_id: int = 0):
+	def alarm_left(self, alarm_id: int = 0) -> int:
 		'''Get the number of milliseconds left before the alarm expires.'''
 
 	def cancel(self, alarm_id: int = 0):
 		'''Cancel a running alarm.'''
 
-	def irq(self, *, trigger: int, handler=None, wake: int = IDLE):
+	def irq(self, *, trigger: int, handler: function = None, wake: int = IDLE):
 		'''
 		Create an irq object triggered by a real time clock alarm.
 
 		- `trigger` must be `RTC.ALARM0`
-		- `handler` is the function to be called when the callback is triggered.
+		- `handler` is the function to be called when the callback is triggered
 		- `wake` specifies the sleep mode from where this interrupt can wake up
-		the system.
+		the system
 		'''
 
 	@typing.overload
 	def memory(self) -> bytes:
 		'''
-		Reads RTC memory and returns a bytes object.
+		Reads RTC memory and returns a `bytes` object.
 
 		The maximum length of RTC user memory is 2048 bytes by default on esp32,
 		and 492 bytes on esp8266.
@@ -1672,7 +1729,7 @@ class Timer(object):
 
 		`id` shall not be passed as a keyword argument.
 
-		See `init` for parameters of initialisation.
+		See `Timer.init` for parameters of initialisation.
 		'''
 
 	# Methods
@@ -1688,22 +1745,22 @@ class Timer(object):
 			- `Timer.ONE_SHOT` - The timer runs once until the configured `period` of the channel expires.
 			- `Timer.PERIODIC` - The timer runs periodically at the configured frequency of the channel.
 
-		- `freq` - The timer frequency, in units of Hz.
+		- `freq` - The timer frequency, in units of Hz
 
 			The upper bound of the frequency is dependent on the port.
 
 			When both the `freq` and `period` arguments are given, `freq` has a
 			higher priority and `period` is ignored.
 
-		- `period` - The timer period, in milliseconds.
-		- `callback` - The callable to call upon expiration of the timer period.
+		- `period` - The timer period, in milliseconds
+		- `callback` - The callable to call upon expiration of the timer period
 
 			The `callback` must take one argument, which is passed the Timer object.
 
 			The `callback` argument shall be specified.
 
-			Otherwise an exception will occur upon timer expiration: `TypeError:
-			'NoneType' object isn't callable`
+			Otherwise an exception will occur upon timer expiration:
+			`TypeError: 'NoneType' object isn’t callable`
 		'''
 
 	def deinit(self):

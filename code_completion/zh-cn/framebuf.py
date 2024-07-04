@@ -39,9 +39,9 @@ class FrameBuffer(object):
 
 		- `buffer`是具有缓冲区协议的对象，该缓冲区必须足够大，以包含由 FrameBuffer 的宽度、高度和格式定义的每个像素。
 
-		- `width`是 FrameBuffer 的宽度，以像素为单位
+		- `width`是 FrameBuffer 的宽度（以像素为单位）
 
-		- `height`是 FrameBuffer 的高度，以像素为单位
+		- `height`是 FrameBuffer 的高度（以像素为单位）
 
 		- `format`指定 FrameBuffer 中使用的像素类型
 

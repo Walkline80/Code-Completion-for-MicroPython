@@ -113,7 +113,7 @@ def statvfs(path: str) -> tuple:
 
 	- `f_bsize` – 文件系统块大小
 	- `f_frsize` – 片段大小
-	- `f_blocks` – 以`f_frsize`为单位的文件系统大小
+	- `f_blocks` – 文件系统大小（以`f_frsize`为单位）
 	- `f_bfree` – 可用区块数
 	- `f_bavail` – 非特权用户的可用块数
 	- `f_files` – 节点数
