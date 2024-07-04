@@ -1,18 +1,16 @@
 '''
-This module provides an interface to a Bluetooth controller on a board.
+该模块为开发板上的蓝牙控制器提供接口。
 
-Currently this supports Bluetooth Low Energy (BLE) in Central, Peripheral,
-Broadcaster, and Observer roles, as well as GATT Server and Client and L2CAP
-connection-oriented-channels.
+目前，它支持蓝牙低功耗（BLE）的中央、外设、广播和观察者等角色，以及 GATT
+服务器和客户端以及面向连接的 L2CAP 通道。
 
-A device may operate in multiple roles concurrently.
+一个设备可同时扮演多个角色。
 
-Pairing (and bonding) is supported on some ports.
+某些端口支持配对和绑定。
 
-This API is intended to match the low-level Bluetooth protocol and provide
-building-blocks for higher-level abstractions such as specific device types.
+该 API 旨在与底层蓝牙协议相匹配，并为更高层次的抽象（如特定设备类型）提供基石。
 
-[View Doc](https://docs.micropython.org/en/latest/library/bluetooth.html)
+[查看文档](https://docs.micropython.org/en/latest/library/bluetooth.html)
 '''
 import typing
 
@@ -25,537 +23,446 @@ FLAG_INDICATE: int = ...
 FLAG_WRITE_NO_RESPONSE: int = ...
 
 
+class UUID(object):
+	def __init__(self, value: int | str, /):
+		'''
+		用指定的`value`创建 UUID 实例。
+
+		`value`可以是：
+
+		- 16 位整数，如`0x2908`。
+		- 128 位 UUID 字符串，如`'6E400001-B5A3-F393-E0A9-E50E24DCCA9E'`。
+		'''
+
+
 class BLE(object):
-	'''Returns the singleton BLE object.'''
+	'''返回 BLE 对象的单例。'''
 	# Configuration
 	@typing.overload
 	def active(self) -> bool:
 		'''
-		Optionally changes the active state of the BLE radio, and returns the
-		current state.
+		返回 BLE 无线电设备当前的激活状态。
 
-		The radio must be made active before using any other methods on this class.
+		在使用该类的其他方法之前，必须先使无线电处于激活状态。
 		'''
 
 	@typing.overload
 	def active(self, active: bool, /) -> bool:
 		'''
-		Optionally changes the active state of the BLE radio, and returns the
-		current state.
+		更改 BLE 无线电设备的激活状态，并返回当前状态。
 
-		The radio must be made active before using any other methods on this class.
+		在使用该类的其他方法之前，必须先使无线电处于激活状态。
 		'''
 
 	@typing.overload
 	def config(self, param: str, /):
 		'''
-		Get configuration values of the BLE interface.
+		获取 BLE 接口的配置值。
 
-		To get a value the parameter name should be quoted as a string, and just
-		one parameter is queried at a time.
+		要获取参数值，参数名应以字符串形式引述，每次只能查询一个参数。
 
-		Currently supported values are:
+		目前支持的参数值有：
 
-		- 'mac': The current address in use, depending on the current address mode.
+		- `mac`：当前使用的地址，取决于当前的地址模式。
 
-			This returns a tuple of (addr_type, addr).
+			返回一个元组`(addr_type, addr)`。
 
-			This may only be queried while the interface is currently active.
+			只能在接口当前处于活动状态时查询。
 
-		- 'addr_mode': Gets the address mode. Values can be:
+		- `addr_mode`：获取地址模式。值可以是：
 
-			- 0x00 - PUBLIC - Use the controller’s public address.
-			- 0x01 - RANDOM - Use a generated static address.
-			- 0x02 - RPA - Use resolvable private addresses.
-			- 0x03 - NRPA - Use non-resolvable private addresses.
+			- `0x00 - PUBLIC` - 使用控制器的公共地址
+			- `0x01 - RANDOM` - 使用生成的静态地址
+			- `0x02 - RPA` - 使用可解析的私有地址
+			- `0x03 - NRPA` - 使用不可解析的专用地址
 
-			By default the interface mode will use a PUBLIC address if available,
-			otherwise it will use a RANDOM address.
+			默认情况下，如果可以的话接口模式将使用 PUBLIC 地址，否则将使用 RANDOM 地址。
 
-		- 'gap_name': Get the GAP device name used by service 0x1800,
-		characteristic 0x2a00.
+		- `gap_name`：获取服务`0x1800`，特征`0x2a00`使用的 GAP 设备名称。
 
-		- 'rxbuf': Get the size in bytes of the internal buffer used to store
-		incoming events.
+		- `rxbuf`：获取用于存储传入事件的内部缓冲区的大小（以字节为单位）。
 
-			This buffer is global to the entire BLE driver and so handles incoming
-			data for all events, including all characteristics.
+			该缓冲区是整个 BLE 驱动程序的全局缓冲区，因此可以处理所有事件（包括所有`特征`）的传入数据。
 
-		- 'mtu': Get the MTU that will be used during a ATT MTU exchange.
+		- `mtu`：获取 ATT MTU 交换时使用的 MTU。
 
-			The resulting MTU will be the minimum of this and the remote device’s
-			MTU.
+			获得的 MTU 是该 MTU 和远程设备 MTU 的最小值。
 
-			Use the `_IRQ_MTU_EXCHANGED` event to discover the MTU for a given
-			connection.
+			使用`_IRQ_MTU_EXCHANGED`事件发现给定连接的 MTU。
 		'''
 
 	@typing.overload
 	def config(self, **params):
 		'''
-		Set configuration values of the BLE interface.
+		设置 BLE 接口的配置值。
 
-		To set values use the keyword syntax, and one or more parameter can be
-		set at a time.
+		要设置参数值，请使用关键字语法，一次可设置一个或多个参数。
 
-		Currently supported values are:
+		目前支持的参数值有：
 
-		- 'addr_mode': Sets the address mode. Values can be:
+		- `addr_mode`：设置地址模式。值可以是：
 
-			- 0x00 - PUBLIC - Use the controller’s public address.
-			- 0x01 - RANDOM - Use a generated static address.
-			- 0x02 - RPA - Use resolvable private addresses.
-			- 0x03 - NRPA - Use non-resolvable private addresses.
+			- `0x00 - PUBLIC` - 使用控制器的公共地址
+			- `0x01 - RANDOM` - 使用生成的静态地址
+			- `0x02 - RPA` - 使用可解析的私有地址
+			- `0x03 - NRPA` - 使用不可解析的专用地址
 
-			By default the interface mode will use a PUBLIC address if available,
-			otherwise it will use a RANDOM address.
+			默认情况下，如果可以的话接口模式将使用 PUBLIC 地址，否则将使用 RANDOM 地址。
 
-		- 'gap_name': Set the GAP device name used by service 0x1800,
-		characteristic 0x2a00.
+		- `gap_name`：获取服务`0x1800`，特征`0x2a00`使用的 GAP 设备名称。
 
-			This can be set at any time and changed multiple times.
+			可随时设置并多次更改。
 
-		- 'rxbuf': Set the size in bytes of the internal buffer used to store
-		incoming events.
+		- `rxbuf`：设置用于存储传入事件的内部缓冲区的大小（以字节为单位）。
 
-			This buffer is global to the entire BLE driver and so handles incoming
-			data for all events, including all characteristics.
+			该缓冲区是整个 BLE 驱动程序的全局缓冲区，因此可以处理所有事件（包括所有`特征`）的传入数据。
 
-			Increasing this allows better handling of bursty incoming data (for
-			example scan results) and the ability to receive larger characteristic
-			values.
+			增大缓冲区大小可以更好地处理突发传入数据（例如扫描结果），并能接收更大的`特征`值。
 
-		- 'mtu': Set the MTU that will be used during a ATT MTU exchange.
+		- `mtu`：设置 ATT MTU 交换时使用的 MTU。
 
-			ATT MTU exchange will not happen automatically (unless the remote
-			device initiates it), and must be manually initiated with
-			gattc_exchange_mtu.
+			ATT MTU 不会自动进行交换（除非远程设备启动），必须使用`gattc_exchange_mtu()`手动启动。
 
-			Use the `_IRQ_MTU_EXCHANGED` event to discover the MTU for a given
-			connection.
+			使用`_IRQ_MTU_EXCHANGED`事件可发现给定连接的 MTU。
 
-		- 'bond': Sets whether bonding will be enabled during pairing.
+		- `bond`：设置配对时是否启用绑定。
 
-			When enabled, pairing requests will set the "bond" flag and the keys
-			will be stored by both devices.
+			启用后，配对请求将设置“绑定标志，并且密钥将被两个设备存储。
 
-		- 'mitm': Sets whether MITM-protection is required for pairing.
+		- `mitm`：设置配对是否需要 MITM 保护。
 
-		- 'io': Sets the I/O capabilities of this device. Available options are:
+		- `io`：设置设备的输入输出功能。可用选项有::
 
-			- _IO CAPABILITY DISPLAY ONLY = const(0)
-			- _IO_CAPABILITY_DISPLAY_YESNO = const(1)
-			- _IO_CAPABILITY_KEYBOARD_ONLY = const(2)
-			- _IO_CAPABILITY_NO_INPUT_OUTPUT = const(3)
-			- _IO_CAPABILITY_KEYBOARD_DISPLAY = const(4)
+		    _IO CAPABILITY DISPLAY ONLY = const(0)
+		    _IO_CAPABILITY_DISPLAY_YESNO = const(1)
+		    _IO_CAPABILITY_KEYBOARD_ONLY = const(2)
+		    _IO_CAPABILITY_NO_INPUT_OUTPUT = const(3)
+		    _IO_CAPABILITY_KEYBOARD_DISPLAY = const(4)
 
-		'le_secure': Sets whether "LE Secure" pairing is required.
+		- `le_secure`：设置是否需要`LE Secure`配对。
 
-			Default is False (i.e. allow "Legacy Pairing").
+			默认为`False`（即允许“传统配对”）。
 		'''
 
 	# Event Handling
 	def irq(self, handler: function, /):
 		'''
-		Registers a callback for events from the BLE stack.
+		为来自 BLE 堆栈的事件注册回调函数。
 
-		The `handler` takes two arguments:
+		`handler`函数需要两个参数，`event`和`data`（这是一个特定于事件的数值元组）。
 
-		- `event(which will be one of the codes below)
-
-		- `data` (which is an event-specific tuple of values).
+		详见 [说明文档](https://docs.micropython.org/en/latest/library/bluetooth.html#bluetooth.BLE.irq)。
 		'''
 
 	# Broadcaster Role (Advertiser)
 	def gap_advertise(self, interval_us: int, adv_data=None, *, resp_data=None,
 		connectable: bool = True):
 		'''
-		Starts advertising at the specified interval (in microseconds).
+		以指定的时间间隔（微秒）开始广播。
 
-		This interval will be rounded down to the nearest 625us.
+		该间隔将向下舍入到最接近的 625 微秒。
 
-		To stop advertising, set `interval_us` to None.
+		要停止广播，请将`interval_us`设为`None`。
 
-		`adv_data` and `resp_data` can be any type that implements the buffer
-		protocol (e.g. bytes, bytearray, str).
+		`adv_data`和`resp_data`可以是任何实现缓冲协议的类型（如`bytes`、`bytearray`、`str`）。
 
-		`adv_data` is included in all broadcasts, and `resp_data` is send in
-		reply to an active scan.
+		`adv_data`包含在所有广播中，而`resp_data`则在主动扫描的回复中发送。
 
-		Note:
+		注意：
 
-			if `adv_data` (or `resp_data`) is None, then the data passed to the
-			previous call to gap_advertise will be reused.
+			如果`adv_data`（或`resp_data`）为`None`，则会重复使用上次调用`gap_advertise`时传递的数据。
 
-			This allows a broadcaster to resume advertising with just
-			`gap_advertise(interval_us)`.
+			这样，广播者只需使用`gap_advertise(interval_us)`，就能继续广播。
 
-			To clear the advertising payload pass an empty bytes, i.e. b''.
+			要清除广播有效载荷，请输入一个空字节，即`b''`。
 		'''
 
 	# Observer Role (Scanner)
 	def gap_scan(self, duration_ms: int, interval_us: int = 1280000,
 		window_us: int = 11250, active: bool = False, /):
 		'''
-		Run a scan operation lasting for the specified duration (in milliseconds).
+		运行扫描操作，持续指定的时间（以毫秒为单位）。
 
-		To scan indefinitely, set `duration_ms` to 0.
+		要无限期扫描，请将`duration_ms`设置为`0`。
 
-		To stop scanning, set `duration_ms` to None.
+		要停止扫描，请将`duration_ms`设置为`None`。
 
-		Use `interval_us` and `window_us` to optionally configure the duty cycle.
+		使用`interval_us`和`window_us`可选择配置占空比。
 
-		The scanner will run for `window_us` microseconds every `interval_us`
-		microseconds for a total of `duration_ms` milliseconds.
+		扫描将每隔`interval_us`微秒运行`window_us`微秒，总共运行`duration_ms`毫秒。
 
-		The default interval and window are 1.28 seconds and 11.25 milliseconds
-		respectively (background scanning).
+		默认时间间隔和窗口分别为 1.28 秒和 11.25 毫秒（后台扫描）。
 
-		For each scan result the `_IRQ_SCAN_RESULT` event will be raised, with
-		event data `(addr_type, addr, adv_type, rssi, adv_data)`.
+		每次扫描结果都会引发`_IRQ_SCAN_RESULT`事件，事件数据为::
 
-		- `addr_type` values indicate public or random addresses:
+		    (addr_type, addr, adv_type, rssi, adv_data)
 
-			- 0x00 - PUBLIC
-			- 0x01 - RANDOM (either static, RPA, or NRPA, the type is encoded in the address itself)
+		- `addr_type`值表示公共地址或随机地址：
 
-		- `adv_type` values correspond to the Bluetooth Specification:
+			- `0x00 - PUBLIC`
+			- `0x01 - RANDOM`（静态、RPA 或 NRPA，类型在地址本身中编码）
 
-			- 0x00 - ADV_IND - connectable and scannable undirected advertising
-			- 0x01 - ADV_DIRECT_IND - connectable directed advertising
-			- 0x02 - ADV_SCAN_IND - scannable undirected advertising
-			- 0x03 - ADV_NONCONN_IND - non-connectable undirected advertising
-			- 0x04 - SCAN_RSP - scan response
+		- `adv_type`值与蓝牙规范相对应：
 
-		`active` can be set True if you want to receive scan responses in the
-		results.
+			- `0x00 - ADV_IND` - 可连接和可扫描的非定向广告
+			- `0x01 - ADV_DIRECT_IND` - 可连接的定向广告
+			- `0x02 - ADV_SCAN_IND` - 可扫描的非定向广告
+			- `0x03 - ADV_NONCONN_IND` - 不可连接的非定向广告
+			- `0x04 - SCAN_RSP` - 扫描响应
 
-		When scanning is stopped (either due to the duration finishing or when
-		explicitly stopped), the `_IRQ_SCAN_DONE` event will be raised.
+		如果希望在结果中接收扫描响应，可将`active`设置为`True`。
+
+		扫描停止时（由于持续时间结束或显式停止），将引发`_IRQ_SCAN_DONE`事件。
 		'''
 
 	# Central Role
-	def gap_connect(self, addr_type: int, addr, scan_duration_ms: int = 2000,
+	def gap_connect(self, addr_type: int, addr: bytes, scan_duration_ms: int = 2000,
 		min_conn_interval_us: int | None = None, max_conn_interval_us: int | None = None, /):
 		'''
-		Connect to a peripheral.
+		连接外设。
 
-		To cancel an outstanding connection attempt early, call `gap_connect(None)`.
+		要提前取消未完成的连接尝试，请调用`gap_connect(None)`。
 
-		On success, the `_IRQ_PERIPHERAL_CONNECT` event will be raised.
+		成功后将引发`_IRQ_PERIPHERAL_CONNECT`事件。
 
-		If cancelling a connection attempt, the `_IRQ_PERIPHERAL_DISCONNECT` event
-		will be raised.
+		如果取消连接尝试，则会引发`_IRQ_PERIPHERAL_DISCONNECT`事件。
 
-		The device will wait up to `scan_duration_ms` to receive an advertising
-		payload from the device.
+		设备将最多等待`scan_duration_ms`毫秒接收来自设备的广播有效载荷。
 
-		The connection interval can be configured in microseconds using either
-		or both of `min_conn_interval_us` and `max_conn_interval_us`.
+		可以使用`min_conn_interval_us`和`max_conn_interval_us`配置连接间隔（以微秒为单位）。
 
-		Otherwise a default interval will be chosen, typically between 30000 and
-		50000 microseconds.
+		否则将选择默认的时间间隔，通常在 30000 至 50000 微秒之间。
 
-		A shorter interval will increase throughput, at the expense of power usage.
+		较短的时间间隔会提高吞吐量，但会增加功耗。
 		'''
 
 	# Central & Peripheral Roles
 	def gap_disconnect(self, conn_handle: int, /):
 		'''
-		Disconnect the specified connection handle.
+		断开指定的连接句柄。
 
-		This can either be a central that has connected to this device (if acting
-		as a peripheral) or a peripheral that was previously connected to by this
-		device (if acting as a central).
+		该句柄可以是已连接到该设备的中心设备（如果作为外设），也可以是之前连接到该设备的外设（如果作为中心设备）。
 
-		On success, the `_IRQ_PERIPHERAL_DISCONNECT` or `_IRQ_CENTRAL_DISCONNECT`
-		event will be raised.
+		成功后将触发`_IRQ_PERIPHERAL_DISCONNECT`或`_IRQ_CENTRAL_DISCONNECT`事件。
 
-		Returns False if the connection handle wasn’t connected, and True otherwise.
+		如果连接句柄未连接，则返回`False`，否则返回`True`。
 		'''
 
 	# GATT Server
-	def gatts_register_services(self, services_definition, /):
+	def gatts_register_services(self, services_definition: tuple, /) -> tuple:
 		'''
-		Configures the server with the specified services, replacing any existing
-		services.
+		用指定的`服务`配置服务器，替换任何现有`服务`。
 
-		`services_definition` is a list of services, where each service is a
-		two-element tuple containing a UUID and a list of characteristics.
+		`services_definition`是一个`服务`列表，其中每个`服务`都是一个包含 UUID 和`特征`列表的双元素元组。
 
-		Each characteristic is a two-or-three-element tuple containing a UUID, a
-		flags value, and optionally a list of descriptors.
+		每个`特征`都是一个包含 UUID、`标志`值和可选的`描述符`列表的二或三元素元组。
 
-		Each descriptor is a two-element tuple containing a UUID and a flags value.
+		每个`描述符`都是包含一个 UUID 和一个`标志`值的双元素元组。
 
-		The flags are a bitwise-OR combination of the flags defined below.
+		`标志`是标志常量的位或组合。
 
-		These set both the behaviour of the characteristic (or descriptor) as well
-		as the security and privacy requirements.
+		这些`标志`设定了`特征`（或`描述符`）的行为以及安全和隐私要求。
 
-		The return value is a list (one element per service) of tuples (each
-		element is a value handle).
+		返回值是一个包含列表（每个`服务`一个元素）的元组（每个元素是一个值句柄）。
 
-		Characteristics and descriptor handles are flattened into the same tuple,
-		in the order that they are defined.
+		`特征`和`描述符`句柄会按照定义的顺序平铺到同一个元组中。
 		'''
 
 	def gatts_read(self, value_handle: int, /):
-		'''
-		Reads the local value for this handle (which has either been written by
-		`gatts_write` or by a remote client).
-		'''
+		'''读取此句柄的本地值（该值由`gatts_write`或远程客户端写入）。'''
 
 	def gatts_write(self, value_handle: int, data, send_update: bool = False, /):
 		'''
-		Writes the local value for this handle, which can be read by a client.
+		写入此句柄的本地值，客户端可以读取此值。
 
-		If `send_update` is True, then any subscribed clients will be notified
-		(or indicated, depending on what they’re subscribed to and which operations
-		the characteristic supports) about this write.
+		如果`send_update`为`True`，则任何已订阅的客户端都会收到关于此次写入的通知
+		（或指示，取决于他们订阅的内容和`特征`支持的操作）。
 		'''
 
-	def gatts_notify(self, conn_handle: int, value_handle: int, data=None, /):
+	def gatts_notify(self, conn_handle: int, value_handle: int, data: bytes = None, /):
 		'''
-		Sends a notification request to a connected client.
+		向已连接的客户端发送通知请求。
 
-		If `data` is None (the default), then the current local value (as set
-		with gatts_write) will be sent.
+		如果`data`为`None`（默认值），则会发送当前的本地值（通过`gatts_write`设置）。
 
-		Otherwise, if `data` is not None, then that value is sent to the client
-		as part of the notification. The local value will not be modified.
+		否则，如果`data`不是`None`，那么该值将作为通知的一部分发送给客户端。
 
-		Note:
+		本地值不会被修改。
 
-			The notification will be sent regardless of the subscription status
-			of the client to this characteristic.
+		注意：
+
+			无论客户端对该`特征`的订阅状态如何，都将发送通知。
 		'''
 
-	def gatts_indicate(self, conn_handle: int, value_handle: int, data=None, /):
+	def gatts_indicate(self, conn_handle: int, value_handle: int, data: bytes = None, /):
 		'''
-		Sends a indication request to a connected client.
+		向已连接的客户端发送指示请求。
 
-		If `data` is None (the default), then the current local value (as set
-		with gatts_write) will be sent.
+		如果`data`为`None`（默认值），则会发送当前的本地值（通过`gatts_write`设置）。
 
-		Otherwise, if `data` is not None, then that value is sent to the client
-		as part of the indication. The local value will not be modified.
+		否则，如果`data`不是`None`，那么该值将作为指示的一部分发送给客户端。
 
-		On acknowledgment (or failure, e.g. timeout), the `_IRQ_GATTS_INDICATE_DONE`
-		event will be raised.
+		本地值不会被修改。
 
-		Note:
+		确认（或失败，例如超时）时，将触发`_IRQ_GATTS_INDICATE_DONE`事件。
 
-			The indication will be sent regardless of the subscription status of
-			the client to this characteristic.
+		注意：
+
+			无论客户端对该`特征`的订阅状态如何，都将发送指示。
 		'''
 
 	def gatts_set_buffer(self, value_handle: int, len: int, append: bool = False, /):
 		'''
-		Sets the internal buffer size for a value in bytes.
+		设置值的内部缓冲区大小（以字节为单位）。
 
-		This will limit the largest possible write that can be received.
+		这将限制可接收的最大写入量，默认值为 20。
 
-		The default is 20.
-
-		Setting `append` to True will make all remote writes append to, rather
-		than replace, the current value.
+		将`append`设置为`True`，所有远程写入都将追加到当前值，而不是替换当前值。
 		'''
 
 	# GATT Client
-	def gattc_discover_services(self, conn_handle: int, uuid=None, /):
+	def gattc_discover_services(self, conn_handle: int, uuid: UUID = None, /):
 		'''
-		Query a connected server for its services.
+		查询已连接服务器的`服务`。
 
-		Optionally specify a service `uuid` to query for that service only.
+		可选择指定一个服务`uuid`，以便只查询该`服务`。
 
-		For each service discovered, the `_IRQ_GATTC_SERVICE_RESULT` event will
-		be raised, followed by `_IRQ_GATTC_SERVICE_DONE` on completion.
+		对于发现的每个`服务`，都会引发`_IRQ_GATTC_SERVICE_RESULT`事件，并在完成后引发`_IRQ_GATTC_SERVICE_DONE`事件。
 		'''
 
 	def gattc_discover_characteristics(self, conn_handle: int, start_handle: int,
-		end_handle: int, uuid=None, /):
+		end_handle: int, uuid: UUID = None, /):
 		'''
-		Query a connected server for characteristics in the specified range.
+		查询指定范围内已连接服务器的`特征`。
 
-		Optionally specify a characteristic `uuid` to query for that
-		characteristic only.
+		可选择指定一个特征`uuid`，以便只查询该`特征`。
 
-		You can use `start_handle`=1, `end_handle`=0xffff to search for a
-		characteristic in any service.
+		可以使用`start_handle=1`，`end_handle=0xffff`搜索任何`服务`中的`特征`。
 
-		For each characteristic discovered, the `_IRQ_GATTC_CHARACTERISTIC_RESULT`
-		event will be raised, followed by `_IRQ_GATTC_CHARACTERISTIC_DONE` on
-		completion.
+		每发现一个`特征`，就会引发`_IRQ_GATTC_CHARACTERISTIC_RESULT`事件，完成后会引发`_IRQ_GATTC_CHARACTERISTIC_DONE`事件。
 		'''
 
 	def gattc_discover_descriptors(self, conn_handle: int, start_handle: int,
 		end_handle: int, /):
 		'''
-		Query a connected server for descriptors in the specified range.
+		在指定范围内查询已连接服务器的`描述符`。
 
-		For each descriptor discovered, the `_IRQ_GATTC_DESCRIPTOR_RESULT` event
-		will be raised, followed by `_IRQ_GATTC_DESCRIPTOR_DONE` on completion.
+		每发现一个`描述符`，就会触发`_IRQ_GATTC_DESCRIPTOR_RESULT`事件，完成后触发`_IRQ_GATTC_DESCRIPTOR_DONE`事件。
 		'''
 
 	def gattc_read(self, conn_handle: int, value_handle: int, /):
 		'''
-		Issue a remote read to a connected server for the specified characteristic
-		or descriptor handle.
+		针对指定的`特征`或`描述符`句柄，向已连接的服务器发出远程读取命令。
 
-		When a value is available, the `_IRQ_GATTC_READ_RESULT` event will be raised.
+		当值可用时，将触发`_IRQ_GATTC_READ_RESULT`事件。
 
-		Additionally, the `_IRQ_GATTC_READ_DONE` will be raised.
+		此外，还将引发`_IRQ_GATTC_READ_DONE`事件。
 		'''
 
-	def gattc_write(self, conn_handle: int, value_handle: int, data, mode: int = 0, /):
+	def gattc_write(self, conn_handle: int, value_handle: int, data: bytes, mode: int = 0, /):
 		'''
-		Issue a remote write to a connected server for the specified characteristic
-		or descriptor handle.
+		针对指定的`特征`或`描述符`句柄向已连接的服务器发出远程写入命令。
 
-		The argument `mode` specifies the write behaviour, with the currently
-		supported values being:
+		参数`mode`指定写入行为，目前支持的值有：
 
-		- mode=0 (default) is a write-without-response:
+		- `mode=0`（默认）是无响应写入
 
-			the write will be sent to the remote server but no confirmation will
-			be returned, and no event will be raised.
+			将向远程服务器发送写入信息，但不会返回确认信息，也不会引发任何事件。
 
-		- mode=1 is a write-with-response:
+		- `mode=1`为带响应写入
 
-			the remote server is requested to send a response/acknowledgement
-			that it received the data.
+			要求远程服务器发送收到数据的响应/确认。
 
-		If a response is received from the remote server the
-		`_IRQ_GATTC_WRITE_DONE` event will be raised.
+		如果收到了远程服务器的响应，就会触发`_IRQ_GATTC_WRITE_DONE`事件。
 		'''
 
 	def gattc_exchange_mtu(self, conn_handle: int, /):
 		'''
-		Initiate MTU exchange with a connected server, using the preferred MTU
-		set using `BLE.config(mtu=value)`.
+		使用`BLE.config(mtu=value)`设置首选 MTU，与已连接的服务器启动 MTU 交换。
 
-		The `_IRQ_MTU_EXCHANGED` event will be raised when MTU exchange completes.
+		MTU 交换完成后，`_IRQ_MTU_EXCHANGED`事件将被触发。
 
-		Note:
+		注意：
 
-			MTU exchange is typically initiated by the central.
+			MTU 交换通常由中心设备启动。
 
-			When using the BlueKitchen stack in the central role, it does not
-			support a remote peripheral initiating the MTU exchange.
+			在中心设备中使用 BlueKitchen 堆栈时，它不支持由远程外设启动 MTU 交换。
 
-			NimBLE works for both roles.
+			NimBLE 同时适用于这两种角色。
 		'''
 
 	# L2CAP connection-oriented-channels
-	def l2cap_listen(self, psm, mtu, /):
+	def l2cap_listen(self, psm, mtu: int, /):
 		'''
-		Start listening for incoming L2CAP channel requests on the specified `psm`
-		with the local MTU set to `mtu`.
+		开始在指定的`psm`上监听传入的 L2CAP 信道请求，并将本地 MTU 设为`mtu`。
 
-		When a remote device initiates a connection, the `_IRQ_L2CAP_ACCEPT` event
-		will be raised, which gives the listening server a chance to reject the
-		incoming connection (by returning a non-zero integer).
+		当远程设备发起连接时，`_IRQ_L2CAP_ACCEPT`事件将被触发，这将给监听服务器一个拒绝传入连接的机会（通过返回一个非零整数）。
 
-		Once the connection is accepted, the `_IRQ_L2CAP_CONNECT` event will be
-		raised, allowing the server to obtain the channel id (CID) and the local
-		and remote MTU.
+		一旦连接被接受，就会触发`_IRQ_L2CAP_CONNECT`事件，使服务器能够获取通道 ID（CID）以及本地和远程 MTU。
 
-		Note:
+		注意：
 
-			It is not currently possible to stop listening.
+			目前无法停止监听。
 		'''
 
-	def l2cap_connect(self, conn_handle: int, psm, mtu, /):
+	def l2cap_connect(self, conn_handle: int, psm, mtu: int, /):
 		'''
-		Connect to a listening peer on the specified `psm` with local MTU set to
-		`mtu`.
+		连接到指定`psm`上的监听节点设备，并将本地 MTU 设为`mtu`。
 
-		On successful connection, the the `_IRQ_L2CAP_CONNECT` event will be
-		raised, allowing the client to obtain the CID and the local and remote
-		(peer) MTU.
+		连接成功后，将触发`_IRQ_L2CAP_CONNECT`事件，允许客户端获取 CID 以及本地和远程（节点）MTU。
 
-		An unsuccessful connection will raise the `_IRQ_L2CAP_DISCONNECT` event
-		with a non-zero status.
+		连接不成功时，将引发状态非零的`_IRQ_L2CAP_DISCONNECT`事件。
 		'''
 
-	def l2cap_disconnect(self, conn_handle: int, cid, /):
-		'''
-		Disconnect an active L2CAP channel with the specified `conn_handle` and `cid`.
-		'''
+	def l2cap_disconnect(self, conn_handle: int, cid: int, /):
+		'''使用指定的`conn_handle`和`cid`断开活动的 L2CAP 信道。'''
 
-	def l2cap_send(self, conn_handle: int, cid, buf, /):
+	def l2cap_send(self, conn_handle: int, cid: int, buf, /) -> bool:
 		'''
-		Send the specified `buf` (which must support the buffer protocol) on the
-		L2CAP channel identified by `conn_handle` and `cid`.
+		在由`conn_handle`和`cid`标识出的 L2CAP 信道上发送指定的`buf`（必须支持缓冲协议）。
 
-		The specified buffer cannot be larger than the remote (peer) MTU, and no
-		more than twice the size of the local MTU.
+		指定的缓冲区不能大于远程（节点）MTU，也不能超过本地 MTU 的两倍。
 
-		This will return False if the channel is now "stalled", which means that
-		l2cap_send must not be called again until the `_IRQ_L2CAP_SEND_READY`
-		event is received (which will happen when the remote device grants more
-		credits, typically after it has received and processed the data).
+		如果通道现在处于“停滞”状态，则返回`False`，这意味着在收到`_IRQ_L2CAP_SEND_READY`事件
+		（通常是在远程设备接收并处理完数据后授予更多信用点时）之前，不得再次调用`l2cap_send`。
 		'''
 
-	def l2cap_recvinto(self, conn_handle: int, cid, buf, /):
+	def l2cap_recvinto(self, conn_handle: int, cid: int, buf, /) -> int:
 		'''
-		Receive data from the specified `conn_handle` and `cid` into the provided
-		`buf` (which must support the buffer protocol, e.g. bytearray or memoryview).
+		从指定的`conn_handle`和`cid`接收数据到提供的`buf`中（必须支持缓冲协议，如`bytearray`或`memoryview`）。
 
-		Returns the number of bytes read from the channel.
+		返回从通道读取的字节数。
 
-		If `buf` is None, then returns the number of bytes available.
+		如果`buf`为`None`，则返回可用字节数。
 
-		Note:
+		注意：
 
-			After receiving the `_IRQ_L2CAP_RECV` event, the application should
-			continue calling l2cap_recvinto until no more bytes are available in
-			the receive buffer (typically up to the size of the remote (peer) MTU).
+			接收到`_IRQ_L2CAP_RECV`事件后，应用程序应继续调用`l2cap_recvinto`，直到接收缓冲区中没有可用字节
+			（通常达到远程（节点）MTU 的大小）。
 
-		Until the receive buffer is empty, the remote device will not be granted
-		more channel credits and will be unable to send any more data.
+		在接收缓冲区清空之前，远程设备不会获得更多信道点数，也无法发送更多数据。
 		'''
 
 	# Pairing and bonding
 	def gap_pair(self, conn_handle: int, /):
 		'''
-		Initiate pairing with the remote device.
+		启动与远程设备的配对。
 
-		Before calling this, ensure that the `io`, `mitm`, `le_secure`, and `bond`
-		configuration options are set (via config).
+		调用前，请确保已通过`config`设置了`io`、`mitm`、`le_secure`和`bond`配置选项。
 
-		On successful pairing, the `_IRQ_ENCRYPTION_UPDATE` event will be raised.
+		配对成功后，将触发`_IRQ_ENCRYPTION_UPDATE`事件。
 		'''
 
-	def gap_passkey(self, conn_handle: int, action: int, passkey, /):
+	def gap_passkey(self, conn_handle: int, action: int, passkey: int, /):
 		'''
-		Respond to a `_IRQ_PASSKEY_ACTION` event for the specified `conn_handle`
-		and `action`.
+		响应指定的`conn_handle`和`action`的`_IRQ_PASSKEY_ACTION`事件。
 
-		The `passkey` is a numeric value and will depend on on the `action`
-		(which will depend on what I/O capability has been set):
+		`passkey`是一个数值，取决于`action`（取决于已设置的 I/O 功能）：
 
-		When the `action` is `_PASSKEY_ACTION_INPUT`, then the application should
-		prompt the user to enter the `passkey` that is shown on the remote device.
+		- 当`action`为`_PASSKEY_ACTION_INPUT`时，应用程序应提示用户输入远程设备上显示的`passkey`。
 
-		When the `action` is `_PASSKEY_ACTION_DISPLAY`, then the application
-		should generate a random 6-digit `passkey` and show it to the user.
+		- 当`action`为`_PASSKEY_ACTION_DISPLAY`时，应用程序将随机生成一个 6 位数的密码并显示给用户。
 
-		When the `action` is `_PASSKEY_ACTION_NUMERIC_COMPARISON`, then the
-		application should show the passkey that was provided in the
-		`_IRQ_PASSKEY_ACTION` event and then respond with either 0 (cancel
-		pairing), or 1 (accept pairing).
+		- 当`action`为`_PASSKEY_ACTION_NUMERIC_COMPARISON`时，应用程序应显示在`_IRQ_PASSKEY_ACTION`
+		事件中提供的密码，然后以`0`（取消配对）或`1`（接受配对）作为响应。
 		'''
-
-
-class UUID(object):
-	'''
-	Creates a UUID instance with the specified `value`.
-
-	The `value` can be either:
-
-	- A 16-bit integer. e.g. 0x2908.
-	- A 128-bit UUID string. e.g. '6E400001-B5A3-F393-E0A9-E50E24DCCA9E'.
-	'''
-	def __init__(self, value: int | str, /): ...
