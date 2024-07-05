@@ -1,0 +1,35 @@
+name: 输入错误
+description: 拼写错误、语法错误等与输入相关的问题
+title: "[输入错误]: "
+labels: ["typo"]
+body:
+  - type: markdown
+    attributes:
+      value: 感谢对项目的支持与关注。
+  - type: dropdown
+    id: language
+    attributes:
+      label: 出现错误的是哪个语言？
+      options:
+        - zh-cn (简体中文)
+        - default (英文)
+        - all (全部)
+    validations:
+      required: true
+  - type: textarea
+    id: url_with_line_number
+    attributes:
+      label: 出现输入错误的文件链接
+      description: 在项目网页中导航到错误的文件，点击行号，复制链接，粘贴到这里
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+    validations:
+      required: true
+  - type: textarea
+    id: how_to_fix
+    attributes:
+      label: 应该如何修改？
