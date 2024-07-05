@@ -5,7 +5,8 @@ labels: ["typo"]
 body:
   - type: markdown
     attributes:
-      value: 感谢对项目的支持与关注。
+      value: |
+        感谢对项目的支持与关注。
   - type: dropdown
     id: language
     attributes:
