@@ -1,154 +1,141 @@
 '''
-simple regular expressions
+简单正则表达式
 
-This module implements a subset of the corresponding CPython module, as described
-below.
+此模块实现了相应`CPython`模块的子集，如下所述。
 
-For more information, refer to the original CPython documentation: re.
+有关更多信息，请参阅原始`CPython`文档：[re](https://docs.python.org/3.5/library/re.html#module-re)。
 
-This module implements regular expression operations.
+该模块实现正则表达式操作。
 
-Regular expression syntax supported is a subset of CPython re module (and actually
-is a subset of POSIX extended regular expressions).
+支持的正则表达式语法是 CPython `re`模块的子集（实际上也是 POSIX 扩展正则表达式的子集）。
 
-[View Doc](https://docs.micropython.org/en/latest/library/re.html)
+[查看文档](https://docs.micropython.org/en/latest/library/re.html)
 '''
 # Constants
 DEBUG: bool = ...
 '''
-Flag value, display debug information about compiled expression.
+标志值，显示编译表达式的调试信息。
 
-Availability depends on MicroPython port.
+可用性取决于 MicroPython 端口。
 '''
 
 
 class Regex(object):
 	'''
-	Compiled regular expression.
+	已编译的正则表达式。
 
-	Instances of this class are created using `re.compile()`.
+	该类的实例使用`re.compile()`创建。
 	'''
 	def match(self, string: str):
 		'''
-		Similar to the module-level function `match()`.
+		类似于模块级函数`match()`。
 
-		Using methods is (much) more efficient if the same regex is applied to
-		multiple strings.
+		如果对多个字符串使用相同的正则表达式，则使用本方法的效率更高。
 		'''
 
 	def search(self, string: str):
 		'''
-		Similar to the module-level function `search()`.
+		类似于模块级函数`search()`。
 
-		Using methods is (much) more efficient if the same regex is applied to
-		multiple strings.
+		如果对多个字符串使用相同的正则表达式，则使用本方法的效率更高。
 		'''
 
 	def sub(self, replace: str, string: str, count: int = 0, flags: int = 0, /):
 		'''
-		Similar to the module-level function`sub()`.
+		类似于模块级函数`sub()`。
 
-		Using methods is (much) more efficient if the same regex is applied to
-		multiple strings.
+		如果对多个字符串使用相同的正则表达式，则使用本方法的效率更高。
 		'''
 
 	def split(self, string: str, max_split: int = -1, /) -> list:
 		'''
-		Split a `string` using regex.
+		使用正则表达式分割字符串。
 
-		If `max_split` is given, it specifies maximum number of splits to perform.
+		如果给定了`max_split`，则指定了要执行的最大拆分次数。
 
-		Returns list of strings (there may be up to max_split+1 elements if it’s
-		specified).
+		返回字符串列表（如果指定了`max_split`参数，则最多可有`max_split + 1`个元素）。
 		'''
 
 
 class Match(object):
 	'''
-	Match objects as returned by `match()` and `search()` methods, and passed to
-	the replacement function in `sub()`.
+	匹配对象，由`match()`和`search()`等方法返回，并传递给`sub()`中的替换函数。
 	'''
-	def group(self, index: int):
+	def group(self, index: int) -> str:
 		'''
-		Return matching (sub)string.
+		返回匹配的（子）字符串。
 
-		`index` is 0 for entire match, 1 and above for each capturing group.
+		`index`为 0 表示整个匹配，1 及以上表示每个捕获组。
 
-		Only numeric groups are supported.
+		只支持数字组。
 		'''
 
 	def groups(self) -> tuple:
 		'''
-		Return a tuple containing all the substrings of the groups of the match.
+		返回包含匹配组所有子串的元组。
 
-		Note: availability of this method depends on MicroPython port.
+		注：此方法的可用性取决于 MicroPython 端口。
 		'''
 
-	def start(self, index=None) -> int:
+	def start(self, index: int = None) -> int:
 		'''
-		Return the index in the original string of the start of the substring
-		group that was matched.
+		返回匹配的子字符串组的起始位置在原始字符串中的索引。
 
-		`index` defaults to the entire group, otherwise it will select a group.
+		`index`默认为整个组，否则将选择一个组。
 
-		Note: availability of these methods depends on MicroPython port.
-		'''
-
-	def end(self, index=None) -> int:
-		'''
-		Return the index in the original string of the end of the substring group
-		that was matched.
-
-		`index` defaults to the entire group, otherwise it will select a group.
-
-		Note: availability of these methods depends on MicroPython port.
+		注意：这些方法的可用性取决于 MicroPython 端口。
 		'''
 
-	def span(self, index=None) -> tuple:
+	def end(self, index: int = None) -> int:
 		'''
-		Returns the 2-tuple `(match.start(index), match.end(index))`.
+		返回匹配的子字符串组的末尾位置在原始字符串中的索引。
 
-		Note: availability of this method depends on MicroPython port.
+		`index`默认为整个组，否则将选择一个组。
+
+		注意：这些方法的可用性取决于 MicroPython 端口。
+		'''
+
+	def span(self, index: int = None) -> tuple:
+		'''
+		返回双元组 `(match.start(index), match.end(index))`
+
+		注意：此方法的可用性取决于 MicroPython 端口。
 		'''
 
 
 # Functions
 def compile(regex_str, flags=None) -> Regex:
-	'''Compile regular expression, return `regex` object.'''
+	'''编译正则表达式，返回`regex`对象。'''
 
 def match(regex_str: str, string: str) -> Match:
 	'''
-	Compile `regex_str` and match against `string`.
+	编译`regex_str`并与`string`匹配。
 
-	Match always happens from starting position in a string.
+	匹配总是从字符串的起始位置开始。
 	'''
 
 def search(regex_str: str, string: str) -> Match:
 	'''
-	Compile `regex_str` and search it in a `string`.
+	编译`regex_str`并在字符串中搜索。
 
-	Unlike `match`, this will search string for first position which matches regex
-	(which still may be 0 if regex is anchored).
+	与`match`不同的是，它将搜索字符串中与正则表达式匹配的第一个位置
+	（如果是锚定的，则仍可能为 0）。
 	'''
 
 def sub(regex_str: str, replace: str | function, string: str, count: int = 0, flags: int = 0, /) -> str:
 	'''
-	Compile `regex_str` and search for it in `string`, replacing all matches with
-	`replace`, and returning the new string.
+	编译`regex_str`并在`string`中搜索，用`replace`替换所有匹配，并返回新字符串。
 
-	`replace` can be a string or a function.
+	`replace`可以是字符串或函数。
 
-	If it is a string then escape sequences of the form `\<number>` and `\g<number>`
-	can be used to expand to the corresponding group (or an empty string for
-	unmatched groups).
+	如果是字符串，则可以使用`\<number>`和`\g<number>`形式的转义序列来扩展到相应的组
+	（或空字符串表示未匹配的组）。
 
-	If `replace` is a function then it must take a single argument (the match)
-	and should return a replacement string.
+	如果`replace`是一个函数，那么它必须接受一个参数（`match`），并返回一个替换字符串。
 
-	If `count` is specified and non-zero then substitution will stop after this
-	many substitutions are made.
+	如果指定了`count`且非零，那么替换次数达到此值后就会停止。
 
-	The `flags` argument is ignored.
+	同时，`flags`参数将被忽略。
 
-	Note: availability of this function depends on MicroPython port.
+	注意：该函数的可用性取决于 MicroPython 端口。
 	'''

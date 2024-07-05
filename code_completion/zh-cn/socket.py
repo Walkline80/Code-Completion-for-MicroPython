@@ -1,13 +1,13 @@
 '''
-socket module
+套接字模块
 
-This module implements a subset of the corresponding CPython module, as described below.
+此模块实现了相应`CPython`模块的子集，如下所述。
 
-For more information, refer to the original CPython documentation: socket.
+有关详细信息，请参阅原始`CPython`文档：[socket](https://docs.python.org/3.5/library/socket.html#module-socket)。
 
-This module provides access to the BSD socket interface.
+该模块提供对 BSD 套接字接口的访问。
 
-[View Doc](https://docs.micropython.org/en/latest/library/socket.html)
+[查看文档](https://docs.micropython.org/en/latest/library/socket.html)
 '''
 import typing
 
@@ -44,35 +44,24 @@ IP_ADD_MEMBERSHIP: int = ...
 TCP_NODELAY: int = ...
 
 IPPROTO_SEC: int = ...
-'''
-Constants specific to WiPy.
-
-Special protocol value to create SSL-compatible socket.
-'''
+'''用于创建 SSL 兼容套接字的特殊协议值，WiPy 特有常量'''
 
 # Functions
 def getaddrinfo(host: str, port: int, af: int = 0, type: int = 0, proto: int = 0,
 	flags: int = 0, /) -> tuple:
 	'''
-	Translate the host/port argument into a sequence of 5-tuples that contain all
-	the necessary arguments for creating a socket connected to that service.
+	将`host/port`参数转换为五元组的序列，其中包含创建连接到该服务的套接字所需的所有参数。
 
-	Arguments `af`, `type`, and `proto` (which have the same meaning as for the
-	`socket()` function) can be used to filter which kind of addresses are
-	returned.
+	参数`af`、`type`和`proto`（与`socket()`函数的含义相同）可用于筛选返回的地址类型。
 
-	If a parameter is not specified or zero, all combinations of addresses can
-	be returned (requiring filtering on the user side).
+	如果未指定参数或参数为 0，则会返回所有地址组合（需要用户进行过滤）。
 
-	The resulting list of 5-tuples has the following structure:
-
-		`(family, type, proto, canonname, sockaddr)`
+	返回的五元组列表结构为：`(family, type, proto, canonname, sockaddr)`
 	'''
 
 def inet_ntop(af: int, bin_addr: bytes):
 	'''
-	Convert a binary network address `bin_addr` of the given address family `af`
-	to a textual representation::
+	将给定地址族`af`的二进制网络地址`bin_addr`转换为文本表示::
 
 	    >>> socket.inet_ntop(socket.AF_INET, b"\\x7f\\x00\\x00\\x01")
 	    >>> '127.0.0.1'
@@ -80,8 +69,7 @@ def inet_ntop(af: int, bin_addr: bytes):
 
 def inet_pton(af: int, txt_addr: str):
 	'''
-	Convert a textual network address `txt_addr` of the given address family `af`
-	to a binary representation::
+	将给定地址族`af`的文本网络地址`txt_addr`转换为二进制表示::
 
 	    >>> socket.inet_pton(socket.AF_INET, "1.2.3.4")
 	    >>> b'\\x01\\x02\\x03\\x04'
@@ -91,249 +79,199 @@ def inet_pton(af: int, txt_addr: str):
 class socket(object):
 	def __init__(self, af: int = AF_INET, type: int = SOCK_STREAM, proto: int = IPPROTO_TCP, /):
 		'''
-		Create a new socket using the given address family, socket type and
-		protocol number.
+		使用给定的地址族、套接字类型和协议号创建新的套接字。
 
-		Note that specifying `proto` in most cases is not required (and not
-		recommended, as some MicroPython ports may omit `IPPROTO_*` constants).
+		请注意，大多数情况下不需要指定`proto`（也不推荐，因为某些 MicroPython 端口可能会省略`IPPROTO_*`常量）。
 
-		Instead, `type` argument will select needed protocol automatically.
+		相反，`type`参数会自动选择所需的协议。
 		'''
 
 	# Methods
 	def close(self):
 		'''
-		Mark the socket closed and release all resources.
+		标记套接字已关闭，并释放所有资源。
 
-		Once that happens, all future operations on the socket object will fail.
+		一旦关闭，今后对套接字对象的所有操作都将失败。
 
-		The remote end will receive EOF indication if supported by protocol.
+		如果协议支持，远端将收到 EOF 指示。
 
-		Sockets are automatically closed when they are garbage-collected, but it
-		is recommended to `close()` them explicitly as soon you finished working
-		with them.
+		套接字在被垃圾回收时会自动关闭，但建议在使用完毕后立即明确地`close()`它们。
 		'''
 
 	def bind(self, address):
 		'''
-		Bind the socket to `address`.
+		将套接字绑定到`address`。
 
-		The socket must not already be bound.
+		该套接字必须尚未绑定。
 		'''
 
 	@typing.overload
 	def listen(self):
-		'''
-		Enable a server to accept connections.
-
-		A default reasonable value is chosen.
-		'''
+		'''启用服务器接受连接。'''
 
 	@typing.overload
 	def listen(self, backlog: int):
 		'''
-		Enable a server to accept connections.
+		启用服务器接受连接。
 
-		`backlog` must be at least 0 (if it’s lower, it will be set to 0); and
-		specifies the number of unaccepted connections that the system will allow
-		before refusing new connections.
+		`backlog`必须至少为 0（如果低于 0，则将设为 0），并指定系统在拒绝新连接之前允许的未接受连接数。
 		'''
 
 	def accept(self) -> tuple:
 		'''
-		Accept a connection.
+		接受连接。
 
-		The socket must be bound to an address and listening for connections.
+		套接字必须绑定到一个地址并监听连接。
 
-		The return value is a pair (conn, address) where conn is a new socket
-		object usable to send and receive data on the connection, and address
-		is the address bound to the socket on the other end of the connection.
+		返回值是一对`(conn, address)`，其中`conn`是一个新的套接字对象，用于在连接上发送和接收数据，
+		`address`是绑定到连接另一端套接字的地址。
 		'''
 
 	def connect(self, address):
-		'''Connect to a remote socket at `address`.'''
+		'''连接到位于`address`的远程套接字。'''
 
-	def send(self, bytes) -> int:
+	def send(self, bytes: bytes) -> int:
 		'''
-		Send data to the socket.
+		向套接字发送数据。
 
-		The socket must be connected to a remote socket.
+		套接字必须连接到远程套接字。
 
-		Returns number of bytes sent, which may be smaller than the length of
-		data ("short write").
+		返回发送的字节数，可能小于数据长度（"short write"）。
 		'''
 
-	def sendall(self, bytes) -> int:
+	def sendall(self, bytes: bytes) -> int:
 		'''
-		Send all data to the socket.
+		向套接字发送所有数据。
 
-		The socket must be connected to a remote socket.
+		套接字必须连接到远程套接字。
 
-		Unlike `send()`, this method will try to send all of data, by sending
-		data chunk by chunk consecutively.
+		与`send()`不同的是，此方法会尝试发送所有数据，即连续地逐块发送数据。
 
-		The behaviour of this method on non-blocking sockets is undefined.
+		此方法在非阻塞套接字上的行为未定义。
 
-		Due to this, on MicroPython, it’s recommended to use `write()` method
-		instead, which has the same "no short writes" policy for blocking sockets,
-		and will return number of bytes sent on non-blocking sockets.
+		因此，在 MicroPython 上，建议使用`write()`方法，该方法对阻塞套接字采用相同的
+		"no short writes" 策略，并将返回在非阻塞套接字上发送的字节数。
 		'''
 
 	def recv(self, bufsize: int) -> bytes:
 		'''
-		Receive data from the socket.
+		从套接字接收数据。
 
-		The return value is a bytes object representing the data received.
+		返回值是一个字节对象，代表接收到的数据。
 
-		The maximum amount of data to be received at once is specified by
-		`bufsize`.
+		一次接收的最大数据量由`bufsize`指定。
 		'''
 
-	def sendto(self, bytes, address):
+	def sendto(self, bytes: bytes, address):
 		'''
-		Send data to the socket.
+		向套接字发送数据。
 
-		The socket should not be connected to a remote socket, since the
-		destination socket is specified by `address`.
+		套接字不应连接到远程套接字，因为目标套接字是由`address`指定的。
 		'''
 
-	def recvfrom(self, bufsize) -> tuple:
+	def recvfrom(self, bufsize: int) -> tuple:
 		'''
-		Receive data from the socket.
+		从套接字接收数据。
 
-		The return value is a pair `(bytes, address)` where `bytes` is a bytes
-		object representing the data received and `address` is the address of
-		the socket sending the data.
+		返回值是一对`(bytes, address)`，其中`bytes`是表示接收到的数据的字节对象，
+		`address`是发送数据的套接字的地址。
 		'''
 
 	def setsockopt(self, level, optname, value):
 		'''
-		Set the value of the given socket option.
+		设置给定套接字选项的值。
 
-		The needed symbolic constants are defined in the socket module
-		(SO_* etc.).
+		所需的符号常量在 socket 模块`SO_*`中定义。
 
-		The `value` can be an integer or a bytes-like object representing a
-		buffer.
+		`value`可以是整数，也可以是代表缓冲区的字节类对象。
 		'''
 
 	def settimeout(self, value: float | None):
 		'''
-		Set a timeout on blocking socket operations.
+		设置阻塞套接字操作的超时时间。
 
-		The `value` argument can be a nonnegative floating point number expressing
-		seconds, or None.
+		参数`value`可以是表示秒数的非负浮点数，也可以是`None`。
 
-		- If a non-zero value is given, subsequent socket operations will raise
-		an `OSError` exception if the timeout period value has elapsed before
-		the operation has completed.
+		如果给定的值不是零，那么在操作完成之前，如果超时时间已过，后续的套接字操作将引发
+		`OSError`异常。
 
-		- If zero is given, the socket is put in non-blocking mode.
+		如果值为 0，套接字将进入非阻塞模式。
 
-		- If None is given, the socket is put in blocking mode.
+		如果值为`None`，则套接字处于阻塞模式。
 
-		Not every MicroPython port supports this method.
+		并非每个 MicroPython 端口都支持此方法。
 		'''
 
 	def setblocking(self, flag: bool):
 		'''
-		Set blocking or non-blocking mode of the socket: if `flag` is False, the
-		socket is set to non-blocking, else to blocking mode.
+		设置套接字的阻塞或非阻塞模式。
 
-		This method is a shorthand for certain `settimeout()` calls:
+		如果`flag`为`False`，则套接字设置为非阻塞模式，否则设置为阻塞模式。
 
-		- `sock.setblocking(True)` is equivalent to `sock.settimeout(None)`
+		该方法是某些`settimeout()`调用的简写：
 
-		- `sock.setblocking(False)` is equivalent to `sock.settimeout(0)`
+		- sock.setblocking(True)`等同于`sock.settimeout(None)`。
+
+		- sock.setblocking(False)`等同于`sock.settimeout(0)`。
 		'''
 
 	def makefile(self, mode: str = 'rb', buffering: int = 0, /):
 		'''
-		Return a file object associated with the socket.
+		返回与套接字相关联的文件对象。
 
-		The exact returned type depends on the arguments given to `makefile()`.
+		确切的返回类型取决于为`makefile()`提供的参数。
 
-		The support is limited to binary modes only (‘rb’, ‘wb’, and ‘rwb’).
+		仅支持二进制模式（`'rb'`、`'wwb'`和`'rwb'`）。
 
-		CPython’s arguments: encoding, errors and newline are not supported.
+		CPython 的参数：`encoding`，`errors`和`newline`不支持。
 
-		Difference to CPython:
+		与 CPython 的区别：
 
-			As MicroPython doesn’t support buffered streams, values of `buffering`
-			parameter is ignored and treated as if it was 0 (unbuffered).
+			由于 MicroPython 不支持缓冲流，因此会忽略参数`buffering`的值，并将其视为 0（无缓冲）。
 
-			Closing the file object returned by `makefile()` WILL close the
-			original socket as well.
+			关闭由`makefile()`返回的文件对象也将关闭原始套接字。
 		'''
 
-	@typing.overload
-	def read(self) -> bytes:
+	def read(self, size: int = None) -> bytes:
 		'''
-		Read up to `size` bytes from the socket.
+		从套接字读取最多`size`个字节数据。
 
-		Return a bytes object.
+		返回字节对象。
 
-		It reads all data available from the socket until EOF; as such the method
-		will not return until the socket is closed.
+		如果未给定`size`，则会读取套接字的所有可用数据，直至 EOF，因此该方法在套接字关闭前不会返回。
 
-		This function tries to read as much data as requested (no "short reads").
+		该函数会尽量读取所请求的全部数据（no "short reads"）。
 
-		This may be not possible with non-blocking socket though, and then less
-		data will be returned.
+		但在非阻塞套接字的情况下，可能无法做到这一点，因此返回的数据会较少。
 		'''
 
-	@typing.overload
-	def read(self, size: int) -> bytes:
-		'''
-		Read up to `size` bytes from the socket.
-
-		Return a bytes object.
-
-		This function tries to read as much data as requested (no "short reads").
-
-		This may be not possible with non-blocking socket though, and then less
-		data will be returned.
-		'''
-
-	@typing.overload
-	def readinto(self, buf) -> int:
-		'''
-		Read bytes into the `buf`.
-
-		Read at most `len(buf)` bytes.
-
-		Just as `read()`, this method follows "no short reads" policy.
-
-		Return value: number of bytes read and stored into buf.
-		'''
-
-	@typing.overload
 	def readinto(self, buf, nbytes: int) -> int:
 		'''
-		Read bytes into the `buf`.
+		将字节读入`buf`。
 
-		Read at most that many bytes.
+		如果指定了`nbytes`，则最多读取这么多字节。
 
-		Just as `read()`, this method follows "no short reads" policy.
+		否则，最多读取`len(buf)`字节。
 
-		Return value: number of bytes read and stored into buf.
+		与`read()`一样，本方法遵循 "no short reads" 策略。
+
+		返回值：读取并存储到`buf`中的字节数。
 		'''
 
 	def readline(self) -> bytes:
 		'''
-		Read a line, ending in a newline character.
+		读取一行，以换行符结束。
 
-		Return value: the line read.
+		返回值：读取的行。
 		'''
 
 	def write(self, buf) -> int:
 		'''
-		Write the buffer of bytes to the socket.
+		将字节缓冲区写入套接字。
 
-		This function will try to write all data to a socket (no "short writes").
+		此函数将尝试向套接字写入所有数据（no "short writes"）。
 
-		This may be not possible with a non-blocking socket though, and returned
-		value will be less than the length of `buf`.
+		但在非阻塞套接字中可能无法做到这一点，因此返回值将小于`buf`的长度。
 
-		Return value: number of bytes written.
+		返回值：写入的字节数。
 		'''

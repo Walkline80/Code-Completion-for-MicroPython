@@ -1,91 +1,86 @@
 '''
-functions related to the ESP8266 and ESP32
+与 ESP8266 和 ESP32 相关的功能
 
-The esp module contains specific functions related to both the ESP8266 and ESP32
-modules.
+esp 模块包含与 ESP8266 和 ESP32 模组相关的特定功能。
 
-Some functions are only available on one or the other of these ports.
+有些功能只能在其中一个端口上使用。
 
-[View Doc](https://docs.micropython.org/en/latest/library/esp.html)
+[查看文档](https://docs.micropython.org/en/latest/library/esp.html)
 '''
 import typing
 
 
+# Constants
+SLEEP_NONE = ...
+SLEEP_MODEM = ...
+SLEEP_LIGHT = ...
+
 # Functions
 @typing.overload
-def sleep_type():
+def sleep_type() -> int:
 	'''
-	Get the sleep type.
+	获取睡眠类型。
 
-	Returns the current sleep type.
+	可能的睡眠类型被定义为常量：
 
-	The possible sleep types are defined as constants:
+	- `SLEEP_NONE` - 启用所有功能
 
-	- SLEEP_NONE – all functions enabled,
+	- `SLEEP_MODEM` - 调制解调器睡眠，关闭 WiFi 调制解调器电路
 
-	- SLEEP_MODEM – modem sleep, shuts down the WiFi Modem circuit.
+	- `SLEEP_LIGHT` - 轻度睡眠，关闭 WiFi 调制解调器电路并定期暂停处理器
 
-	- SLEEP_LIGHT – light sleep, shuts down the WiFi Modem circuit and suspends
-	the processor periodically.
+	注意：
 
-	Note:
-
-		ESP8266 only
+		仅适用于 ESP8266
 	'''
 
 @typing.overload
 def sleep_type(sleep_type: int):
 	'''
-	Set the sleep type.
+	将睡眠类型设置为`sleep_type`。
 
-	Sets the sleep type to its value.
+	可能的睡眠类型被定义为常量：
 
-	The possible sleep types are defined as constants:
+	- `SLEEP_NONE` - 启用所有功能
 
-	- SLEEP_NONE – all functions enabled,
+	- `SLEEP_MODEM` - 调制解调器睡眠，关闭 WiFi 调制解调器电路
 
-	- SLEEP_MODEM – modem sleep, shuts down the WiFi Modem circuit.
+	- `SLEEP_LIGHT` - 轻度睡眠，关闭 WiFi 调制解调器电路并定期暂停处理器运行
 
-	- SLEEP_LIGHT – light sleep, shuts down the WiFi Modem circuit and suspends
-	the processor periodically.
+	在可能的情况下，系统会自动进入设定的睡眠模式。
 
-	The system enters the set sleep mode automatically when possible.
+	注意：
 
-	Note:
-
-		ESP8266 only
+		仅适用于 ESP8266
 	'''
 
 def deepsleep(time_us: int = 0, /):
 	'''
-	Enter deep sleep.
+	进入深度睡眠。
 
-	The whole module powers down, except for the RTC clock circuit,
+	除 RTC 时钟电路外，整个模块断电，如果 16 引脚连接到复位引脚，则可在指定时间后重启模块。
 
-	which can be used to restart the module after the specified time if the pin
-	16 is connected to the reset pin.
+	否则，模块将进入休眠状态，直至手动复位。
 
-	Otherwise the module will sleep until manually reset.
+	注意：
 
-	Note:
-
-		ESP8266 only - use `machine.deepsleep()` on ESP32
+		仅适用于 ESP8266 - 在 ESP32 上使用`machine.deepsleep()`代替。
 	'''
 
 def flash_id():
 	'''
-	Read the device ID of the flash memory.
+	读取闪存的设备 ID。
 
-	Note:
+	注意：
 
-		ESP8266 only
+		仅适用于 ESP8266
 	'''
 
-def flash_size():
-	'''Read the total size of the flash memory.'''
+def flash_size() -> int:
+	'''读取闪存的总大小。'''
 
-def flash_user_start():
-	'''Read the memory offset at which the user flash space begins.'''
+def flash_user_start() -> int:
+	'''读取用户闪存空间开始的内存偏移量。'''
 
 def flash_read(byte_offset, length_or_buffer): ...
 
@@ -95,100 +90,69 @@ def flash_erase(sector_no): ...
 
 def osdebug(uart_no, level: int = None):
 	'''
-	Change the level of OS serial debug log messages.
+	更改操作系统串行调试日志信息的级别。
 
-	On boot, OS serial debug log messages are limited to Error output only.
+	启动时，操作系统串行调试日志信息仅限于错误输出。
 
-	The behaviour of this function depends on the arguments passed to it.
+	该函数的行为取决于传递给它的参数，支持以下组合：
 
-	The following combinations are supported:
+	- `osdebug(None)`恢复默认的操作系统调试日志信息级别（`LOG_ERROR`）
+	- `osdebug(0)`启用所有可用的操作系统调试日志信息（在默认构建配置中为`LOG_INFO`）
+	- `osdebug(0, level)`将操作系统调试日志信息级别设置为指定值。日志级别被定义为常量：
 
-	- osdebug(None) - restores the default OS debug log message level (`LOG_ERROR`).
+		- `LOG_NONE` - 无日志输出
+		- `LOG_ERROR` - 严重错误，软件模块无法自行恢复
+		- `LOG_WARN` - 已采取恢复措施的错误情况
+		- `LOG_INFO` - 描述正常事件流程的信息消息
+		- `LOG_DEBUG` - 正常使用中不需要的额外信息（值、指针、大小等）
+		- `LOG_VERBOSE` - 较大块的调试信息，或可能导致输出泛滥的频繁信息
 
-	- osdebug(0) - enables all available OS debug log messages (in the default
-	build configuration this is `LOG_INFO`).
+	注意：
 
-	- osdebug(0, level) sets the OS debug log message level to the specified value. The log levels are defined as constants:
+		`LOG_DEBUG`和`LOG_VERBOSE`默认不编译到 MicroPython 二进制文件中，以节省文件大小。
 
-		- `LOG_NONE` – No log output
+		要查看这些日志级别的任何输出，需要使用修改过的 "`sdkconfig`"源文件进行自定义编译。
 
-		- `LOG_ERROR` – Critical errors, software module can not recover on its own
+		在“原始 REPL”模式下，ESP32 上的日志输出会自动暂停，以防止出现通信问题。
 
-		- `LOG_WARN` – Error conditions from which recovery measures have been taken
+		这意味着在使用`mpremote run`和类似工具时，永远看不到操作系统级别的日志。
 
-		- `LOG_INFO` – Information messages which describe normal flow of events
-
-		- `LOG_DEBUG` – Extra information which is not necessary for normal use (values, pointers, sizes, etc)
-
-		- `LOG_VERBOSE` – Bigger chunks of debugging information, or frequent messages which can potentially flood the output
-
-	Note:
-
-		`LOG_DEBUG` and `LOG_VERBOSE` are not compiled into the MicroPython binary
-		by default, to save size.
-
-		A custom build with a modified "sdkconfig" source file is needed to see
-		any output at these log levels.
-
-	Note:
-
-		Log output on ESP32 is automatically suspended in "Raw REPL" mode, to
-		prevent communications issues.
-
-		This means OS level logging is never seen when using mpremote run and
-		similar tools.
-
-	Note:
-
-		This is the ESP32 form of this function.
+		这是 ESP32 形式的函数。
 	'''
 
-def set_native_code_location(start, length):
+def set_native_code_location(start: int = None, length: int = None):
 	'''
-	Set the location that native code will be placed for execution after it is
-	compiled.
+	设置本地代码编译后的执行位置。
 
-	Native code is emitted when the @micropython.native, @micropython.viper and
-	@micropython.asm_xtensa decorators are applied to a function.
+	当`@micropython.native`、`@micropython.viper`和`@micropython.asm_xtensa`装饰器被应用到函数时，本地代码就会被执行。
 
-	The ESP8266 must execute code from either iRAM or the lower 1MByte of flash
-	(which is memory mapped), and this function controls the location.
+	ESP8266 必须从 iRAM 或较低的 1MByte 闪存（内存映射）中执行代码，该函数控制代码的位置。
 
-	If `start` and `length` are both None then the native code location is set
-	to the unused portion of memory at the end of the iRAM1 region.
+	如果`start`和`length`均为`None`，则本地代码位置将被设置为 iRAM1 区域末端未使用的内存部分。
 
-	The size of this unused portion depends on the firmware and is typically
-	quite small (around 500 bytes), and is enough to store a few very small
-	functions.
+	这部分未使用内存的大小取决于固件，通常很小（约 500 字节），足以存储几个很小的函数。
 
-	The advantage of using this iRAM1 region is that it does not get worn out
-	by writing to it.
+	使用 iRAM1 区域的好处是不会因为写入而耗尽。
 
-	If neither `start` nor `length` are None then they should be integers.
+	如果`start`和`length`都不是`None`，那么它们应该是整数。
 
-	`start` should specify the byte offset from the beginning of the flash at
-	which native code should be stored.
+	`start应指定存储本地代码的闪存开头的字节偏移量。
 
-	`length` specifies how many bytes of flash from `start` can be used to store
-	native code. `start` and `length` should be multiples of the sector size
-	(being 4096 bytes).
+	`length`指定从`start`开始存储本地代码的闪存字节数。
 
-	The flash will be automatically erased before writing to it so be sure to
-	use a region of flash that is not otherwise used, for example by the firmware
-	or the filesystem.
+	`start`和`length`应该是扇区大小（4096 字节）的倍数。
 
-	When using the flash to store native code `start+length` must be less than
-	or equal to 1MByte. Note that the flash can be worn out if repeated erasures
-	(and writes) are made so use this feature sparingly.
+	在写入闪存之前，闪存会被自动擦除，因此请确保使用的闪存区域不被其他设备（例如固件或文件系统）使用。
 
-	In particular, native code needs to be recompiled and rewritten to flash on
-	each boot (including wake from deepsleep).
+	使用闪存存储本地代码时，`start + length`必须小于或等于 1MB。
 
-	In both cases above, using iRAM1 or flash, if there is no more room left in
-	the specified region then the use of a native decorator on a function will
-	lead to MemoryError exception being raised during compilation of that function.
+	请注意，如果反复擦除（和写入），闪存可能会被耗尽，因此请谨慎使用此功能。
 
-	Note:
+	特别是在每次启动（包括从深度睡眠唤醒）时，都需要重新编译和重写本地代码到闪存中。
 
-		ESP8266 only
+	在使用 iRAM1 或闪存的上述两种情况下，如果指定区域已没有剩余空间，那么在函数上使用本地装饰器将导致在编译该函数时出现`MemoryError`异常。
+
+	注意：
+
+		仅适用于 ESP8266
 	'''

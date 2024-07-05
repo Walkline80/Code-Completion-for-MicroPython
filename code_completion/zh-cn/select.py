@@ -1,17 +1,14 @@
 '''
-wait for events on a set of streams
+等待一组流上的事件
 
-This module implements a subset of the corresponding CPython module, as described below.
+此模块实现了相应`CPython`模块的子集，如下所述。
 
-For more information, refer to the original CPython documentation: select.
+更多信息，请参阅`CPython`文档原文：[select](https://docs.python.org/3.5/library/select.html#module-select)。
 
-This module provides functions to efficiently wait for events on multiple streams (select streams which are ready for operations).
+该模块提供了在多个流上高效等待事件的函数（选择已准备好进行操作的流）。
 
-[View Doc](https://docs.micropython.org/en/latest/library/select.html)
+[查看文档](https://docs.micropython.org/en/latest/library/select.html)
 '''
-import typing
-
-
 # Constants
 POLLIN: int = ...
 POLLOUT: int = ...
@@ -23,114 +20,82 @@ class Poll(object):
 	# Methods
 	def register(self, obj, eventmask: int = POLLIN | POLLOUT):
 		'''
-		Register `stream` obj for polling.
+		为轮询注册`stream obj`。
 
-		`eventmask` is logical OR of:
+		`eventmask`是以下各项的逻辑或值：
 
-		- `select.POLLIN` - data available for reading
-		- `select.POLLOUT` - more data can be written
+		- `select.POLLIN` - 可读取数据
+		- `select.POLLOUT` - 可写入更多数据
 
-		Note that flags like `select.POLLHUP` and `select.POLLERR` are not valid
-		as input eventmask (these are unsolicited events which will be returned
-		from `poll()` regardless of whether they are asked for).
+		请注意，`select.POLLHUP`和`select.POLLERR`等标志不能作为输入事件掩码
+		（这些是非请求事件，无论是否请求，都会从`poll()`返回）。
 
-		This semantics is per POSIX.
+		这种语义符合 POSIX 标准。
 
-		`eventmask` defaults to `select.POLLIN | select.POLLOUT`.
+		`eventmask`默认为`select.POLLIN | select.POLLOUT`。
 
-		It is OK to call this function multiple times for the same `obj`.
+		对同一个`obj`可以多次调用此函数。
 
-		Successive calls will update `obj`’s eventmask to the value of `eventmask`
-		(i.e. will behave as `modify()`).
+		连续调用会将`obj`的事件掩码更新为`eventmask`的值（即行为类似于`modify()`）。
 		'''
 
 	def unregister(self, obj):
-		'''Unregister obj from polling.'''
+		'''从轮询中取消注册`obj`。'''
 
 	def modify(self, obj, eventmask: int):
 		'''
-		Modify the `eventmask` for `obj`.
+		修改`obj`的`eventmask`。
 
-		If `obj` is not registered, `OSError` is raised with error of ENOENT.
+		如果`obj`未注册，则会引发`OSError: ENOENT`错误。
 		'''
 
-	@typing.overload
-	def poll(self) -> tuple:
-		'''
-		Wait for at least one of the registered objects to become ready or have
-		an exceptional condition, there is no timeout).
-
-		Returns list of `(`obj`, `event`, …)` tuples.
-
-		There may be other elements in tuple, depending on a platform and version,
-		so don’t assume that its size is 2.
-
-		The `event` element specifies which events happened with a stream and is
-		a combination of `select.POLL*` constants described above.
-
-		Note that flags `select.POLLHUP` and `select.POLLERR` can be returned at
-		any time (even if were not asked for), and must be acted on accordingly
-		(the corresponding stream unregistered from poll and likely closed),
-		because otherwise all further invocations of `poll()` may return
-		immediately with these flags set for this stream again.
-
-		In case of timeout, an empty list is returned.
-		'''
-
-	@typing.overload
 	def poll(self, timeout: int = -1, /) -> tuple:
 		'''
-		Wait for at least one of the registered objects to become ready or have
-		an exceptional condition.
+		等待至少一个注册对象准备就绪或出现异常情况，可选超时（以毫秒为单位）
 
-		Returns list of `(`obj`, `event`, …)` tuples.
+		如果未指定`timeout`参数或`timeout`参数为 -1，则无超时。
 
-		There may be other elements in tuple, depending on a platform and version,
-		so don’t assume that its size is 2.
+		返回`(obj, event, …)`元组列表。
 
-		The `event` element specifies which events happened with a stream and is
-		a combination of `select.POLL*` constants described above.
+		元组中可能还有其他元素，这取决于平台和版本，因此不要认为其大小为 2。
 
-		Note that flags `select.POLLHUP` and `select.POLLERR` can be returned at
-		any time (even if were not asked for), and must be acted on accordingly
-		(the corresponding stream unregistered from poll and likely closed),
-		because otherwise all further invocations of `poll()` may return
-		immediately with these flags set for this stream again.
+		`event`元素指定流中发生的事件，是上述`select.POLL*`常量的组合。
 
-		In case of timeout, an empty list is returned.
+		请注意，`select.POLLHUP`和`select.POLLERR`这两个标志可以随时返回
+		（即使没有被要求返回），而且必须采取相应的措施（从轮询中取消注册相应的流，
+		并可能关闭），否则，所有对`poll()`的进一步调用都可能立即返回并再次为该流设置这些标志。
+
+		如果超时，则返回空列表。
 		'''
 
 	def ipoll(self, timeout: int = -1, flags: int = 0, /):
 		'''
-		Like `poll.poll()`, but instead returns an iterator which yields a
-		`callee-owned tuple`.
+		类似于`poll.poll()`，但返回的是一个迭代器，该迭代器产生一个`callee-owned tuple`。
 
-		This function provides an efficient, allocation-free way to poll on
-		streams.
+		该函数提供了一种高效、免分配的流轮询方式。
 
-		If `flags` is 1, one-shot behaviour for events is employed: streams for
-		which events happened will have their event masks automatically reset (
-		equivalent to `poll.modify(obj, 0)`), so new events for such a stream
-		won’t be processed until new mask is set with `poll.modify()`.
+		如果`flags`为 1，则会对事件采用一次性行为：
 
-		This behaviour is useful for asynchronous I/O schedulers.
+			发生事件的流将自动重置其事件掩码（相当于`poll.modify(obj, 0)`），
+			因此在使用`poll.modify()`设置新掩码之前，不会处理该流的新事件。
 
-		Difference to CPython:
+		这种行为对异步 I/O 调度器非常有用。
 
-			This function is a MicroPython extension.
+		与 CPython 的区别：
+
+			此函数是 MicroPython 扩展。
 		'''
 
 
 # Functions
 def poll() -> Poll:
-	'''Create an instance of the Poll class.'''
+	'''创建 Poll 类的实例。'''
 
 def select(rlist, wlist, xlist, timeout=None):
 	'''
-	Wait for activity on a set of objects.
+	等待一组对象的活动。
 
-	This function is provided by some MicroPython ports for compatibility and is
-	not efficient.
+	一些 MicroPython 端口提供此函数是为了兼容，但效率不高。
 
-	Usage of `Poll` is recommended instead.
+	建议使用`Poll`代替。
 	'''

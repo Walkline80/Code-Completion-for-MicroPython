@@ -1,60 +1,58 @@
 '''
-Lightweight MQTT client for MicroPython.
+适用于 MicroPython 的轻量级 MQTT 客户端
 
-[View Doc](https://github.com/micropython/micropython-lib/blob/master/micropython/umqtt.simple/README.rst)
+[查看文档](https://github.com/micropython/micropython-lib/blob/master/micropython/umqtt.simple/README.rst)
 '''
 class MQTTException(Exception): ...
 
 
 class MQTTClient:
-	'''a simple MQTT client for MicroPython.'''
+	'''一个适用于 MicroPython 的简单 MQTT 客户端。'''
 	def __init__(self, client_id: str, server: str, port: int = 0, user: str | None = None,
 		password: str | None = None, keepalive: int = 0, ssl=None):
-		'''Create an instance of the MQTT client.'''
+		'''创建一个 MQTT 客户端实例。'''
 
-	def set_callback(self, f):
-		'''Set callback for received subscription messages.'''
+	def set_callback(self, f: function):
+		'''为收到的订阅信息设置回调。'''
 
-	def set_last_will(self, topic, msg, retain: bool = False, qos: int = 0):
+	def set_last_will(self, topic: bytes, msg: bytes, retain: bool = False, qos: int = 0):
 		'''
-		Set MQTT "last will" message.
+		设置 MQTT "last will" 消息。
 
-		Should be called before `connect()`.
+		应在`connect()`之前调用。
 		'''
 
 	def connect(self, clean_session: bool = True) -> bool:
 		'''
-		Connect to a server.
+		连接到服务器。
 
-		Returns True if this connection uses persisten session stored on a server.
+		如果此连接使用存储在服务器上的持久会话，则返回`True`。
 
-		This will be always False if `clean_session=True` argument is used
-		(default).
+		如果使用了`clean_session=True`参数（默认使用），则返回`False`。
 		'''
 
 	def disconnect(self):
-		'''Disconnect from a server, release resources.'''
+		'''断开服务器连接，释放资源。'''
 
 	def ping(self):
-		'''Ping server (response is processed automatically by `wait_msg()`).'''
+		'''Ping 服务器（响应由`wait_msg()`自动处理）。'''
 
-	def publish(self, topic, msg, retain: bool = False, qos: int = 0):
-		'''Publish a message.'''
+	def publish(self, topic: bytes, msg: bytes, retain: bool = False, qos: int = 0):
+		'''发布消息'''
 
-	def subscribe(self, topic, qos: int = 0):
-		'''Subscribe to a topic.'''
+	def subscribe(self, topic: bytes, qos: int = 0):
+		'''订阅主题。'''
 
 	def wait_msg(self):
 		'''
-		Wait for a server message.
+		等待服务器消息。
 
-		A subscription message will be delivered to a callback set with
-		`set_callback()`, any other messages will be processed internally.
+		订阅信息将发送到使用`set_callback()`设置的回调，其他信息将在内部处理。
 		'''
 
 	def check_msg(self):
 		'''
-		Check if there's pending message from server.
+		检查是否有来自服务器的待处理信息。
 
-		If yes, process the same way as `wait_msg()`, if not, return immediately.
+		如果有待处理消息，则按照与`wait_msg()`相同的方式处理，如果没有，则立即返回。
 		'''
