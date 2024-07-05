@@ -11,22 +11,25 @@ Some functions are only available on one or the other of these ports.
 import typing
 
 
+# Constants
+SLEEP_NONE = ...
+SLEEP_MODEM = ...
+SLEEP_LIGHT = ...
+
 # Functions
 @typing.overload
-def sleep_type():
+def sleep_type() -> int:
 	'''
 	Get the sleep type.
 
-	Returns the current sleep type.
-
 	The possible sleep types are defined as constants:
 
-	- SLEEP_NONE – all functions enabled,
+	- `SLEEP_NONE` – all functions enabled
 
-	- SLEEP_MODEM – modem sleep, shuts down the WiFi Modem circuit.
+	- `SLEEP_MODEM` – modem sleep, shuts down the WiFi Modem circuit
 
-	- SLEEP_LIGHT – light sleep, shuts down the WiFi Modem circuit and suspends
-	the processor periodically.
+	- `SLEEP_LIGHT` – light sleep, shuts down the WiFi Modem circuit and suspends
+	the processor periodically
 
 	Note:
 
@@ -42,12 +45,12 @@ def sleep_type(sleep_type: int):
 
 	The possible sleep types are defined as constants:
 
-	- SLEEP_NONE – all functions enabled,
+	- `SLEEP_NONE` – all functions enabled
 
-	- SLEEP_MODEM – modem sleep, shuts down the WiFi Modem circuit.
+	- `SLEEP_MODEM` – modem sleep, shuts down the WiFi Modem circuit
 
-	- SLEEP_LIGHT – light sleep, shuts down the WiFi Modem circuit and suspends
-	the processor periodically.
+	- `SLEEP_LIGHT` – light sleep, shuts down the WiFi Modem circuit and suspends
+	the processor periodically
 
 	The system enters the set sleep mode automatically when possible.
 
@@ -81,10 +84,10 @@ def flash_id():
 		ESP8266 only
 	'''
 
-def flash_size():
+def flash_size() -> int:
 	'''Read the total size of the flash memory.'''
 
-def flash_user_start():
+def flash_user_start() -> int:
 	'''Read the memory offset at which the user flash space begins.'''
 
 def flash_read(byte_offset, length_or_buffer): ...
@@ -103,23 +106,17 @@ def osdebug(uart_no, level: int = None):
 
 	The following combinations are supported:
 
-	- osdebug(None) - restores the default OS debug log message level (`LOG_ERROR`).
-
-	- osdebug(0) - enables all available OS debug log messages (in the default
+	- `osdebug(None)` restores the default OS debug log message level (`LOG_ERROR`).
+	- `osdebug(0)` enables all available OS debug log messages (in the default
 	build configuration this is `LOG_INFO`).
 
-	- osdebug(0, level) sets the OS debug log message level to the specified value. The log levels are defined as constants:
+	- `osdebug(0, level)` sets the OS debug log message level to the specified value. The log levels are defined as constants:
 
 		- `LOG_NONE` – No log output
-
 		- `LOG_ERROR` – Critical errors, software module can not recover on its own
-
 		- `LOG_WARN` – Error conditions from which recovery measures have been taken
-
 		- `LOG_INFO` – Information messages which describe normal flow of events
-
 		- `LOG_DEBUG` – Extra information which is not necessary for normal use (values, pointers, sizes, etc)
-
 		- `LOG_VERBOSE` – Bigger chunks of debugging information, or frequent messages which can potentially flood the output
 
 	Note:
@@ -127,10 +124,8 @@ def osdebug(uart_no, level: int = None):
 		`LOG_DEBUG` and `LOG_VERBOSE` are not compiled into the MicroPython binary
 		by default, to save size.
 
-		A custom build with a modified "sdkconfig" source file is needed to see
+		A custom build with a modified `"sdkconfig"` source file is needed to see
 		any output at these log levels.
-
-	Note:
 
 		Log output on ESP32 is automatically suspended in "Raw REPL" mode, to
 		prevent communications issues.
@@ -138,23 +133,21 @@ def osdebug(uart_no, level: int = None):
 		This means OS level logging is never seen when using mpremote run and
 		similar tools.
 
-	Note:
-
 		This is the ESP32 form of this function.
 	'''
 
-def set_native_code_location(start, length):
+def set_native_code_location(start: int = None, length: int = None):
 	'''
 	Set the location that native code will be placed for execution after it is
 	compiled.
 
-	Native code is emitted when the @micropython.native, @micropython.viper and
-	@micropython.asm_xtensa decorators are applied to a function.
+	Native code is emitted when the `@micropython.native`, `@micropython.viper` and
+	`@micropython.asm_xtensa` decorators are applied to a function.
 
 	The ESP8266 must execute code from either iRAM or the lower 1MByte of flash
 	(which is memory mapped), and this function controls the location.
 
-	If `start` and `length` are both None then the native code location is set
+	If `start` and `length` are both `None` then the native code location is set
 	to the unused portion of memory at the end of the iRAM1 region.
 
 	The size of this unused portion depends on the firmware and is typically
@@ -164,22 +157,25 @@ def set_native_code_location(start, length):
 	The advantage of using this iRAM1 region is that it does not get worn out
 	by writing to it.
 
-	If neither `start` nor `length` are None then they should be integers.
+	If neither `start` nor `length` are `None` then they should be integers.
 
 	`start` should specify the byte offset from the beginning of the flash at
 	which native code should be stored.
 
 	`length` specifies how many bytes of flash from `start` can be used to store
-	native code. `start` and `length` should be multiples of the sector size
-	(being 4096 bytes).
+	native code.
+
+	`start` and `length` should be multiples of the sector size	(being 4096 bytes).
 
 	The flash will be automatically erased before writing to it so be sure to
 	use a region of flash that is not otherwise used, for example by the firmware
 	or the filesystem.
 
 	When using the flash to store native code `start+length` must be less than
-	or equal to 1MByte. Note that the flash can be worn out if repeated erasures
-	(and writes) are made so use this feature sparingly.
+	or equal to 1MByte.
+
+	Note that the flash can be worn out if repeated erasures (and writes) are made
+	so use this feature sparingly.
 
 	In particular, native code needs to be recompiled and rewritten to flash on
 	each boot (including wake from deepsleep).

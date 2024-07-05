@@ -1,14 +1,14 @@
 '''
 simple regular expressions
 
-This module implements a subset of the corresponding CPython module, as described
+This module implements a subset of the corresponding `CPython` module, as described
 below.
 
-For more information, refer to the original CPython documentation: re.
+For more information, refer to the original `CPython` documentation: [re](https://docs.python.org/3.5/library/re.html#module-re).
 
 This module implements regular expression operations.
 
-Regular expression syntax supported is a subset of CPython re module (and actually
+Regular expression syntax supported is a subset of CPython `re` module (and actually
 is a subset of POSIX extended regular expressions).
 
 [View Doc](https://docs.micropython.org/en/latest/library/re.html)
@@ -68,7 +68,7 @@ class Match(object):
 	Match objects as returned by `match()` and `search()` methods, and passed to
 	the replacement function in `sub()`.
 	'''
-	def group(self, index: int):
+	def group(self, index: int) -> str:
 		'''
 		Return matching (sub)string.
 
@@ -84,7 +84,7 @@ class Match(object):
 		Note: availability of this method depends on MicroPython port.
 		'''
 
-	def start(self, index=None) -> int:
+	def start(self, index: int = None) -> int:
 		'''
 		Return the index in the original string of the start of the substring
 		group that was matched.
@@ -94,7 +94,7 @@ class Match(object):
 		Note: availability of these methods depends on MicroPython port.
 		'''
 
-	def end(self, index=None) -> int:
+	def end(self, index: int = None) -> int:
 		'''
 		Return the index in the original string of the end of the substring group
 		that was matched.
@@ -104,7 +104,7 @@ class Match(object):
 		Note: availability of these methods depends on MicroPython port.
 		'''
 
-	def span(self, index=None) -> tuple:
+	def span(self, index: int = None) -> tuple:
 		'''
 		Returns the 2-tuple `(match.start(index), match.end(index))`.
 

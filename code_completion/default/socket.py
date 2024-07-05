@@ -1,9 +1,10 @@
 '''
 socket module
 
-This module implements a subset of the corresponding CPython module, as described below.
+This module implements a subset of the corresponding `CPython` module, as described
+below.
 
-For more information, refer to the original CPython documentation: socket.
+For more information, refer to the original `CPython` documentation: [socket](https://docs.python.org/3.5/library/socket.html#module-socket).
 
 This module provides access to the BSD socket interface.
 
@@ -54,7 +55,7 @@ Special protocol value to create SSL-compatible socket.
 def getaddrinfo(host: str, port: int, af: int = 0, type: int = 0, proto: int = 0,
 	flags: int = 0, /) -> tuple:
 	'''
-	Translate the host/port argument into a sequence of 5-tuples that contain all
+	Translate the `host/port` argument into a sequence of 5-tuples that contain all
 	the necessary arguments for creating a socket connected to that service.
 
 	Arguments `af`, `type`, and `proto` (which have the same meaning as for the
@@ -123,11 +124,7 @@ class socket(object):
 
 	@typing.overload
 	def listen(self):
-		'''
-		Enable a server to accept connections.
-
-		A default reasonable value is chosen.
-		'''
+		'''Enable a server to accept connections.'''
 
 	@typing.overload
 	def listen(self, backlog: int):
@@ -145,15 +142,15 @@ class socket(object):
 
 		The socket must be bound to an address and listening for connections.
 
-		The return value is a pair (conn, address) where conn is a new socket
-		object usable to send and receive data on the connection, and address
+		The return value is a pair `(conn, address)` where `conn` is a new socket
+		object usable to send and receive data on the connection, and `address`
 		is the address bound to the socket on the other end of the connection.
 		'''
 
 	def connect(self, address):
 		'''Connect to a remote socket at `address`.'''
 
-	def send(self, bytes) -> int:
+	def send(self, bytes: bytes) -> int:
 		'''
 		Send data to the socket.
 
@@ -163,7 +160,7 @@ class socket(object):
 		data ("short write").
 		'''
 
-	def sendall(self, bytes) -> int:
+	def sendall(self, bytes: bytes) -> int:
 		'''
 		Send all data to the socket.
 
@@ -211,7 +208,7 @@ class socket(object):
 		Set the value of the given socket option.
 
 		The needed symbolic constants are defined in the socket module
-		(SO_* etc.).
+		(`SO_*` etc.).
 
 		The `value` can be an integer or a bytes-like object representing a
 		buffer.
@@ -222,7 +219,7 @@ class socket(object):
 		Set a timeout on blocking socket operations.
 
 		The `value` argument can be a nonnegative floating point number expressing
-		seconds, or None.
+		seconds, or `None`.
 
 		- If a non-zero value is given, subsequent socket operations will raise
 		an `OSError` exception if the timeout period value has elapsed before
@@ -230,15 +227,17 @@ class socket(object):
 
 		- If zero is given, the socket is put in non-blocking mode.
 
-		- If None is given, the socket is put in blocking mode.
+		- If `None` is given, the socket is put in blocking mode.
 
 		Not every MicroPython port supports this method.
 		'''
 
 	def setblocking(self, flag: bool):
 		'''
-		Set blocking or non-blocking mode of the socket: if `flag` is False, the
-		socket is set to non-blocking, else to blocking mode.
+		Set blocking or non-blocking mode of the socket.
+
+		If `flag` is `False`, the socket is set to non-blocking,
+		else to blocking mode.
 
 		This method is a shorthand for certain `settimeout()` calls:
 
@@ -253,9 +252,9 @@ class socket(object):
 
 		The exact returned type depends on the arguments given to `makefile()`.
 
-		The support is limited to binary modes only (‘rb’, ‘wb’, and ‘rwb’).
+		The support is limited to binary modes only (‘'rb'’, ‘'wb'’, and ‘'rwb'’).
 
-		CPython’s arguments: encoding, errors and newline are not supported.
+		CPython’s arguments: `encoding`, `errors` and `newline` are not supported.
 
 		Difference to CPython:
 
@@ -266,15 +265,14 @@ class socket(object):
 			original socket as well.
 		'''
 
-	@typing.overload
-	def read(self) -> bytes:
+	def read(self, size: int = None) -> bytes:
 		'''
 		Read up to `size` bytes from the socket.
 
 		Return a bytes object.
 
-		It reads all data available from the socket until EOF; as such the method
-		will not return until the socket is closed.
+		If `size` is not given, it reads all data available from the socket until EOF;
+		as such the method will not return until the socket is closed.
 
 		This function tries to read as much data as requested (no "short reads").
 
@@ -282,41 +280,17 @@ class socket(object):
 		data will be returned.
 		'''
 
-	@typing.overload
-	def read(self, size: int) -> bytes:
-		'''
-		Read up to `size` bytes from the socket.
-
-		Return a bytes object.
-
-		This function tries to read as much data as requested (no "short reads").
-
-		This may be not possible with non-blocking socket though, and then less
-		data will be returned.
-		'''
-
-	@typing.overload
-	def readinto(self, buf) -> int:
-		'''
-		Read bytes into the `buf`.
-
-		Read at most `len(buf)` bytes.
-
-		Just as `read()`, this method follows "no short reads" policy.
-
-		Return value: number of bytes read and stored into buf.
-		'''
-
-	@typing.overload
 	def readinto(self, buf, nbytes: int) -> int:
 		'''
 		Read bytes into the `buf`.
 
-		Read at most that many bytes.
+		If `nbytes` is specified then read at most that many bytes.
+
+		Otherwise, read at most `len(buf)` bytes. 
 
 		Just as `read()`, this method follows "no short reads" policy.
 
-		Return value: number of bytes read and stored into buf.
+		Return value: number of bytes read and stored into `buf`.
 		'''
 
 	def readline(self) -> bytes:

@@ -6,6 +6,9 @@ ESP32 modules.
 
 [View Doc](https://docs.micropython.org/en/latest/library/esp32.html)
 '''
+import typing
+
+
 # Constants
 HEAP_DATA: int = ...
 HEAP_EXEC: int = ...
@@ -18,7 +21,7 @@ def wake_on_touch(wake: bool):
 	'''
 	Configure whether or not a touch will wake the device from sleep.
 
-	- `wake` should be a boolean value.
+	`wake` should be a boolean value.
 	'''
 
 def wake_on_ulp(wake: bool):
@@ -26,14 +29,14 @@ def wake_on_ulp(wake: bool):
 	Configure whether or not the Ultra-Low-Power co-processor can wake the device
 	from sleep.
 
-	- `wake` should be a boolean value.
+	`wake` should be a boolean value.
 	'''
 
 def wake_on_ext0(pin, level: int):
 	'''
 	Configure how EXT0 wakes the device from sleep.
 
-	- `pin` can be None or a valid Pin object.
+	- `pin` can be `None` or a valid Pin object.
 	- `level` should be `esp32.WAKEUP_ALL_LOW` or `esp32.WAKEUP_ANY_HIGH`.
 	'''
 
@@ -41,7 +44,7 @@ def wake_on_ext1(pins: tuple | list | None, level: int):
 	'''
 	Configure how EXT1 wakes the device from sleep.
 
-	- `pins` can be None or a tuple/list of valid Pin objects.
+	- `pins` can be `None` or a tuple/list of valid Pin objects.
 
 	- `level` should be `esp32.WAKEUP_ALL_LOW` or `esp32.WAKEUP_ANY_HIGH`.
 	'''
@@ -51,7 +54,7 @@ def gpio_deep_sleep_hold(enable: bool):
 	Configure whether non-RTC GPIO pin configuration is retained during deep-sleep
 	mode for held pads.
 
-	- `enable` should be a boolean value.
+	`enable` should be a boolean value.
 	'''
 
 def raw_temperature() -> int:
@@ -59,7 +62,7 @@ def raw_temperature() -> int:
 	Read the raw value of the internal temperature sensor, returning an integer.
 	'''
 
-def idf_heap_info(capabilities):
+def idf_heap_info(capabilities: int) -> list:
 	'''
 	Returns information about the ESP-IDF heap memory regions.
 
@@ -73,8 +76,8 @@ def idf_heap_info(capabilities):
 	allocation failures.
 
 	The `capabilities` parameter corresponds to ESP-IDF’s `MALLOC_CAP_XXX` values
-	but the two most useful ones are predefined as esp32.HEAP_DATA for data heap
-	regions and esp32.HEAP_EXEC for executable regions as used by the native code
+	but the two most useful ones are predefined as `esp32.HEAP_DATA` for data heap
+	regions and `esp32.HEAP_EXEC` for executable regions as used by the native code
 	emitter.
 
 	The return value is a list of 4-tuples, where each 4-tuple corresponds to one
@@ -95,26 +98,35 @@ class Partition(object):
 	'''
 	# Constants
 	BOOT: int = ...
+	'''Partition will be booted at the next reset'''
+
 	RUNNING: int = ...
+	'''The currently running partition'''
 
 	TYPE_APP: int = ...
+	'''
+	For bootable firmware partitions (typically labelled `factory`, `ota_0`,
+	`ota_1`)
+	'''
+
 	TYPE_DATA: int = ...
+	'''For other partitions, e.g. `nvs`, `otadata`, `phy_init`, `vfs`'''
 
 	def __init__(self, id: str | int, block_size: int = 4096, /):
 		'''
 		Create an object representing a partition.
 
-		- `id` can be a string which is the label of the partition to retrieve,
-		or one of the constants: BOOT or RUNNING.
+		`id` can be a string which is the label of the partition to retrieve,
+		or one of the constants: `BOOT` or `RUNNING`.
 
-		- `block_size` specifies the byte size of an individual block.
+		`block_size` specifies the byte size of an individual block.
 		'''
 
 	@staticmethod
 	def find(type: int = TYPE_APP, subtype: int = 0xff, label: str = None,
 		block_size: int = 4096) -> list:
 		'''
-		Find a partition specified by type, subtype and label.
+		Find a partition specified by `type`, `subtype` and `label`.
 
 		Returns a (possibly empty) list of Partition objects.
 
@@ -155,13 +167,13 @@ class Partition(object):
 
 		Note:
 
-			Do not enter deepsleep after changing the OTA boot partition, without
-			first performing a hard reset or power cycle.
+			Do not enter `deepsleep` after changing the OTA boot partition, without
+			first performing a hard `reset` or power cycle.
 
 			This ensures the bootloader will validate the new image before booting.
 		'''
 
-	def get_next_update(self):
+	def get_next_update(self) -> typing.Self:
 		'''
 		Gets the next update partition after this one, and returns a new Partition
 		object.
@@ -175,14 +187,14 @@ class Partition(object):
 		'''
 		Signals that the current boot is considered successful.
 
-		Calling mark_app_valid_cancel_rollback is required on the first boot of a
+		Calling `mark_app_valid_cancel_rollback` is required on the first boot of a
 		new partition to avoid an automatic rollback at the next boot.
 
 		This uses the ESP-IDF "app rollback" feature with
-		"CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE" and an OSError(-261) is raised if
+		"CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE" and an `OSError(-261)` is raised if
 		called on firmware that doesn’t have the feature enabled.
 
-		It is OK to call mark_app_valid_cancel_rollback on every boot and it is
+		It is OK to call `mark_app_valid_cancel_rollback` on every boot and it is
 		not necessary when booting firmware that was loaded using esptool.
 		'''
 
@@ -199,29 +211,35 @@ class RMT(object):
 	'''
 	# Constants
 	PULSE_MAX: int = ...
+	'''Maximum integer that can be set for a pulse duration'''
 
 	def __init__(self, channel: int, *, pin=None, clock_div: int = 8,
-		idle_level: bool = False, tx_carrier=None):
+		idle_level: bool = False, tx_carrier: tuple = None):
 		'''
 		This class provides access to one of the eight RMT channels.
 
-		- `channel` is required and identifies which RMT channel (0-7) will be configured.
+		- `channel` is required and identifies which RMT channel (0-7) will be
+		configured.
 
 		- `pin`, also required, configures which Pin is bound to the RMT channel.
 
-		- `clock_div` is an 8-bit clock divider that divides the source clock (80MHz) to the RMT channel allowing the resolution to be specified.
+		- `clock_div` is an 8-bit clock divider that divides the source clock
+		(80MHz) to the RMT channel allowing the resolution to be specified.
 
-		- `idle_level` specifies what level the output will be when no transmission is in progress and can be any value that converts to a boolean, with True representing high voltage and False representing low.
+		- `idle_level` specifies what level the output will be when no transmission
+		is in progress and can be any value that converts to a boolean, with `True`
+		representing high voltage and `False` representing low.
 
-		To enable the transmission carrier feature, `tx_carrier` should be a tuple of three positive integers:
+		To enable the transmission carrier feature, `tx_carrier` should be a tuple
+		of three positive integers:
 
-		- carrier frequency,
-		- duty percent (0 to 100)
+		- carrier frequency
+		- duty percent (`0` to `100`)
 		- output level to apply the carrier to (a boolean as per `idle_level`)
 		'''
 
 	@staticmethod
-	def source_freq():
+	def source_freq() -> int:
 		'''
 		Returns the source clock frequency.
 
@@ -229,7 +247,7 @@ class RMT(object):
 		return 80MHz.
 		'''
 
-	def clock_div(self):
+	def clock_div(self) -> int:
 		'''
 		Return the clock divider.
 
@@ -249,37 +267,37 @@ class RMT(object):
 		'''
 		Configure looping on the channel.
 
-		- `enable_loop` is bool, set to True to enable looping on the next call
+		`enable_loop` is bool, set to `True` to enable looping on the next call
 		to `RMT.write_pulses`.
 
-		If called with False while a looping sequence is currently being
+		If called with `False` while a looping sequence is currently being
 		transmitted then the current loop iteration will be completed and then
 		transmission will stop.
 		'''
 
-	def write_pulses(self, duration, data):
+	def write_pulses(self, duration: int | tuple | list, data=None):
 		'''
 		Begin transmitting a sequence. There are three ways to specify this:
 
-		- Mode 1: `duration` is a list or tuple of durations.
+		- `Mode 1`: `duration` is a list or tuple of durations.
 
 			The optional `data` argument specifies the initial output level.
 
 			The output level will toggle after each duration.
 
-		- Mode 2: `duration` is a positive integer and `data` is a list or tuple
+		- `Mode 2`: `duration` is a positive integer and `data` is a list or tuple
 		of output levels.
 
 			`duration` specifies a fixed duration for each.
 
-		- Mode 3: `duration` and `data` are lists or tuples of equal length,
+		- `Mode 3`: `duration` and `data` are lists or tuples of equal length,
 		specifying individual durations and the output level for each.
 
 		Durations are in integer units of the channel resolution
 		(as described above), between `1` and `PULSE_MAX` units.
 
-		Output levels are any value that can be converted to a boolean, with True
-		representing high voltage and False representing low.
+		Output levels are any value that can be converted to a boolean, with `True`
+		representing high voltage and `False` representing low.
 
 		If transmission of an earlier sequence is in progress then this method
 		will block until that transmission is complete before beginning the new
@@ -294,12 +312,22 @@ class RMT(object):
 		Looping sequences longer than 126 pulses is not supported by the hardware.
 		'''
 
+	@typing.overload
+	@staticmethod
+	def bitstream_channel() -> int:
+		'''
+		This function returns the current channel number.
+
+		The default RMT channel is the highest numbered one.
+		'''
+
+	@typing.overload
 	@staticmethod
 	def bitstream_channel(value: int | None) -> int:
 		'''
 		Select which RMT channel is used by the `machine.bitstream` implementation.
 
-		- `value` can be None or a valid RMT channel number.
+		`value` can be None or a valid RMT channel number.
 
 		The default RMT channel is the highest numbered one.
 
@@ -323,13 +351,11 @@ class ULP(object):
 		This class does not provide access to the RISCV ULP co-processor available
 		on the ESP32-S2 and ESP32-S3 chips.
 	'''
-	def set_wakeup_period(self, period_index, period_us):
+	def set_wakeup_period(self, period_index: int, period_us: int):
 		'''Set the wake-up period.'''
 
-	def load_binary(self, load_addr, program_binary):
-		'''
-		Load a `program_binary` into the ULP at the given `load_addr`.
-		'''
+	def load_binary(self, load_addr: int, program_binary):
+		'''Load a `program_binary` into the ULP at the given `load_addr`.'''
 
 	def run(self, entry_point):
 		'''Start the ULP running at the given entry_point.'''
@@ -350,10 +376,9 @@ class NVS(object):
 
 	Warning:
 
-		Changes to NVS need to be committed to flash by calling the commit method.
+		Changes to NVS need to be committed to flash by calling the `commit` method.
 
-		Failure to call commit results in changes being lost at the next reset.
-
+		Failure to call `commit` results in changes being lost at the next reset.
 	'''
 	def __init__(self, namespace):
 		'''
@@ -361,26 +386,26 @@ class NVS(object):
 		created if not present).
 		'''
 
-	def set_i32(self, key, value):
+	def set_i32(self, key: str, value: int):
 		'''
 		Sets a 32-bit signed integer `value` for the specified `key`.
 
 		Remember to call commit!
 		'''
 
-	def get_i32(self, key):
+	def get_i32(self, key: str) -> int:
 		'''
 		Returns the signed integer value for the specified `key`.
 
 		Raises an `OSError` if the key does not exist or has a different type.
 		'''
 
-	def set_blob(self, key, value):
+	def set_blob(self, key: str, value):
 		'''
 		Sets a binary blob `value` for the specified `key`.
 
-		The `value` passed in must support the buffer protocol, e.g. bytes,
-		bytearray, str.
+		The `value` passed in must support the buffer protocol, e.g. `bytes`,
+		`bytearray`, `str`.
 
 		(Note that esp-idf distinguishes blobs and strings, this method always
 		writes a blob even if a string is passed in as value.)
@@ -388,10 +413,10 @@ class NVS(object):
 		Remember to call commit!
 		'''
 
-	def get_blob(self, key, buffer):
+	def get_blob(self, key: str, buffer: bytearray) -> int:
 		'''
 		Reads the value of the blob for the specified `key` into the `buffer`,
-		which must be a bytearray.
+		which must be a `bytearray`.
 
 		Returns the actual length read.
 
@@ -399,8 +424,8 @@ class NVS(object):
 		if the buffer is too small.
 		'''
 
-	def erase_key(self, key):
+	def erase_key(self, key: str):
 		'''Erases a key-value pair.'''
 
 	def commit(self):
-		'''Commits changes made by set_xxx methods to flash.'''
+		'''Commits changes made by `set_xxx` methods to flash.'''

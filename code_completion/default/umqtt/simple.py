@@ -12,10 +12,10 @@ class MQTTClient:
 		password: str | None = None, keepalive: int = 0, ssl=None):
 		'''Create an instance of the MQTT client.'''
 
-	def set_callback(self, f):
+	def set_callback(self, f: function):
 		'''Set callback for received subscription messages.'''
 
-	def set_last_will(self, topic, msg, retain: bool = False, qos: int = 0):
+	def set_last_will(self, topic: bytes, msg: bytes, retain: bool = False, qos: int = 0):
 		'''
 		Set MQTT "last will" message.
 
@@ -26,9 +26,9 @@ class MQTTClient:
 		'''
 		Connect to a server.
 
-		Returns True if this connection uses persisten session stored on a server.
+		Returns `True` if this connection uses persisten session stored on a server.
 
-		This will be always False if `clean_session=True` argument is used
+		This will be always `False` if `clean_session=True` argument is used
 		(default).
 		'''
 
@@ -38,10 +38,10 @@ class MQTTClient:
 	def ping(self):
 		'''Ping server (response is processed automatically by `wait_msg()`).'''
 
-	def publish(self, topic, msg, retain: bool = False, qos: int = 0):
+	def publish(self, topic: bytes, msg: bytes, retain: bool = False, qos: int = 0):
 		'''Publish a message.'''
 
-	def subscribe(self, topic, qos: int = 0):
+	def subscribe(self, topic: bytes, qos: int = 0):
 		'''Subscribe to a topic.'''
 
 	def wait_msg(self):

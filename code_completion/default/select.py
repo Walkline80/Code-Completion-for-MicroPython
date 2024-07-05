@@ -1,17 +1,15 @@
 '''
 wait for events on a set of streams
 
-This module implements a subset of the corresponding CPython module, as described below.
+This module implements a subset of the corresponding `CPython` module, as described
+below.
 
-For more information, refer to the original CPython documentation: select.
+For more information, refer to the original `CPython` documentation: [select](https://docs.python.org/3.5/library/select.html#module-select).
 
-This module provides functions to efficiently wait for events on multiple streams (select streams which are ready for operations).
+This module provides functions to efficiently wait for events on multiple `streams` (select streams which are ready for operations).
 
 [View Doc](https://docs.micropython.org/en/latest/library/select.html)
 '''
-import typing
-
-
 # Constants
 POLLIN: int = ...
 POLLOUT: int = ...
@@ -23,7 +21,7 @@ class Poll(object):
 	# Methods
 	def register(self, obj, eventmask: int = POLLIN | POLLOUT):
 		'''
-		Register `stream` obj for polling.
+		Register `stream obj` for polling.
 
 		`eventmask` is logical OR of:
 
@@ -45,57 +43,34 @@ class Poll(object):
 		'''
 
 	def unregister(self, obj):
-		'''Unregister obj from polling.'''
+		'''Unregister `obj` from polling.'''
 
 	def modify(self, obj, eventmask: int):
 		'''
 		Modify the `eventmask` for `obj`.
 
-		If `obj` is not registered, `OSError` is raised with error of ENOENT.
+		If `obj` is not registered, `OSError: ENOENT` is raised.
 		'''
 
-	@typing.overload
-	def poll(self) -> tuple:
-		'''
-		Wait for at least one of the registered objects to become ready or have
-		an exceptional condition, there is no timeout).
-
-		Returns list of `(`obj`, `event`, …)` tuples.
-
-		There may be other elements in tuple, depending on a platform and version,
-		so don’t assume that its size is 2.
-
-		The `event` element specifies which events happened with a stream and is
-		a combination of `select.POLL*` constants described above.
-
-		Note that flags `select.POLLHUP` and `select.POLLERR` can be returned at
-		any time (even if were not asked for), and must be acted on accordingly
-		(the corresponding stream unregistered from poll and likely closed),
-		because otherwise all further invocations of `poll()` may return
-		immediately with these flags set for this stream again.
-
-		In case of timeout, an empty list is returned.
-		'''
-
-	@typing.overload
 	def poll(self, timeout: int = -1, /) -> tuple:
 		'''
 		Wait for at least one of the registered objects to become ready or have
-		an exceptional condition.
+		an exceptional condition, with optional timeout in milliseconds (if
+		`timeout` arg is not specified or -1, there is no timeout).
 
-		Returns list of `(`obj`, `event`, …)` tuples.
+		Returns list of `(obj, event, …)` tuples.
 
 		There may be other elements in tuple, depending on a platform and version,
 		so don’t assume that its size is 2.
 
-		The `event` element specifies which events happened with a stream and is
-		a combination of `select.POLL*` constants described above.
+		The `event` element specifies which events happened with a stream and is a
+		combination of `select.POLL*` constants described above.
 
-		Note that flags `select.POLLHUP` and `select.POLLERR` can be returned at
-		any time (even if were not asked for), and must be acted on accordingly
-		(the corresponding stream unregistered from poll and likely closed),
-		because otherwise all further invocations of `poll()` may return
-		immediately with these flags set for this stream again.
+		Note that flags `select.POLLHUP` and `select.POLLERR` can be returned at any
+		time (even if were not asked for), and must be acted on accordingly (the
+		corresponding stream unregistered from poll and likely closed), because
+		otherwise all further invocations of `poll()` may return immediately with
+		these flags set for this stream again.
 
 		In case of timeout, an empty list is returned.
 		'''
@@ -108,10 +83,12 @@ class Poll(object):
 		This function provides an efficient, allocation-free way to poll on
 		streams.
 
-		If `flags` is 1, one-shot behaviour for events is employed: streams for
-		which events happened will have their event masks automatically reset (
-		equivalent to `poll.modify(obj, 0)`), so new events for such a stream
-		won’t be processed until new mask is set with `poll.modify()`.
+		If `flags` is 1, one-shot behaviour for events is employed:
+
+			streams for which events happened will have their event masks
+			automatically reset (equivalent to `poll.modify(obj, 0)`), so new
+			events for such a stream won’t be processed until new mask is set
+			with `poll.modify()`.
 
 		This behaviour is useful for asynchronous I/O schedulers.
 
