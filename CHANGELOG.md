@@ -3,6 +3,77 @@
 ## [Unreleased]
 
 
+## [Version 0.1.0]: 2024-07-05
+
+### Updated
+
+给类库文件中的常量增加数据类型。
+
+翻译类库文件：
+
+* array
+
+* binascii
+* bluetooth
+* btree
+
+* cmath
+* collections
+* cryptolib
+
+* deflate
+* dht
+* ds18x20
+
+* esp
+* esp32
+* errno
+
+* framebuf
+
+* gc
+
+* hashlib
+* heapq
+
+* json
+
+* machine
+* math
+* micropython
+* mip
+
+* neopixel
+* network
+* ntptime
+
+* onewire
+* os
+
+* platform
+
+* random
+* re
+* requests
+
+* select
+* socket
+* struct
+* sys
+
+* time
+
+* uctypes
+* umqtt/robust
+* umqtt/simple
+
+
+* ble_config
+* dispatcher
+* qrcode
+* smartconfig
+
+
 ## [Version 0.0.12]: 2024-06-23
 
 ### Added
@@ -182,7 +253,8 @@
 删除无用文件。
 
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.12...HEAD
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.0...HEAD
+[Version 0.1.0]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.12...v0.1.0
 [Version 0.0.12]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.11...v0.0.12
 [Version 0.0.11]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.10...v0.0.11
 [Version 0.0.10]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.9...v0.0.10
