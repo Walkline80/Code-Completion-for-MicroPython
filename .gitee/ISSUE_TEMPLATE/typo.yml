@@ -1,6 +1,6 @@
 name: 输入错误
 description: 拼写错误、语法错误等与输入相关的问题
-title: "[输入错误]: "
+title: "[输入错误] "
 labels: ["typo"]
 body:
   - type: markdown
