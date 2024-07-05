@@ -8,10 +8,9 @@
 
 使用快捷键 <kbd>F1</kbd> 打开命令面板，输入 `MicroPython`，然后：
 
-* 选择 `MicroPython: Enable Code Completion` 可以启用代码补全功能
-* 选择 `MicroPython: Disable Code Completion` 可以禁用代码补全功能
-
-> 如果代码补全功能失效或提示内容不是最新的，可能是因为插件版本升级所致，重新启用代码补全功能即可修复。
+* 选择 `MicroPython: 启用代码补全功能` 启用扩展
+* 选择 `MicroPython: 禁用代码补全功能` 禁用扩展
+* 选择 `MicroPython: 多语言文档支持` 启用/禁用多语言内容提示
 
 ## 类库列表
 
@@ -133,6 +132,96 @@
 - [ ] st7789
 
 - [ ] wtools
+
+</details>
+
+
+### 多语言文档支持
+
+计划对已完成的类库文件中的说明内容进行本地化翻译。
+
+<details>
+<summary>已完成的类库</summary>
+
+- [x] array
+
+- [x] binascii
+- [x] bluetooth
+- [x] btree
+
+- [x] cmath
+- [x] collections
+- [x] cryptolib
+
+- [x] deflate
+- [x] dht
+- [x] ds18x20
+
+- [x] esp
+- [x] esp32
+- [x] errno
+
+- [x] framebuf
+
+- [x] gc
+
+- [x] hashlib
+- [x] heapq
+
+- [x] json
+
+- [x] machine
+- [x] math
+- [x] micropython
+- [x] mip
+
+- [x] neopixel
+- [x] network
+- [x] ntptime
+
+- [x] onewire
+- [x] os
+
+- [x] platform
+
+- [x] random
+- [x] re
+- [x] requests
+
+- [x] select
+- [x] socket
+- [x] struct
+- [x] sys
+
+- [x] time
+
+- [x] uctypes
+- [x] umqtt/robust
+- [x] umqtt/simple
+
+
+- [x] ble_config: [MicroPython BLE 配网](https://gitee.com/walkline/micropython_ble_config)
+
+- [x] dispatcher: [MicroPython Timer Dispatcher](https://gitee.com/walkline/micropython-timer-dispatcher)
+
+- [x] qrcode: [MicroPython QRCode CModule](https://gitee.com/walkline/micropython-qrcode-cmodule)
+
+- [x] smartconfig: [esp32/modsmartconfig: Add smartconfig module](https://github.com/micropython/micropython/pull/13658)
+
+</details>
+
+<details>
+<summary>未完成的类库</summary>
+
+- [ ] asyncio
+
+- [ ] ssl
+
+- [ ] uasyncio
+
+
+- [ ] MicroDNSSrv: [MicroDNSSrv](https://github.com/jczic/MicroDNSSrv)
+- [ ] MicroWebSrv: [MicroWebSrv](https://github.com/jczic/MicroWebSrv)
 
 </details>
 
