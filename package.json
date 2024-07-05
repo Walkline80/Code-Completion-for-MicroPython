@@ -10,8 +10,7 @@
   "homepage": "https://gitee.com/walkline/code-completion-for-micropython/blob/main/README.md",
   "keywords": [
     "MicroPython",
-    "Completion",
-    "autoComplete"
+    "CodeCompletion"
   ],
   "preview": true,
   "author": {
@@ -19,7 +18,7 @@
   },
   "publisher": "WalklineWang",
   "icon": "images/icon.png",
-  "version": "0.0.12",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.80.0"
   },
