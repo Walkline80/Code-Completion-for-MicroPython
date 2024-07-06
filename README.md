@@ -2,7 +2,11 @@
 
 <p align="center"><img src="https://img.shields.io/badge/Licence-MIT-green.svg?style=for-the-badge&&logo=gitee" /></p>
 
+[Instructions for use (English)](./README.en.md)
+
 **Code Completion for MicroPython** 扩展程序用于为 VSCode 提供 MicroPython 类库代码补全功能。
+
+![demo](https://raw.githubusercontent.com/Walkline80/Code-Completion-for-MicroPython/master/images/demo.gif)
 
 ## 使用方法
 
@@ -10,13 +14,15 @@
 
 * 选择 `MicroPython: 启用代码补全功能` 启用扩展
 * 选择 `MicroPython: 禁用代码补全功能` 禁用扩展
-* 选择 `MicroPython: 多语言文档支持` 启用/禁用多语言内容提示
+* 选择 `MicroPython: 多语言文档支持` 启用/禁用多语言文档内容提示
+
+	> 目前仅支持英文和简体中文。
 
 ## 类库列表
 
 类库列表包含了 MicroPython 官方提供的类库，以及从互联网获取的一些有用的类库。
 
-> MicroPython 官方类库列表获取自固件文件 `MicroPython v1.24.0-preview.23 on 2024-06-05; ESP32C3 module with ESP32C3`
+> MicroPython 官方类库列表来自固件文件 `MicroPython v1.24.0-preview.23 on 2024-06-05; ESP32C3 module with ESP32C3`
 
 ### MicroPython 官方类库
 
@@ -137,8 +143,6 @@
 
 
 ### 多语言文档支持
-
-计划对已完成的类库文件中的说明内容进行本地化翻译。
 
 <details>
 <summary>已完成的类库</summary>
