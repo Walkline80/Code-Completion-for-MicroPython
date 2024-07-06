@@ -236,4 +236,4 @@
 	* 走线物联：[163271910](https://jq.qq.com/?_wv=1027&k=xtPoHgwL)
 	* 扇贝物联：[31324057](https://jq.qq.com/?_wv=1027&k=yp4FrpWh)
 
-<p align="center"><img src="https://gitee.com/walkline/WeatherStation/raw/docs/images/qrcode_walkline.png" width="300px" alt="走线物联"><img src="https://gitee.com/walkline/WeatherStation/raw/docs/images/qrcode_bigiot.png" width="300px" alt="扇贝物联"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/Walkline80/Code-Completion-for-MicroPython/master/images/qrcode_walkline.png" width="300px" alt="走线物联"><img src="https://raw.githubusercontent.com/Walkline80/Code-Completion-for-MicroPython/master/images/qrcode_bigiot.png" width="300px" alt="扇贝物联"></p>
