@@ -2,7 +2,7 @@
 
 <p align="center"><img src="https://img.shields.io/badge/Licence-MIT-green.svg?style=for-the-badge&&logo=gitee" /></p>
 
-[Instructions for use (English)](README.en-us.md)
+[Instructions for use (English)](https://github.com/Walkline80/Code-Completion-for-MicroPython/blob/main/README.en-us.md)
 
 **Code Completion for MicroPython** 扩展程序用于为 VSCode 提供 MicroPython 类库代码补全功能。
 

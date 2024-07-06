@@ -2,7 +2,7 @@
 
 <p align="center"><img src="https://img.shields.io/badge/Licence-MIT-green.svg?style=for-the-badge&&logo=gitee" /></p>
 
-[使用说明（简体中文）](README.md)
+[使用说明（简体中文）](https://github.com/Walkline80/Code-Completion-for-MicroPython/blob/main/README.md)
 
 **Code Completion for MicroPython** Extension to provide MicroPython library code completion for VSCode.
 
