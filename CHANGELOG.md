@@ -2,12 +2,25 @@
 
 ## [Unreleased]
 
+## [Version 0.1.3]: 2024-07-06
+
+### Updated
+
+更新演示动画内容。
+
+
+## [Version 0.1.2]: 2024-07-06
+
+### Fixed
+
+修复说明文档语言版本冲突问题。
+
 
 ## [Version 0.1.1]: 2024-07-06
 
 ### Added
 
-增加英文说明文档
+增加英文说明文档。
 
 ### Updated
 
@@ -268,7 +281,9 @@
 删除无用文件。
 
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.1...HEAD
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.3...HEAD
+[Version 0.1.3]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.2...v0.1.3
+[Version 0.1.2]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.1...v0.1.2
 [Version 0.1.1]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.0...v0.1.1
 [Version 0.1.0]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.12...v0.1.0
 [Version 0.0.12]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.11...v0.0.12
