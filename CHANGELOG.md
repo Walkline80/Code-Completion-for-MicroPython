@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+
+## [Version 0.1.3]: 2024-07-06
+
+### Updated
+
+将说明文档多语言跳转指向 Github。
+
+
 ## [Version 0.1.3]: 2024-07-06
 
 ### Updated
@@ -281,7 +289,8 @@
 删除无用文件。
 
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.3...HEAD
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.4...HEAD
+[Version 0.1.4]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.3...v0.1.4
 [Version 0.1.3]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.2...v0.1.3
 [Version 0.1.2]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.1...v0.1.2
 [Version 0.1.1]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.0...v0.1.1
