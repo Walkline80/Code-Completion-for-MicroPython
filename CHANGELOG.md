@@ -3,6 +3,21 @@
 ## [Unreleased]
 
 
+## [Version 0.1.1]: 2024-07-06
+
+### Added
+
+增加英文说明文档
+
+### Updated
+
+更新扩展英文显示内容。
+
+### Fixed
+
+修复中文翻译中的 [输入错误](https://gitee.com/walkline/code-completion-for-micropython/issues/IAB0IR)。
+
+
 ## [Version 0.1.0]: 2024-07-05
 
 ### Updated
@@ -253,7 +268,8 @@
 删除无用文件。
 
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.0...HEAD
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.1...HEAD
+[Version 0.1.1]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.0...v0.1.1
 [Version 0.1.0]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.12...v0.1.0
 [Version 0.0.12]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.11...v0.0.12
 [Version 0.0.11]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.0.10...v0.0.11
