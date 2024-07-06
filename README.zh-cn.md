@@ -2,32 +2,30 @@
 
 <p align="center"><img src="https://img.shields.io/badge/Licence-MIT-green.svg?style=for-the-badge&&logo=gitee" /></p>
 
-[使用说明（简体中文）](./README.md)
-
-**Code Completion for MicroPython** Extension to provide MicroPython library code completion for VSCode.
+**Code Completion for MicroPython** 扩展程序用于为 VSCode 提供 MicroPython 类库代码补全功能。
 
 ![demo](https://raw.githubusercontent.com/Walkline80/Code-Completion-for-MicroPython/master/images/demo.gif)
 
-## How to use
+## 使用方法
 
-Use the shortcut <kbd>F1</kbd> to open the command panel, type `MicroPython`, and:
+使用快捷键 <kbd>F1</kbd> 打开命令面板，输入 `MicroPython`，然后：
 
-* Select `MicroPython: Enable Code Completion` to enable the extension.
-* Select `MicroPython: Disable Code Completion` to disable extensions.
-* Select `MicroPython: Multi-Language Documentation Support` to enable/disable multi-language content hinting
+* 选择 `MicroPython: 启用代码补全功能` 启用扩展
+* 选择 `MicroPython: 禁用代码补全功能` 禁用扩展
+* 选择 `MicroPython: 多语言文档支持` 启用/禁用多语言文档内容提示
 
-	> Currently only English and Simplified Chinese are supported.
+	> 目前仅支持英文和简体中文。
 
-## Libraries List
+## 类库列表
 
-The list of libraries contains the official MicroPython libraries, as well as some useful libraries obtained from the Internet.
+类库列表包含了 MicroPython 官方提供的类库，以及从互联网获取的一些有用的类库。
 
-### MicroPython Official Libraries
+> MicroPython 官方类库列表来自固件文件 `MicroPython v1.24.0-preview.23 on 2024-06-05; ESP32C3 module with ESP32C3`
 
-> MicroPython official libraries list from firmware file `MicroPython v1.24.0-preview.23 on 2024-06-05; ESP32C3 module with ESP32C3`
+### MicroPython 官方类库
 
 <details>
-<summary>Completed libraries</summary>
+<summary>已完成的类库</summary>
 
 - [x] array
 - [x] asyncio
@@ -91,7 +89,7 @@ The list of libraries contains the official MicroPython libraries, as well as so
 </details>
 
 <details>
-<summary>Unfinished libraries</summary>
+<summary>未完成的类库</summary>
 
 - [ ] _thread
 
@@ -112,10 +110,10 @@ The list of libraries contains the official MicroPython libraries, as well as so
 
 </details>
 
-### Other Libraries
+### 其它类库
 
 <details>
-<summary>Completed libraries</summary>
+<summary>已完成的类库</summary>
 
 - [x] ble_config: [MicroPython BLE 配网](https://gitee.com/walkline/micropython_ble_config)
 
@@ -131,7 +129,7 @@ The list of libraries contains the official MicroPython libraries, as well as so
 </details>
 
 <details>
-<summary>Unfinished libraries</summary>
+<summary>未完成的类库</summary>
 
 - [ ] MicroWebSrv2
 
@@ -142,10 +140,10 @@ The list of libraries contains the official MicroPython libraries, as well as so
 </details>
 
 
-### Multi-Language Documentation Support
+### 多语言文档支持
 
 <details>
-<summary>Completed libraries</summary>
+<summary>已完成的类库</summary>
 
 - [x] array
 
@@ -215,7 +213,7 @@ The list of libraries contains the official MicroPython libraries, as well as so
 </details>
 
 <details>
-<summary>Unfinished libraries</summary>
+<summary>未完成的类库</summary>
 
 - [ ] asyncio
 
@@ -229,10 +227,15 @@ The list of libraries contains the official MicroPython libraries, as well as so
 
 </details>
 
-## Project Home
+## 项目主页
 
 * [Gitee: Code completion for MicroPython](https://gitee.com/walkline/code-completion-for-micropython)
 
-## Communication
+## 合作交流
 
-* Contact Email: <walkline@163.com>
+* 联系邮箱：<walkline@163.com>
+* QQ 交流群：
+	* 走线物联：[163271910](https://jq.qq.com/?_wv=1027&k=xtPoHgwL)
+	* 扇贝物联：[31324057](https://jq.qq.com/?_wv=1027&k=yp4FrpWh)
+
+<p align="center"><img src="https://raw.githubusercontent.com/Walkline80/Code-Completion-for-MicroPython/master/images/qrcode_walkline.png" width="300px" alt="走线物联"><img src="https://raw.githubusercontent.com/Walkline80/Code-Completion-for-MicroPython/master/images/qrcode_bigiot.png" width="300px" alt="扇贝物联"></p>
