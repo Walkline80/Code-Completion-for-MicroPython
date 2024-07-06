@@ -8,3 +8,5 @@ src/**
 **/*.map
 **/*.ts
 **/.vscode-test.*
+images/demo*
+images/qrcode*
