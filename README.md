@@ -6,7 +6,9 @@
 
 **Code Completion for MicroPython** 扩展程序用于为 VSCode 提供 MicroPython 类库代码补全功能。
 
-![demo](https://raw.githubusercontent.com/Walkline80/Code-Completion-for-MicroPython/master/images/demo.gif)
+![demo](https://raw.githubusercontent.com/Walkline80/Code-Completion-for-MicroPython/master/images/demo01.gif)
+
+![demo](https://raw.githubusercontent.com/Walkline80/Code-Completion-for-MicroPython/master/images/demo02.gif)
 
 ## 使用方法
 

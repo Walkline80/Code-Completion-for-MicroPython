@@ -6,9 +6,11 @@
 
 **Code Completion for MicroPython** Extension to provide MicroPython library code completion for VSCode.
 
-![demo](https://raw.githubusercontent.com/Walkline80/Code-Completion-for-MicroPython/master/images/demo.gif)
+![demo](https://raw.githubusercontent.com/Walkline80/Code-Completion-for-MicroPython/master/images/demo01.gif)
 
-## How to use
+![demo](https://raw.githubusercontent.com/Walkline80/Code-Completion-for-MicroPython/master/images/demo02.gif)
+
+## Usage
 
 Use the shortcut <kbd>F1</kbd> to open the command panel, type `MicroPython`, and:
 
