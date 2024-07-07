@@ -3,14 +3,14 @@
 ## [Unreleased]
 
 
-## [Version 0.1.5]: 2024-07-06
+## [Version 0.1.5]: 2024-07-07
 
 ### Updated
 
-美化 VSCode 市场页面显示
+美化 VSCode 市场页面显示。
 
 
-## [Version 0.14]: 2024-07-06
+## [Version 0.1.4]: 2024-07-06
 
 ### Updated
 
