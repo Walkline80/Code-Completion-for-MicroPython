@@ -2,29 +2,36 @@
   "name": "code-completion-for-micropython",
   "displayName": "Code Completion for MicroPython",
   "description": "MicroPython modules code completion extension.",
+  "version": "0.1.5",
+  "preview": true,
+  "publisher": "WalklineWang",
+  "author": {
+    "name": "Walkline Wang"
+  },
   "license": "MIT",
+  "homepage": "https://gitee.com/walkline/code-completion-for-micropython/blob/main/README.md",
+  "bugs": {
+    "url": "https://gitee.com/walkline/code-completion-for-micropython/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://gitee.com/walkline/code-completion-for-micropython.git"
   },
-  "homepage": "https://gitee.com/walkline/code-completion-for-micropython/blob/main/README.md",
+  "galleryBanner": {
+    "color": "#F29700",
+    "theme": "dark"
+  },
+  "icon": "images/icon.png",
   "keywords": [
     "MicroPython",
     "CodeCompletion"
   ],
-  "preview": true,
-  "author": {
-    "name": "Walkline Wang"
-  },
-  "publisher": "WalklineWang",
-  "icon": "images/icon.png",
-  "version": "0.1.4",
-  "engines": {
-    "vscode": "^1.80.0"
-  },
   "categories": [
     "Programming Languages"
   ],
+  "engines": {
+    "vscode": "^1.80.0"
+  },
   "activationEvents": [
     "onStartupFinished"
   ],
