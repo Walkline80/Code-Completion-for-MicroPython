@@ -3,7 +3,14 @@
 ## [Unreleased]
 
 
-## [Version 0.1.3]: 2024-07-06
+## [Version 0.1.5]: 2024-07-06
+
+### Updated
+
+美化 VSCode 市场页面显示
+
+
+## [Version 0.14]: 2024-07-06
 
 ### Updated
 
@@ -289,7 +296,8 @@
 删除无用文件。
 
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.4...HEAD
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.5...HEAD
+[Version 0.1.5]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.4...v0.1.5
 [Version 0.1.4]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.3...v0.1.4
 [Version 0.1.3]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.2...v0.1.3
 [Version 0.1.2]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.1...v0.1.2
