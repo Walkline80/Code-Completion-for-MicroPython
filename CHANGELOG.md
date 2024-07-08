@@ -3,6 +3,13 @@
 ## [Unreleased]
 
 
+## [Version 0.1.6]: 2024-07-08
+
+### Updated
+
+修改扩展设置名称，优化提示信息。
+
+
 ## [Version 0.1.5]: 2024-07-07
 
 ### Updated
@@ -296,7 +303,8 @@
 删除无用文件。
 
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.5...HEAD
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.6...HEAD
+[Version 0.1.6]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.5...v0.1.6
 [Version 0.1.5]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.4...v0.1.5
 [Version 0.1.4]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.3...v0.1.4
 [Version 0.1.3]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.2...v0.1.3
