@@ -15,8 +15,8 @@ const config_python_keys = [
 let config_python_value = '';
 const config_micropython = 'micropython';
 const config_micropython_keys = [
-	'codeCompletion.enabled',
-	'multiLanguage.enabled'
+	'enableCodeCompletion',
+	'enableMultiLanguage'
 ];
 
 // https://blog.csdn.net/forward_huan/article/details/108084802
@@ -125,7 +125,7 @@ export async function activate(context: vscode.ExtensionContext) {
 				{label: vscode.l10n.t('Enable'), description: vscode.l10n.t('Enable multi-language documents support'), value: true},
 				{label: vscode.l10n.t('Disable'), description: vscode.l10n.t('Disable multi-language documents support'), value: false}
 			],
-			{placeHolder: vscode.l10n.t('Whether to enable multi-language documents or not.')});
+			{placeHolder: vscode.l10n.t('Whether to enable multi-language documents or not?')});
 
 		if (enabled) {
 			update_configuration(config_micropython, config_micropython_keys[1], enabled.value, vscode.ConfigurationTarget.Workspace);
@@ -137,7 +137,7 @@ export async function activate(context: vscode.ExtensionContext) {
 				],
 				{placeHolder: vscode.l10n.t('Reload window now for the settings to take effect?')});
 
-			if (reload) {
+			if (reload?.value === true) {
 				vscode.commands.executeCommand('workbench.action.reloadWindow');
 			}
 		}

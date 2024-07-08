@@ -2,7 +2,7 @@
   "name": "code-completion-for-micropython",
   "displayName": "Code Completion for MicroPython",
   "description": "MicroPython modules code completion extension.",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "preview": true,
   "publisher": "WalklineWang",
   "author": {
@@ -39,17 +39,17 @@
   "main": "./dist/extension.js",
   "contributes": {
     "configuration": {
-      "title": "MicroPython",
+      "title": "Code Completion for MicroPython",
       "properties": {
-        "micropython.codeCompletion.enabled": {
+        "micropython.enableCodeCompletion": {
           "type": "boolean",
           "default": false,
-          "description": "%micropython.codeCompletion.enabled%"
+          "description": "%micropython.enableCodeCompletion%"
         },
-        "micropython.multiLanguage.enabled": {
+        "micropython.enableMultiLanguage": {
           "type": "boolean",
           "default": false,
-          "description": "%micropython.multiLanguage.enabled%"
+          "description": "%micropython.enableMultiLanguage%"
         }
       }
     },
