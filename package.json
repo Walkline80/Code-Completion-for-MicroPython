@@ -2,7 +2,7 @@
   "name": "code-completion-for-micropython",
   "displayName": "Code Completion for MicroPython",
   "description": "MicroPython modules code completion extension.",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "preview": true,
   "publisher": "WalklineWang",
   "author": {
@@ -30,7 +30,7 @@
     "Programming Languages"
   ],
   "engines": {
-    "vscode": "^1.80.0"
+    "vscode": "^1.75.0"
   },
   "activationEvents": [
     "onStartupFinished"
@@ -80,7 +80,7 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.80.0",
+    "@types/vscode": "^1.75.0",
     "@types/mocha": "^10.0.6",
     "@types/node": "18.x",
     "@typescript-eslint/eslint-plugin": "^7.11.0",
