@@ -3,6 +3,13 @@
 ## [Unreleased]
 
 
+## [Version 0.1.7]: 2024-07-23
+
+### Updated
+
+修改 VSCode 引擎兼容版本，降低至 1.75.0。
+
+
 ## [Version 0.1.6]: 2024-07-08
 
 ### Updated
@@ -303,7 +310,8 @@
 删除无用文件。
 
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.6...HEAD
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.7...HEAD
+[Version 0.1.7]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.6...v0.1.7
 [Version 0.1.6]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.5...v0.1.6
 [Version 0.1.5]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.4...v0.1.5
 [Version 0.1.4]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.3...v0.1.4
