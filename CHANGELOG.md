@@ -3,6 +3,12 @@
 ## [Unreleased]
 
 
+## [Version 0.1.8]: 2024-09-17
+
+### Updated
+
+更新 SmartConfig 说明文档。
+
 ## [Version 0.1.7]: 2024-07-23
 
 ### Updated
@@ -310,7 +316,8 @@
 删除无用文件。
 
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.7...HEAD
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.8...HEAD
+[Version 0.1.8]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.7...v0.1.8
 [Version 0.1.7]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.6...v0.1.7
 [Version 0.1.6]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.5...v0.1.6
 [Version 0.1.5]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.4...v0.1.5
