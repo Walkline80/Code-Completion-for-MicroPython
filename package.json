@@ -2,7 +2,7 @@
   "name": "code-completion-for-micropython",
   "displayName": "Code Completion for MicroPython",
   "description": "MicroPython modules code completion extension.",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "preview": true,
   "publisher": "WalklineWang",
   "author": {
