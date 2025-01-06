@@ -3,6 +3,13 @@
 ## [Unreleased]
 
 
+## [Version 0.1.9]: 2025-01-06
+
+### Added
+
+增加自定义按键驱动类库文件
+
+
 ## [Version 0.1.8]: 2024-09-17
 
 ### Updated
@@ -316,7 +323,8 @@
 删除无用文件。
 
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.8...HEAD
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.9...HEAD
+[Version 0.1.9]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.8...v0.1.9
 [Version 0.1.8]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.7...v0.1.8
 [Version 0.1.7]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.6...v0.1.7
 [Version 0.1.6]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.5...v0.1.6
