@@ -2,7 +2,7 @@
   "name": "code-completion-for-micropython",
   "displayName": "Code Completion for MicroPython",
   "description": "MicroPython modules code completion extension.",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "preview": true,
   "publisher": "WalklineWang",
   "author": {
@@ -93,5 +93,8 @@
   },
   "dependencies": {
     "@vscode/l10n": "^0.0.10"
-  }
+  },
+  "extensionDependencies": [
+    "ms-python.vscode-pylance"
+  ]
 }
