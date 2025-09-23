@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [Version 0.1.10]: 2025-09-23
+
+### Update
+
+package.json: 增加 PyLance 插件依赖项
 
 ## [Version 0.1.9]: 2025-01-06
 
@@ -326,7 +331,8 @@
 删除无用文件。
 
 
-[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.9...HEAD
+[unreleased]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.10...HEAD
+[Version 0.1.10]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.9...v0.1.10
 [Version 0.1.9]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.8...v0.1.9
 [Version 0.1.8]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.7...v0.1.8
 [Version 0.1.7]: https://gitee.com/walkline/code-completion-for-micropython/compare/v0.1.6...v0.1.7
