@@ -2,9 +2,15 @@
 
 ## [Unreleased]
 
+## [Version 0.1.11]: 2025-09-25
+
+### Updated
+
+调整代码补全功能菜单的启用与禁用选项
+
 ## [Version 0.1.10]: 2025-09-23
 
-### Update
+### Updated
 
 package.json: 增加 PyLance 插件依赖项
 
