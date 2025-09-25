@@ -1,6 +1,5 @@
 {
-	"extension.enable": "Enable Code Completion",
-	"extension.disable": "Disable Code Completion",
+	"extension.codeCompletion": "Code Completion",
 	"extension.multiLanguage": "Multi-Language Documentation Support",
 	"micropython.enableCodeCompletion": "Enable Code Completion Extension.",
 	"micropython.enableMultiLanguage": "Enable Multi-Language Documentation Support."

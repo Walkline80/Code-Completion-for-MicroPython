@@ -1,7 +1,6 @@
 /* Copyright © 2024 Walkline Wang (https://walkline.wang)
  * Gitee: https://gitee.com/walkline/code-completion-for-micropython
  */
-import { rejects } from 'assert';
 import * as vscode from 'vscode';
 
 let ext = vscode.extensions.getExtension('walklinewang.code-completion-for-micropython');
@@ -75,54 +74,61 @@ export async function activate(context: vscode.ExtensionContext) {
 		}
 	}
 
-	const enable = vscode.commands.registerCommand('extension.enable', () => {
-		update_configuration(config_python, config_python_keys[0], [config_python_value], vscode.ConfigurationTarget.Workspace)
-		.then((resolved) => {
-			if (resolved) {
-				update_configuration(config_python, config_python_keys[1], [config_python_value], vscode.ConfigurationTarget.Workspace)
-				.then((resolved) => {
-					if (resolved) {
-						update_configuration(config_python, config_python_keys[2], config_python_value, vscode.ConfigurationTarget.Workspace)
-						.then(() => {
-							update_configuration(config_micropython, config_micropython_keys[0], true, vscode.ConfigurationTarget.Workspace, true);
-							vscode.window.showInformationMessage(vscode.l10n.t('Update Settings Successed'));
-						});
-					}
-				});
+	const enable = vscode.commands.registerCommand('extension.enable', async () => {
+		let success = false;
+		try {
+			success = await update_configuration(config_python, config_python_keys[0], [config_python_value], vscode.ConfigurationTarget.Workspace) as boolean;
+			if (success) success = await update_configuration(config_python, config_python_keys[1], [config_python_value], vscode.ConfigurationTarget.Workspace) as boolean;
+			if (success) success = await update_configuration(config_python, config_python_keys[2], config_python_value, vscode.ConfigurationTarget.Workspace) as boolean;
+			if (success) {
+				await update_configuration(config_micropython, config_micropython_keys[0], true, vscode.ConfigurationTarget.Workspace, true);
+				vscode.window.showInformationMessage(vscode.l10n.t('Update Settings Successed'));
 			} else {
 				vscode.window.showErrorMessage(vscode.l10n.t('Update settings failed: Configuration key {0} not found.', config_python), vscode.l10n.t('OK'));
 			}
-		}).catch((error) => {
+		} catch (error: any) {
 			vscode.window.showErrorMessage(vscode.l10n.t('Update settings failed: {0}', error.message), vscode.l10n.t('OK'));
-		});
+		}
 	});
 
-	const disable = vscode.commands.registerCommand('extension.disable', () => {
-		update_configuration(config_python, config_python_keys[0], [], vscode.ConfigurationTarget.Workspace)
-		.then((resolved) => {
-			if (resolved) {
-				update_configuration(config_python, config_python_keys[1], [], vscode.ConfigurationTarget.Workspace)
-				.then((resolved) => {
-					if (resolved) {
-						update_configuration(config_python, config_python_keys[2], '', vscode.ConfigurationTarget.Workspace)
-						.then(() => {
-							update_configuration(config_micropython, config_micropython_keys[0], false, vscode.ConfigurationTarget.Workspace);
-							vscode.window.showInformationMessage(vscode.l10n.t('Update Settings Successed'));
-						});
-					}
-				});
+	const disable = vscode.commands.registerCommand('extension.disable', async () => {
+		let success = false;
+		try {
+			success = await update_configuration(config_python, config_python_keys[0], [], vscode.ConfigurationTarget.Workspace) as boolean;
+			if (success) success = await update_configuration(config_python, config_python_keys[1], [], vscode.ConfigurationTarget.Workspace) as boolean;
+			if (success) success = await update_configuration(config_python, config_python_keys[2], '', vscode.ConfigurationTarget.Workspace) as boolean;
+			if (success) {
+				await update_configuration(config_micropython, config_micropython_keys[0], false, vscode.ConfigurationTarget.Workspace);
+				vscode.window.showInformationMessage(vscode.l10n.t('Update Settings Successed'));
 			} else {
 				vscode.window.showErrorMessage(vscode.l10n.t('Update settings failed: Configuration key {0} not found.', config_python), vscode.l10n.t('OK'));
 			}
-		}).catch((error) => {
+		} catch (error: any) {
 			vscode.window.showErrorMessage(vscode.l10n.t('Update settings failed: {0}', error.message), vscode.l10n.t('OK'));
-		});
+		}
+	});
+
+	vscode.commands.registerCommand('extension.codeCompletion', async () => {
+		const enabled = await vscode.window.showQuickPick(
+			[
+				{label: vscode.l10n.t('Enable'),  description: vscode.l10n.t('Enable code completion'),  value: true},
+				{label: vscode.l10n.t('Disable'), description: vscode.l10n.t('Disable code completion'), value: false}
+			],
+			{placeHolder: vscode.l10n.t('Whether to enable code completion or not?')});
+
+		if (enabled) {
+			if (enabled.value) {
+				vscode.commands.executeCommand('extension.enable', () => {});
+			} else {
+				vscode.commands.executeCommand('extension.disable', () => {});
+			}
+		}
 	});
 
 	vscode.commands.registerCommand('extension.multiLanguage', async () => {
 		const enabled = await vscode.window.showQuickPick(
 			[
-				{label: vscode.l10n.t('Enable'), description: vscode.l10n.t('Enable multi-language documents support'), value: true},
+				{label: vscode.l10n.t('Enable'),  description: vscode.l10n.t('Enable multi-language documents support'),  value: true},
 				{label: vscode.l10n.t('Disable'), description: vscode.l10n.t('Disable multi-language documents support'), value: false}
 			],
 			{placeHolder: vscode.l10n.t('Whether to enable multi-language documents or not?')});
@@ -132,8 +138,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
 			const reload = await vscode.window.showQuickPick(
 				[
-					{label: 'YES', description: vscode.l10n.t('Reload window now'), value: true},
-					{label: 'NO', description: vscode.l10n.t('Manually reload later'), value: false}
+					{label: '$(check)   YES', description: vscode.l10n.t('Reload window now'), value: true},
+					{label: '$(close)   NO', description: vscode.l10n.t('Manually reload later'), value: false}
 				],
 				{placeHolder: vscode.l10n.t('Reload window now for the settings to take effect?')});
 
@@ -142,8 +148,6 @@ export async function activate(context: vscode.ExtensionContext) {
 			}
 		}
 	});
-
-	context.subscriptions.push(enable, disable);
 }
 
 export function deactivate() {}
